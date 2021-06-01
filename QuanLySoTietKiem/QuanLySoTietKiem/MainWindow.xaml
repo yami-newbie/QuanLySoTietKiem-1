@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
-        mc:Ignorable="d"
-                
+        mc:Ignorable="d"            
+        x:Name="Main"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
         TextElement.FontWeight="Regular"    
@@ -14,11 +14,72 @@
         TextOptions.TextRenderingMode="Auto"    
         Background="{DynamicResource MaterialDesignPaper}"    
         FontFamily="{DynamicResource MaterialDesignFont}"
+
+        WindowStartupLocation="CenterScreen"  
+        Title="" Height="700" Width="1200"
         
-        Title="MainWindow" Height="450" Width="800">
+        DataContext="{StaticResource MainVM}">
     <Grid>
-        <materialDesign:Card Padding="32" Margin="16">
-            <TextBlock Style="{DynamicResource MaterialDesignTitleTextBlock}">My First Material Design App</TextBlock>
-        </materialDesign:Card>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="White">
+            <StackPanel>
+                <Grid Height="100">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Dollar" Width="30" Height="30" Foreground="blue" VerticalAlignment="Center"></materialDesign:PackIcon>
+                        <TextBlock TextAlignment="Center" Text="Saving Account"  Foreground="Blue" VerticalAlignment="Center" FontSize="20" FontWeight="SemiBold"/>
+                    </StackPanel>
+
+                </Grid>
+                <Button Background="{Binding BackgroundColor[0]}" Command="{Binding HomeCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="HomeOutline" Foreground="{Binding TextIconColor[0]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Trang Chủ" Foreground="{Binding TextIconColor[0]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="{Binding BackgroundColor[1]}" Command="{Binding SavingAccountCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="PiggyBankOutline" Foreground="{Binding TextIconColor[1]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Sổ Tiết Kiệm" Foreground="{Binding TextIconColor[1]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="{Binding BackgroundColor[2]}" Command="{Binding DepositCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="BankTransferIn" Foreground="{Binding TextIconColor[2]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Phiếu Gởi Tiền" Foreground="{Binding TextIconColor[2]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="{Binding BackgroundColor[3]}" Command="{Binding WithdrawCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="BankTransferOut" Foreground="{Binding TextIconColor[3]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Phiếu Rút Tiền" Foreground="{Binding TextIconColor[3]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <Button Background="{Binding BackgroundColor[4]}" Command="{Binding ReportCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="ChartArc" Foreground="{Binding TextIconColor[4]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Thống kê" Foreground="{Binding TextIconColor[4]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                <Grid Height="280">
+                    <Image Source="Images/Bank.png" Margin="20"></Image>
+                </Grid>
+                <Button Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=Main}" materialDesign:ButtonAssist.CornerRadius="10"    Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Bottom">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Logout" Foreground="#A5A5B3" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Đăng xuất" Foreground="#A5A5B3" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
+                
+            </StackPanel>
+
+        </Grid>
+        <Grid Grid.Column="1" >
+            <ContentControl Content="{Binding CurrentView}"></ContentControl>
+        </Grid>
     </Grid>
+
 </Window>

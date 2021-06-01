@@ -21,3 +21,14 @@ G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\MaterialDesignTh
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\MaterialDesignThemes.Wpf.xml
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\App.baml
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.csproj.CopyComplete
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\GeneratedInternalTypeHelper.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\SavingAccountView.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\SavingAccountView.baml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\HomeView.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\HomeView.baml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\DepositView.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\ReportView.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\WithdrawView.g.cs
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\DepositView.baml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\ReportView.baml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\WithdrawView.baml

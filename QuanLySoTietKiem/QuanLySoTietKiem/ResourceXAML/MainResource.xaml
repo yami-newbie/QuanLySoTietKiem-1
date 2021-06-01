@@ -1,5 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:QuanLySoTietKiem.ResourceXAML">
-    
+                    xmlns:local="clr-namespace:QuanLySoTietKiem.ResourceXAML"
+                    xmlns:viewmodel="clr-namespace:QuanLySoTietKiem.ViewModel">
+    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
+    <viewmodel:SavingAccountViewModel x:Key="SavingAccountVM"></viewmodel:SavingAccountViewModel>
+    <viewmodel:HomeViewModel x:Key="HomeVM"></viewmodel:HomeViewModel>
+    <viewmodel:DepositViewModel x:Key="DepositVM"></viewmodel:DepositViewModel>
+    <viewmodel:WithdrawViewModel x:Key="WithdrawVM"></viewmodel:WithdrawViewModel>
+    <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
 </ResourceDictionary>
