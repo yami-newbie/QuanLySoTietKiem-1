@@ -15,7 +15,6 @@ namespace QuanLySoTietKiem.ViewModel
         public String[] BackgroundColor { get => _backgroundColor; set { _backgroundColor = value; OnPropertyChanged(); } }
         private String[] _textIconColor = { "White", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3"};
         public String[] TextIconColor { get => _textIconColor; set { _textIconColor = value; OnPropertyChanged(); } }
-        public string userInside;
         public ICommand HomeCommand { get; set; }
         public ICommand SavingAccountCommand { get; set; }
         public ICommand DepositCommand { get; set; }
@@ -26,10 +25,6 @@ namespace QuanLySoTietKiem.ViewModel
         public object CurrentView { get => _currentView; set { _currentView = value; OnPropertyChanged(); } }        
         public MainViewModel()
         {
-            LoginWindow loginWD = new LoginWindow();
-            loginWD.ShowDialog();
-            userInside = loginWD._username;
-            MessageBox.Show("User vừa đăng nhập: " + userInside);
             HomeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 BackgroundColor = new String[] { "#5EB2FF", "",  "", "", "", };

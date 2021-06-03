@@ -9,4 +9,5 @@
     <viewmodel:WithdrawViewModel x:Key="WithdrawVM"></viewmodel:WithdrawViewModel>
     <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:RegisterViewModel x:Key="RegisterVM"></viewmodel:RegisterViewModel>
 </ResourceDictionary>

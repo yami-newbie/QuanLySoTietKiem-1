@@ -25,34 +25,5 @@ namespace QuanLySoTietKiem
         {
             InitializeComponent();
         }
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Process.GetCurrentProcess().Kill();
-
-        }
-
-        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            RegisterWindow registerWD = new RegisterWindow();
-            registerWD.ShowDialog();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            _username = txtUser.Text;
-        }
     }
 }

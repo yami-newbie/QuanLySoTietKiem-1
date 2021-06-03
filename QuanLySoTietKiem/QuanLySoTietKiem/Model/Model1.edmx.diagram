@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7b9ac46c206a4f789958807aab47ca1d" Name="Diagram1">
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.CHUCNANG" Width="1.5" PointX="7.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.LOAITIETKIEM" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.NGUOIDUNG" Width="1.5" PointX="10" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.NHOMNGUOIDUNG" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHANQUYEN" Width="1.5" PointX="10" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEUGOITIEN" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEURUTTIEN" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_NGUOIDUNG_MaNhom" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaNhom" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo" ManuallyRouted="false" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHIEURUTTIEN_MaSo" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

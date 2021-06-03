@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLySoTietKiem.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,26 +20,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class RegisterWindow : Window
     {
-        public RegisterWindow()
+        public RegisterWindow(Window window)
         {
             InitializeComponent();
-        }
-        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            DragMove();
-        }
-
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            //LoginWindow wd = new LoginWindow();
-            //wd.ShowDialog();
+            (this.DataContext as RegisterViewModel).LoginWindow = window as LoginWindow;
         }
     }
 }

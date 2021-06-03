@@ -4,13 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Register" Height="430" Width="800"
         ResizeMode="NoResize"
         WindowStyle="None"
-        Name="RegisterWD"
+        Name="window"
+        DataContext="{StaticResource RegisterVM}"
         WindowStartupLocation="CenterScreen">
-    <Grid MouseDown="Grid_MouseDown">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding DragMoveCommand}" CommandParameter="{Binding ElementName=window}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -57,8 +64,8 @@
 
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent"
-                    ToolTip="Close" x:Name="btnExit" Margin="0,10,0,0" BorderBrush="White" Click="btnExit_Click" >
+                            <Button Command="{Binding SignInCommand}" CommandParameter="{Binding ElementName=window}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent"
+                    ToolTip="Close" x:Name="btnExit" Margin="0,10,0,0" BorderBrush="White">
                                 <materialDesign:PackIcon Kind="Close" Foreground="Gray" Width="50" Height="50"></materialDesign:PackIcon>
 
                             </Button>
@@ -132,7 +139,7 @@
                             </Grid>
                             <Grid Grid.Column="1">
                                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Purple" FontSize="15" Margin="5,-3,0,0" FontWeight="Bold" >
-                                     <Hyperlink Click="Hyperlink_Click">
+                                     <Hyperlink Command="{Binding SignInCommand}" CommandParameter="{Binding ElementName=window}">
                                         Sign in 
                                     </Hyperlink>
                                 </TextBlock>

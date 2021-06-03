@@ -4,15 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
+        mc:Ignorable="d"   
+        x:Name="window"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
        Title="LoginWinDow" Height="420" Width="800"
         ResizeMode="NoResize"
         WindowStyle="None"
-        x:Name="LoginWD"
         WindowStartupLocation="CenterScreen"
         DataContext="{StaticResource LoginVM}">
 
-    <Grid MouseDown="Grid_MouseDown">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding DragMoveCommand}" CommandParameter="{Binding ElementName=window}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -31,8 +38,8 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1" Margin="115,0,-0.4,0" >
-            <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent"
-                    ToolTip="Close" x:Name="btnExit" Margin="0,10,-24.4,0" BorderBrush="red" Click="btnExit_Click">
+            <Button Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=window}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionButton}" Background="Transparent"
+                    ToolTip="Close" x:Name="btnExit" Margin="0,10,-24.4,0" BorderBrush="red">
                 <materialDesign:PackIcon Kind="Close" Foreground="Black" Width="50" Height="50"></materialDesign:PackIcon>
 
             </Button>
@@ -79,7 +86,7 @@
                                     <Grid Grid.Row="0" Margin="5">
                                         <materialDesign:PackIcon Kind="User" Width="50" Height="35" Foreground="White" VerticalAlignment="Center" RenderTransformOrigin="0.372,2.143" Margin="0,10,0,-8.2"/>
                                         <TextBox
-                                            Name="txtUser"
+                                            Text="{Binding UserName}"
                                             Width="190"                    
                                             materialDesign:HintAssist.Hint="Username"  
                                             Foreground="Wheat"
@@ -93,16 +100,21 @@
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0" >
                                             <materialDesign:PackIcon Kind="Password" Width="50" Height="30" Foreground="White" VerticalAlignment="Bottom" Margin="0,10,0,-5"/>
-                                            <PasswordBox
-                                                Width="190"
-                                                x:Name="FloatingPasswordBox"         
+                                            <PasswordBox 
+                                                x:Name="PasswordBox"
+                                                Width="190"                                               
                                                 Foreground="Wheat"
                                                 materialDesign:HintAssist.Hint="Password"                                   
                                                 materialDesign:HintAssist.Foreground="Green"                                    
                                                 materialDesign:TextFieldAssist.UnderlineBrush="Wheat"                                   
                                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"                                    
-                                                VerticalAlignment="Center"
-                                                />
+                                                VerticalAlignment="Center">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="PasswordChanged">
+                                                        <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=PasswordBox}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </PasswordBox>
                                         </Grid>
                                         <Grid Grid.Row="1">
                                             <TextBlock Text="Forget password?" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" Foreground="Purple" Margin="0,4,10,0"/>
@@ -122,15 +134,16 @@
                                                 materialDesign:ButtonAssist.CornerRadius="25"
                                                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
                                                 Content="Sign in"
-                                                FontWeight="Bold" Click="Button_Click"
-                                                
+                                                FontWeight="Bold" 
+                                                Command="{Binding LoginCommand}"
+                                                CommandParameter="{Binding ElementName=window}"
                                                 >
                                             </Button>
                                         </Grid>
 
-                                        <TextBlock Text="  Not registered?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
+                                        <TextBlock Text="Not registered?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
                                         <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="-8,1,0,0" FontSize="13" Foreground="Purple" FontWeight="Bold" >
-                                            <Hyperlink Click="Hyperlink_Click">
+                                            <Hyperlink Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=window}">
                                                 Create an Account
                                             </Hyperlink>
 
