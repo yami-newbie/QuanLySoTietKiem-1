@@ -16,8 +16,39 @@
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
-        <StackPanel>
-            <TextBlock>Gửi tiền</TextBlock>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5">
+            <materialDesign:Card>
+                <Button     
+                    Command="{Binding AddCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                    Background="Green"
+                    Content="Thêm" />
+            </materialDesign:Card>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+            <materialDesign:Card>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Mã phiếu rút tiền" DisplayMemberBinding="{Binding MaPhieuGoiTien}"></GridViewColumn>
+                                <GridViewColumn Header="Tên khách hàng" DisplayMemberBinding="{Binding SOTIETKIEM.KHACHHANG.TenKhachHang}"></GridViewColumn>
+                                <GridViewColumn Header="Mã sổ tiết kiệm" DisplayMemberBinding="{Binding MaSo}"></GridViewColumn>
+                                <GridViewColumn Header="Ngày gởi" DisplayMemberBinding="{Binding NgayGoi, StringFormat=dd/MM/yyyy}"></GridViewColumn>
+                                <GridViewColumn Header="Số tiền gởi" DisplayMemberBinding="{Binding SoTienGoi}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
     </Grid>
 </UserControl>

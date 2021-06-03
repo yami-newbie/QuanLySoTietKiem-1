@@ -80,8 +80,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddDepositView.xaml.cs">
+      <DependentUpon>AddDepositView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddSavingAccountView.xaml.cs">
+      <DependentUpon>AddSavingAccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DepositView.xaml.cs">
       <DependentUpon>DepositView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditSavingAccountView.xaml.cs">
+      <DependentUpon>EditSavingAccountView.xaml</DependentUpon>
     </Compile>
     <Compile Include="HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -141,6 +150,9 @@
     <Compile Include="ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RestoreSavingAccountView.xaml.cs">
+      <DependentUpon>RestoreSavingAccountView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SavingAccountView.xaml.cs">
       <DependentUpon>SavingAccountView.xaml</DependentUpon>
     </Compile>
@@ -156,7 +168,19 @@
     <Compile Include="WithdrawView.xaml.cs">
       <DependentUpon>WithdrawView.xaml</DependentUpon>
     </Compile>
+    <Page Include="AddDepositView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddSavingAccountView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DepositView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditSavingAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -189,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RestoreSavingAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
