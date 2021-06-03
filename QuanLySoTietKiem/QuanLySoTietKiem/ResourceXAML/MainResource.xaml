@@ -8,4 +8,5 @@
     <viewmodel:DepositViewModel x:Key="DepositVM"></viewmodel:DepositViewModel>
     <viewmodel:WithdrawViewModel x:Key="WithdrawVM"></viewmodel:WithdrawViewModel>
     <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
 </ResourceDictionary>
