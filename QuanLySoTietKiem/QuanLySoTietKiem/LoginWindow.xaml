@@ -19,7 +19,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -67,7 +67,7 @@
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Row="2">
-                    <TextBlock Text="User Login" HorizontalAlignment="Center" Width="180" FontSize="30" Margin="5" Foreground="AntiqueWhite" FontWeight="Bold"/>
+                    <TextBlock Text="Đăng Nhập " HorizontalAlignment="Center" Width="180" FontSize="30" Margin="5" Foreground="AntiqueWhite" FontWeight="Bold"/>
                 </Grid>
                 <Grid Grid.Row="2" Background="Transparent" Margin="-28,41.6,27.8,10.4" Grid.RowSpan="2">
                     <Border Background="Transparent" BorderBrush="White" BorderThickness="1" CornerRadius="10,10,10,10" Width="350" Height="200" Margin="10,10,-8,-9.2">
@@ -88,7 +88,7 @@
                                         <TextBox
                                             Text="{Binding UserName}"
                                             Width="190"                    
-                                            materialDesign:HintAssist.Hint="Username"  
+                                            materialDesign:HintAssist.Hint="Tên đăng nhập"  
                                             Foreground="Wheat"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"                  
                                             VerticalAlignment="Center" />
@@ -104,9 +104,9 @@
                                                 x:Name="PasswordBox"
                                                 Width="190"                                               
                                                 Foreground="Wheat"
-                                                materialDesign:HintAssist.Hint="Password"                                   
-                                                materialDesign:HintAssist.Foreground="Green"                                    
-                                                materialDesign:TextFieldAssist.UnderlineBrush="Wheat"                                   
+                                                materialDesign:HintAssist.Hint="Mật khẩu"                                   
+                                                materialDesign:HintAssist.Foreground="Purple"                                    
+                                                materialDesign:TextFieldAssist.UnderlineBrush="Purple"                                   
                                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"                                    
                                                 VerticalAlignment="Center">
                                                 <i:Interaction.Triggers>
@@ -117,7 +117,11 @@
                                             </PasswordBox>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <TextBlock Text="Forget password?" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" Foreground="Purple" Margin="0,4,10,0"/>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="274*"/>
+                                                <ColumnDefinition Width="17*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="Quên mật khẩu?" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" Foreground="Purple" Margin="0,6,9.4,0.8" Grid.ColumnSpan="2"/>
 
                                         </Grid>
 
@@ -133,7 +137,7 @@
                                                 Style="{StaticResource MaterialDesignRaisedDarkButton}"   
                                                 materialDesign:ButtonAssist.CornerRadius="25"
                                                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
-                                                Content="Sign in"
+                                                Content="Đăng nhập"
                                                 FontWeight="Bold" 
                                                 Command="{Binding LoginCommand}"
                                                 CommandParameter="{Binding ElementName=window}"
@@ -141,10 +145,10 @@
                                             </Button>
                                         </Grid>
 
-                                        <TextBlock Text="Not registered?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
-                                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="-8,1,0,0" FontSize="13" Foreground="Purple" FontWeight="Bold" >
+                                        <TextBlock Text="Chưa có tài khoản?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
+                                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20,0,0,2" FontSize="13" Foreground="Purple" FontWeight="Bold" >
                                             <Hyperlink Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=window}">
-                                                Create an Account
+                                                Tạo tài khoản mới
                                             </Hyperlink>
 
                                         </TextBlock>

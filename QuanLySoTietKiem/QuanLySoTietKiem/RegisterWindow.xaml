@@ -76,10 +76,10 @@
                             </Viewbox>
                         </Grid>
                         <Grid Grid.Row="1" Margin="5">
-                            <TextBlock Text="Sign up" FontSize="30" Foreground="WhiteSmoke" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock Text="Đăng ký tài khoản" FontSize="30" Foreground="WhiteSmoke" HorizontalAlignment="Center" FontWeight="Bold"/>
                         </Grid>
                         <Grid Grid.Row="2" >
-                            <TextBlock Text="Name*" Foreground="White" FontSize="18" Height="20"/>
+                            <TextBlock Text="Tên*" Foreground="White" FontSize="18" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="3" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
@@ -87,7 +87,7 @@
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtName"
-                                    materialDesign:HintAssist.Hint="Name"/>
+                                    materialDesign:HintAssist.Hint="Nguyễn Văn A"/>
                             </Border>
                         </Grid>
                         <Grid Grid.Row="4" >
@@ -96,6 +96,7 @@
                         <Grid Grid.Row="5" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
                                 <TextBox
+                                    Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtEmail"
@@ -103,11 +104,12 @@
                             </Border>
                         </Grid>
                         <Grid Grid.Row="6" >
-                            <TextBlock Text="Password*" Foreground="White" FontSize="18" Height="20"/>
+                            <TextBlock Text="Mật khẩu*" Foreground="White" FontSize="18" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="7" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
                                 <TextBox
+                                    Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged}"
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtPassword"
@@ -123,10 +125,11 @@
                                                 Style="{StaticResource MaterialDesignRaisedDarkButton}"   
                                                 materialDesign:ButtonAssist.CornerRadius="25"
                                                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
-                                                Content="Sign up"
+                                                Content="Đăng ký"
                                                 FontWeight="Bold"
                                                 FontSize="20"
-                                Command="{Binding Login}">
+                                Command="{Binding Login}"
+                                CommandParameter="{Binding ElementName=window}">
                             </Button>
                         </Grid>
                         <Grid Grid.Row="9">
@@ -135,12 +138,12 @@
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="0">
-                                <TextBlock Text="Already have an Account?" VerticalAlignment="Top" HorizontalAlignment="Right" Foreground="Black" FontSize="13"/>
+                                <TextBlock Text="Đã có tài khoản?" VerticalAlignment="Top" HorizontalAlignment="Right" Foreground="Black" FontSize="13"/>
                             </Grid>
                             <Grid Grid.Column="1">
                                 <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Purple" FontSize="15" Margin="5,-3,0,0" FontWeight="Bold" >
                                      <Hyperlink Command="{Binding SignInCommand}" CommandParameter="{Binding ElementName=window}">
-                                        Sign in 
+                                        Đăng Nhập
                                     </Hyperlink>
                                 </TextBlock>
 
