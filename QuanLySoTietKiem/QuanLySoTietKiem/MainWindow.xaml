@@ -64,6 +64,12 @@
                         <TextBlock  Text="Thống kê" Foreground="{Binding TextIconColor[4]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
                     </StackPanel>
                 </Button>
+                <Button Background="{Binding BackgroundColor[5]}" Command="{Binding EnhanceCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Settings" Foreground="{Binding TextIconColor[5]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                        <TextBlock  Text="Nâng cao" Foreground="{Binding TextIconColor[5]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </Button>
                 <Grid Height="280">
                     <Image Source="Images/Bank.png" Margin="20"></Image>
                 </Grid>

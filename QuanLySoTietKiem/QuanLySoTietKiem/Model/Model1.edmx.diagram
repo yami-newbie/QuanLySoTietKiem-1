@@ -7,14 +7,15 @@
       <Diagram DiagramId="7b9ac46c206a4f789958807aab47ca1d" Name="Diagram1">
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.CHUCNANG" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.KHACHHANG" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="QuanLySoTietKiemModel.LOAITIETKIEM" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.LOAITIETKIEM" Width="1.5" PointX="0.75" PointY="0.875" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.NGUOIDUNG" Width="1.5" PointX="10" PointY="6.5" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.NHOMNGUOIDUNG" Width="1.5" PointX="7.75" PointY="3.75" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHANQUYEN" Width="1.5" PointX="10" PointY="3.75" />
-        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEUGOITIEN" Width="1.5" PointX="5.25" PointY="5.375" />
-        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEURUTTIEN" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEUGOITIEN" Width="1.5" PointX="5.25" PointY="2.375" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.PHIEURUTTIEN" Width="1.5" PointX="5.25" PointY="5.375" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.SOTIETKIEM" Width="1.5" PointX="3" PointY="3.5" />
         <EntityTypeShape EntityType="QuanLySoTietKiemModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.THAMSO" Width="1.5" PointX="2.75" PointY="9.125" />
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang" />
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang" />
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" />

@@ -26,6 +26,8 @@
     <Property Name="MaLoaiTietKiem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="TenLoaiTietKiem" Type="nvarchar" MaxLength="40" />
     <Property Name="BiXoa" Type="bit" />
+    <Property Name="KyHan" Type="int" />
+    <Property Name="LaiSuat" Type="numeric" Precision="5" Scale="4" />
   </EntityType>
   <EntityType Name="NGUOIDUNG">
     <Key>
@@ -94,14 +96,15 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6013: The table/view 'QuanLySoTietKiem.dbo.THAMSO' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="THAMSO">
-          <Property Name="SoTienGoiBanDauToiThieu" Type="int" />
-          <Property Name="SoTienGoiThemToiThieu" Type="int" />
-          <Property Name="TuDongSoKhiRutHetTien" Type="bit" />
-          <Property Name="Id" Type="nchar" MaxLength="10" />
-        </EntityType>-->
+  <EntityType Name="THAMSO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="SoTienGoiBanDauToiThieu" Type="int" />
+    <Property Name="SoTienGoiThemToiThieu" Type="int" />
+    <Property Name="TuDongSoKhiRutHetTien" Type="bit" />
+    <Property Name="Id" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
   <Association Name="FK_NGUOIDUNG_MaNhom">
     <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -211,6 +214,7 @@ warning 6013: The table/view 'QuanLySoTietKiem.dbo.THAMSO' does not have a prima
     <EntitySet Name="PHIEURUTTIEN" EntityType="Self.PHIEURUTTIEN" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SOTIETKIEM" EntityType="Self.SOTIETKIEM" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="THAMSO" EntityType="Self.THAMSO" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_NGUOIDUNG_MaNhom" Association="Self.FK_NGUOIDUNG_MaNhom">
       <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNG" />
       <End Role="NGUOIDUNG" EntitySet="NGUOIDUNG" />

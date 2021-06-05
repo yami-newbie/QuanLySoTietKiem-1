@@ -11,6 +11,7 @@
     <EntitySet Name="PHIEURUTTIENs" EntityType="QuanLySoTietKiemModel.PHIEURUTTIEN" />
     <EntitySet Name="SOTIETKIEMs" EntityType="QuanLySoTietKiemModel.SOTIETKIEM" />
     <EntitySet Name="sysdiagrams" EntityType="QuanLySoTietKiemModel.sysdiagram" />
+    <EntitySet Name="THAMSOes" EntityType="QuanLySoTietKiemModel.THAMSO" />
     <AssociationSet Name="FK_PHANQUYEN_MaChucNang" Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang">
       <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
       <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
@@ -68,6 +69,8 @@
     <Property Name="MaLoaiTietKiem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TenLoaiTietKiem" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="BiXoa" Type="Boolean" />
+    <Property Name="KyHan" Type="Int32" />
+    <Property Name="LaiSuat" Type="Decimal" Precision="5" Scale="4" />
     <NavigationProperty Name="SOTIETKIEMs" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
   </EntityType>
   <EntityType Name="NGUOIDUNG">
@@ -147,6 +150,15 @@
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="THAMSO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="SoTienGoiBanDauToiThieu" Type="Int32" />
+    <Property Name="SoTienGoiThemToiThieu" Type="Int32" />
+    <Property Name="TuDongSoKhiRutHetTien" Type="Boolean" />
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <Association Name="FK_PHANQUYEN_MaChucNang">
     <End Type="QuanLySoTietKiemModel.CHUCNANG" Role="CHUCNANG" Multiplicity="1">

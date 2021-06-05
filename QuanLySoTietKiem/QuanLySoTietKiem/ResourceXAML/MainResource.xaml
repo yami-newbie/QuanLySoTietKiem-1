@@ -10,4 +10,6 @@
     <viewmodel:ReportViewModel x:Key="ReportVM"></viewmodel:ReportViewModel>
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:RegisterViewModel x:Key="RegisterVM"></viewmodel:RegisterViewModel>
+    <viewmodel:EnhanceViewModel x:Key="EnhanceVM"></viewmodel:EnhanceViewModel>
+    <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
 </ResourceDictionary>

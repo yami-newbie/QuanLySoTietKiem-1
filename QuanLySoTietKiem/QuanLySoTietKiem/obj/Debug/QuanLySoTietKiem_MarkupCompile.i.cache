@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\DELL\Desktop\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\
 QuanLySoTietKiem
 none
 false
 DEBUG;TRACE
-C:\Users\DELL\Desktop\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
-141132196192
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
+181264034430
 2-1556844510
-41-1509934949
-242019322088
-AddDepositView.xaml;AddSavingAccountView.xaml;DepositView.xaml;EditSavingAccountView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;WithdrawView.xaml;
+491880665946
+241273433804
+AddCategoryView.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;CategoryView.xaml;DepositView.xaml;EditCategoryView.xaml;EditSavingAccountView.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;WithdrawView.xaml;
 
 True
 

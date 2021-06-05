@@ -35,5 +35,6 @@ namespace QuanLySoTietKiem.Model
         public virtual DbSet<PHIEURUTTIEN> PHIEURUTTIENs { get; set; }
         public virtual DbSet<SOTIETKIEM> SOTIETKIEMs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<THAMSO> THAMSOes { get; set; }
     }
 }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
-141132196192
+181264034430
 2-1556844510
-40-667575582
+48-1571941983
 241273433804
-AddDepositView.xaml;AddSavingAccountView.xaml;DepositView.xaml;EditSavingAccountView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;WithdrawView.xaml;
+AddCategoryView.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;CategoryView.xaml;DepositView.xaml;EditCategoryView.xaml;EditSavingAccountView.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;WithdrawView.xaml;
 
 False
 
