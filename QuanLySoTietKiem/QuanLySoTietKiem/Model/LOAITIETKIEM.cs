@@ -23,8 +23,9 @@ namespace QuanLySoTietKiem.Model
         public int MaLoaiTietKiem { get; set; }
         public string TenLoaiTietKiem { get; set; }
         public Nullable<bool> BiXoa { get; set; }
-        public Nullable<int> KyHan { get; set; }
         public Nullable<decimal> LaiSuat { get; set; }
+        public Nullable<int> ThoiGianGoiToiThieu { get; set; }
+        public Nullable<bool> PhaiRutToanBo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }

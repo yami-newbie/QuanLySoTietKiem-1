@@ -16,7 +16,7 @@
         Background="{DynamicResource MaterialDesignPaper}"    
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"  
-        Title="" Height="420" Width="540"
+        Title="" Height="500" Width="400"
         DataContext="{StaticResource CategoryVM}">
     <Grid>
         <Grid>
@@ -37,92 +37,64 @@
                 Width="350"              
                 Height="50"
                 VerticalAlignment="Top">
-                    <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Mã loại tiết kiệm" VerticalAlignment="Center"/>
-
                     <TextBox
                     Width="180"
                     IsEnabled="False"
                     materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
                     Text="{Binding SelectedItem.MaLoaiTietKiem, Mode=OneTime}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"/>
                 </Grid>
                 <Grid
                 Margin="0,60,0,0"
                 Width="350"              
                 Height="50"
                 VerticalAlignment="Top">
-                    <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Tên loại tiết kiệm" VerticalAlignment="Center"/>
-
                     <TextBox
                     IsEnabled="False"
                     Width="180"
                     materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
                     Text="{Binding SelectedItem.TenLoaiTietKiem, Mode=OneTime}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
-                </Grid>
-                <Grid Width="350"
-                  Margin="0,120,0,0"
-                  Height="50"
-                  VerticalAlignment="Top">
-                    <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Kì hạn" VerticalAlignment="Center"/>
-
-                    <TextBox
-                    IsEnabled="False"
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Kì hạn"
-                    Text="{Binding SelectedItem.KyHan, Mode=OneTime}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
-
-                </Grid>
-                <Grid Width="480"
-                  Margin="0,120,0,0"
-                  Height="50"
-                  VerticalAlignment="Top">
-                    <TextBlock 
-                     Foreground="Gray"
-                    FontWeight="SemiBold"
-                    FontSize="14"
-                    HorizontalAlignment="Right"                         
-                    Text="Tháng" VerticalAlignment="Center"/>
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
                 </Grid>
                 <Grid Width="350"
                   Margin="0,180,0,0"
                   Height="50"
                   VerticalAlignment="Top">
-                    <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Lãi suất" VerticalAlignment="Center"/>
-
                     <TextBox
-                        x:Name="txtLaiSuat"
+                    IsEnabled="{Binding isKhongKiHan, UpdateSourceTrigger=PropertyChanged}"
                     Width="180"
-                    materialDesign:HintAssist.Hint="%"
-                    Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
+                    materialDesign:HintAssist.Hint="Thời gian gởi tối thiểu (Ngày)"
+                    Text="{Binding ThoiGianGoiToiThieu, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
                 </Grid>
+                <Grid Width="350"
+                  Margin="0,120,0,0"
+                  Height="50"
+                  VerticalAlignment="Top">
+                    <TextBox
+                    Width="180"
+                    IsEnabled="False"
+                    materialDesign:HintAssist.Hint="Yêu cầu rút toàn bộ"
+                    Text="{Binding SelectedYesNo, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"/>
+
+                </Grid>
+                <Grid Width="350"
+                  Margin="0,240,0,0"
+                  Height="50"
+                  VerticalAlignment="Top">
+                    <TextBox
+                    Width="180"
+                    materialDesign:HintAssist.Hint="Lãi suất(%)"
+                    Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"/>
+
+                </Grid>
+
 
                 <Grid Width="220"
                   Margin="0,0,0,20"

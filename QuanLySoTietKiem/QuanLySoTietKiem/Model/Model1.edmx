@@ -31,8 +31,9 @@
           <Property Name="MaLoaiTietKiem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenLoaiTietKiem" Type="nvarchar" MaxLength="40" />
           <Property Name="BiXoa" Type="bit" />
-          <Property Name="KyHan" Type="int" />
           <Property Name="LaiSuat" Type="numeric" Precision="5" Scale="4" />
+          <Property Name="ThoiGianGoiToiThieu" Type="int" />
+          <Property Name="PhaiRutToanBo" Type="bit" />
         </EntityType>
         <EntityType Name="NGUOIDUNG">
           <Key>
@@ -322,8 +323,9 @@
           <Property Name="MaLoaiTietKiem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenLoaiTietKiem" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="BiXoa" Type="Boolean" />
-          <Property Name="KyHan" Type="Int32" />
           <Property Name="LaiSuat" Type="Decimal" Precision="5" Scale="4" />
+          <Property Name="ThoiGianGoiToiThieu" Type="Int32" />
+          <Property Name="PhaiRutToanBo" Type="Boolean" />
           <NavigationProperty Name="SOTIETKIEMs" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="NGUOIDUNG">
@@ -541,8 +543,9 @@
           <EntitySetMapping Name="LOAITIETKIEMs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.LOAITIETKIEM">
               <MappingFragment StoreEntitySet="LOAITIETKIEM">
+                <ScalarProperty Name="PhaiRutToanBo" ColumnName="PhaiRutToanBo" />
+                <ScalarProperty Name="ThoiGianGoiToiThieu" ColumnName="ThoiGianGoiToiThieu" />
                 <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
-                <ScalarProperty Name="KyHan" ColumnName="KyHan" />
                 <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
                 <ScalarProperty Name="TenLoaiTietKiem" ColumnName="TenLoaiTietKiem" />
                 <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />

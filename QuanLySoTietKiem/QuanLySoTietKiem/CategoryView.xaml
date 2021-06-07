@@ -27,7 +27,7 @@
                         <GridView>
                             <GridViewColumn Header="Id" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
                             <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
-                            <GridViewColumn Header="Kì hạn" DisplayMemberBinding="{Binding KyHan}"></GridViewColumn>
+                            <GridViewColumn Header="Thời gian (Ngày)" DisplayMemberBinding="{Binding ThoiGianGoiToiThieu}"></GridViewColumn>
                             <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
                         </GridView>
                     </ListView.View>
