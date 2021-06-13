@@ -43,6 +43,7 @@
           <Property Name="MatKhau" Type="nvarchar" MaxLength="100" />
           <Property Name="MaNhom" Type="int" />
           <Property Name="BiXoa" Type="bit" />
+          <Property Name="TenThat" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -91,6 +92,7 @@
           <Property Name="NgayMoSo" Type="smalldatetime" />
           <Property Name="SoTienGoi" Type="int" />
           <Property Name="BiXoa" Type="bit" />
+          <Property Name="NgayTinhLaiGanNhat" Type="smalldatetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -336,6 +338,7 @@
           <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MaNhom" Type="Int32" />
           <Property Name="BiXoa" Type="Boolean" />
+          <Property Name="TenThat" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QuanLySoTietKiemModel.FK_NGUOIDUNG_MaNhom" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
@@ -391,6 +394,7 @@
           <Property Name="NgayMoSo" Type="DateTime" Precision="0" />
           <Property Name="SoTienGoi" Type="Int32" />
           <Property Name="BiXoa" Type="Boolean" />
+          <Property Name="NgayTinhLaiGanNhat" Type="DateTime" Precision="0" />
           <NavigationProperty Name="KHACHHANG" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang" FromRole="SOTIETKIEM" ToRole="KHACHHANG" />
           <NavigationProperty Name="LOAITIETKIEM" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
           <NavigationProperty Name="PHIEUGOITIENs" Relationship="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo" FromRole="SOTIETKIEM" ToRole="PHIEUGOITIEN" />
@@ -555,6 +559,7 @@
           <EntitySetMapping Name="NGUOIDUNGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NGUOIDUNG">
               <MappingFragment StoreEntitySet="NGUOIDUNG">
+                <ScalarProperty Name="TenThat" ColumnName="TenThat" />
                 <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
                 <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
                 <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
@@ -605,6 +610,7 @@
           <EntitySetMapping Name="SOTIETKIEMs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.SOTIETKIEM">
               <MappingFragment StoreEntitySet="SOTIETKIEM">
+                <ScalarProperty Name="NgayTinhLaiGanNhat" ColumnName="NgayTinhLaiGanNhat" />
                 <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
                 <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
                 <ScalarProperty Name="NgayMoSo" ColumnName="NgayMoSo" />

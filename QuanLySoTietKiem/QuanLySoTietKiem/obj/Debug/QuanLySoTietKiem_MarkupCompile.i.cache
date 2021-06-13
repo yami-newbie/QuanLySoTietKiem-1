@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\
 QuanLySoTietKiem
 none
 false
 DEBUG;TRACE
-H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
-19581174731
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
+20-1175346172
 2-1556844510
-51-1561466837
-24-2068626997
-AddCategoryView.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;CategoryView.xaml;DepositView.xaml;EditCategoryView.xaml;EditSavingAccountView.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;UserControlSTK\ControlBarUC.xaml;WithdrawView.xaml;
+53-1592952597
+241273433804
+AddCategoryView.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;CategoryView.xaml;DepositView.xaml;EditCategoryView.xaml;EditSavingAccountView.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;MinimalDepositView.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;UserControlSTK\ControlBarUC.xaml;WithdrawView.xaml;
 
 True
 

@@ -18,6 +18,7 @@ namespace QuanLySoTietKiem.Model
         public string MatKhau { get; set; }
         public Nullable<int> MaNhom { get; set; }
         public Nullable<bool> BiXoa { get; set; }
+        public string TenThat { get; set; }
     
         public virtual NHOMNGUOIDUNG NHOMNGUOIDUNG { get; set; }
     }
