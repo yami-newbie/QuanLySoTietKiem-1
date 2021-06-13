@@ -45,7 +45,7 @@ namespace QuanLySoTietKiem.ViewModel
                 (p) =>
                 {
                 AddDeposit();
-                ResetField();
+                
                 });
         }
         private void ResetField()
@@ -61,14 +61,55 @@ namespace QuanLySoTietKiem.ViewModel
             bool isIntMaSo = int.TryParse(MaSo, out int maSo);
             bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
             if (!isIntMaSo || !isIntSoTienGoi) return;
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiXoa == false).SingleOrDefault();
+            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiXoa != true).SingleOrDefault();
             if (stk == null) return;
+            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+            if (soTienGoi < thamSo.SoTienGoiThemToiThieu)
+            {
+                MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
+                return;
+            }
             if (stk.KHACHHANG.TenKhachHang == TenKhachHang && stk.KHACHHANG.CMND == CMND)
             {
+                if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
+                {
+                    stk.SoTienGoi +=  (int)((decimal)stk.SoTienGoi* (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
+                }
+                    
+                else
+                {
+                    if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    {
+                        MessageBox.Show("Chưa đến kì hạn tính lãi suất để có thể gửi tiền!");
+                        return;
+                    }
+                    var koKiHan = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == "Không kì hạn").SingleOrDefault();
+                    if (koKiHan == null) return;
+                    var laiSuatKoKiHan = koKiHan.LaiSuat;
+                    int laiKiHan;
+                    int laiKhongKiHan;
+                    if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    {
+                        MessageBox.Show("cc");
+                        laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                    }
+                    else
+                    {
+                        laiKiHan = 0;
+                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    }
+                    stk.SoTienGoi += laiKiHan + laiKhongKiHan;
+                }               
+                stk.SoTienGoi += soTienGoi;
+                stk.NgayTinhLaiGanNhat = DateTime.Now;
                 var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = maSo, NgayGoi = DateTime.Now };
                 DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
                 DataProvider.Ins.DB.SaveChanges();
                 List.Add(PHIEUGOITIEN);
+                
+                ResetField();
             }
         }
     }

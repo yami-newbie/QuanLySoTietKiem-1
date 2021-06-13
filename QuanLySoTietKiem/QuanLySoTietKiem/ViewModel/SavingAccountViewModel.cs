@@ -37,7 +37,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand SaveEditCommand { get; set; }
         public SavingAccountViewModel()
         {
-            List = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == false));
+            List = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
             LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -102,15 +102,17 @@ namespace QuanLySoTietKiem.ViewModel
         private void AddSavingAccount()
         {
             bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
+
             if (!isIntSoTienGoi) 
             {
                 MessageBox.Show("Vui lòng nhập đúng định dạng tiền!");
                 return; 
             }
             var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
-            if (soTienGoi < 1000000)
+            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+            if (soTienGoi < thamSo.SoTienGoiBanDauToiThieu)
             {
-                MessageBox.Show("số tiền gởi ban đầu chưa đạt mức tối thiểu !");
+                MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.SoTienGoiBanDauToiThieu.ToString());
                 return;
             }
             if (kh != null)
@@ -123,11 +125,11 @@ namespace QuanLySoTietKiem.ViewModel
             }
             else
             {
-                kh = new KHACHHANG { BiXoa = false, CMND = CMND, DiaChi = DiaChi, TenKhachHang = TenKhachHang };
+                kh = new KHACHHANG {  CMND = CMND, DiaChi = DiaChi, TenKhachHang = TenKhachHang };
                 DataProvider.Ins.DB.KHACHHANGs.Add(kh);
                 DataProvider.Ins.DB.SaveChanges();
             }
-            var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, BiXoa = false, SoTienGoi = soTienGoi, KHACHHANG = kh };
+            var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
             DataProvider.Ins.DB.SOTIETKIEMs.Add(SOTIETKIEM);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(SOTIETKIEM);

@@ -12,4 +12,5 @@
     <viewmodel:RegisterViewModel x:Key="RegisterVM"></viewmodel:RegisterViewModel>
     <viewmodel:EnhanceViewModel x:Key="EnhanceVM"></viewmodel:EnhanceViewModel>
     <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
+    <viewmodel:MinimalDepositInitViewModel x:Key="MinimalVM"></viewmodel:MinimalDepositInitViewModel>
 </ResourceDictionary>
