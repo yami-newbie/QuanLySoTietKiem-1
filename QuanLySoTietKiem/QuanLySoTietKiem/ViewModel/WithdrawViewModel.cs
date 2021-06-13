@@ -45,7 +45,7 @@ namespace QuanLySoTietKiem.ViewModel
             SaveCommand = new RelayCommand<Window>(
                 (p) =>
                 {
-                    return !(String.IsNullOrEmpty(MaSo) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang) || String.IsNullOrEmpty(SoTienRut));
+                    return !(String.IsNullOrEmpty(MaSo) );
                 },
                 (p) =>
                 {
