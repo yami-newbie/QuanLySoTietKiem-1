@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QuanLySoTietKiemModelStoreContainer" CdmEntityContainer="QuanLySoTietKiemEntities">
+    <EntitySetMapping Name="CHUCNANGs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.CHUCNANG">
+        <MappingFragment StoreEntitySet="CHUCNANG">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
+          <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+          <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHACHHANGs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.KHACHHANG">
+        <MappingFragment StoreEntitySet="KHACHHANG">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+          <ScalarProperty Name="CMND" ColumnName="CMND" />
+          <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOAITIETKIEMs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.LOAITIETKIEM">
+        <MappingFragment StoreEntitySet="LOAITIETKIEM">
+          <ScalarProperty Name="PhaiRutToanBo" ColumnName="PhaiRutToanBo" />
+          <ScalarProperty Name="ThoiGianGoiToiThieu" ColumnName="ThoiGianGoiToiThieu" />
+          <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="TenLoaiTietKiem" ColumnName="TenLoaiTietKiem" />
+          <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NGUOIDUNGs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NGUOIDUNG">
+        <MappingFragment StoreEntitySet="NGUOIDUNG">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+          <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+          <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NHOMNGUOIDUNGs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NHOMNGUOIDUNG">
+        <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
+          <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHANQUYENs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHANQUYEN">
+        <MappingFragment StoreEntitySet="PHANQUYEN">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+          <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHIEUGOITIENs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHIEUGOITIEN">
+        <MappingFragment StoreEntitySet="PHIEUGOITIEN">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
+          <ScalarProperty Name="NgayGoi" ColumnName="NgayGoi" />
+          <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+          <ScalarProperty Name="MaPhieuGoiTien" ColumnName="MaPhieuGoiTien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PHIEURUTTIENs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHIEURUTTIEN">
+        <MappingFragment StoreEntitySet="PHIEURUTTIEN">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="SoTienRut" ColumnName="SoTienRut" />
+          <ScalarProperty Name="NgayRut" ColumnName="NgayRut" />
+          <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+          <ScalarProperty Name="MaPhieuRutTien" ColumnName="MaPhieuRutTien" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOTIETKIEMs">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.SOTIETKIEM">
+        <MappingFragment StoreEntitySet="SOTIETKIEM">
+          <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+          <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
+          <ScalarProperty Name="NgayMoSo" ColumnName="NgayMoSo" />
+          <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+          <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
+          <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="THAMSOes">
+      <EntityTypeMapping TypeName="QuanLySoTietKiemModel.THAMSO">
+        <MappingFragment StoreEntitySet="THAMSO">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TuDongSoKhiRutHetTien" ColumnName="TuDongSoKhiRutHetTien" />
+          <ScalarProperty Name="SoTienGoiThemToiThieu" ColumnName="SoTienGoiThemToiThieu" />
+          <ScalarProperty Name="SoTienGoiBanDauToiThieu" ColumnName="SoTienGoiBanDauToiThieu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
