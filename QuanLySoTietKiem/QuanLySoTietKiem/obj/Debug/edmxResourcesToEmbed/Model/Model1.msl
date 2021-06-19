@@ -37,6 +37,7 @@
     <EntitySetMapping Name="NGUOIDUNGs">
       <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NGUOIDUNG">
         <MappingFragment StoreEntitySet="NGUOIDUNG">
+          <ScalarProperty Name="TenThat" ColumnName="TenThat" />
           <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
           <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
           <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
@@ -87,6 +88,7 @@
     <EntitySetMapping Name="SOTIETKIEMs">
       <EntityTypeMapping TypeName="QuanLySoTietKiemModel.SOTIETKIEM">
         <MappingFragment StoreEntitySet="SOTIETKIEM">
+          <ScalarProperty Name="NgayTinhLaiGanNhat" ColumnName="NgayTinhLaiGanNhat" />
           <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
           <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
           <ScalarProperty Name="NgayMoSo" ColumnName="NgayMoSo" />

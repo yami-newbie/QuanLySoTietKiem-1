@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLySoTietKiem"
              mc:Ignorable="d" 
-            DataContext="{StaticResource ReportVM}"
+             DataContext="{StaticResource ReportVM}"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
              TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
              TextElement.FontWeight="Regular"    
@@ -15,9 +15,151 @@
              Background="{DynamicResource MaterialDesignPaper}"          
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid Margin="10">
-        <StackPanel>
-            <TextBlock>Báo cáo</TextBlock>
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <TextBlock 
+                        Margin="5,10,0,0"
+                        Text="Báo cáo doanh số hoạt động ngày"
+                           FontSize="30"
+                           FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <DatePicker
+                        FontWeight="Bold"
+                        Margin="0,10,10,0"
+                        Name="LocaleDatePicker"  
+                        Width="120" 
+                        FontSize="18"
+                        materialDesign:HintAssist.Hint="Locale Date" 
+                        SelectedDate="{Binding DateInput,UpdateSourceTrigger=PropertyChanged,StringFormat=dd/MM/yyyy}"
+                        />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+                <materialDesign:Card VerticalAlignment="Stretch">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="Auto" Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LoaiTietKiem}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <TextBlock 
+                        Margin="5,10,0,0"
+                        Text="Báo cáo Mở/Đóng sổ tháng"
+                           FontSize="28"
+                           FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <ComboBox
+                            Margin="0,0,20,0"
+                          materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding ListLoaiTietKiem}"
+                          DisplayMemberPath="TenLoaiTietKiem"
+                          SelectedItem="{Binding SelectedLoai, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <ComboBox
+                          materialDesign:HintAssist.Hint="Tháng"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding cbxThang}"
+                          SelectedItem="{Binding SelectedThang, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+                 
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+                <materialDesign:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView  ItemsSource="{Binding List2}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" SnapsToDevicePixels="True" BorderBrush="#89FABF07" FontSize="16">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.Resources>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                </Style>
+                            </ListView.Resources>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="50"  Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Width="200" Header="Ngày" DisplayMemberBinding="{Binding Ngay, StringFormat=dd/MM/yyyy hh:mm tt }"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Sổ mở" DisplayMemberBinding="{Binding SoMo}"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Sổ đóng" DisplayMemberBinding="{Binding SoDong}"></GridViewColumn>
+                                    <GridViewColumn Width="500" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech2}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+
+        </Grid>
+
+
     </Grid>
 </UserControl>

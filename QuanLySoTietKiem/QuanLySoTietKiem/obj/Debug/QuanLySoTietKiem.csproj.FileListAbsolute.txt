@@ -191,3 +191,17 @@ G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.csproj.CopyComplete
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.exe
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.pdb
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\MinimalDepositView.g.cs
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\MinimalDepositView.baml
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.dll
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.dll
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.pdb
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.xml
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.pdb
+H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.xml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.dll
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.dll
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.pdb
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.xml
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.pdb
+G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\bin\Debug\LiveCharts.Wpf.xml

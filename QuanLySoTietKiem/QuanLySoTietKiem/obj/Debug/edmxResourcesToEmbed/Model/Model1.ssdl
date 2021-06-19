@@ -38,6 +38,7 @@
     <Property Name="MatKhau" Type="nvarchar" MaxLength="100" />
     <Property Name="MaNhom" Type="int" />
     <Property Name="BiXoa" Type="bit" />
+    <Property Name="TenThat" Type="nvarchar" MaxLength="40" />
   </EntityType>
   <EntityType Name="NHOMNGUOIDUNG">
     <Key>
@@ -86,6 +87,7 @@
     <Property Name="NgayMoSo" Type="smalldatetime" />
     <Property Name="SoTienGoi" Type="int" />
     <Property Name="BiXoa" Type="bit" />
+    <Property Name="NgayTinhLaiGanNhat" Type="smalldatetime" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
