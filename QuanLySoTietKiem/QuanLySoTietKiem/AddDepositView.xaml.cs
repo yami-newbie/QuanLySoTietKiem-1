@@ -21,7 +21,7 @@ namespace QuanLySoTietKiem
     {
         public AddDepositView()
         {
-            InitializeComponent();
+            InitializeComponent(); DataContext = new ViewModel.DepositViewModel();
         }
     }
 }

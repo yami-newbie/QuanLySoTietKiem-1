@@ -22,6 +22,7 @@ namespace QuanLySoTietKiem
         public AddSavingAccountView()
         {
             InitializeComponent();
+            DataContext = new ViewModel.SavingAccountViewModel();
         }
     }
 }

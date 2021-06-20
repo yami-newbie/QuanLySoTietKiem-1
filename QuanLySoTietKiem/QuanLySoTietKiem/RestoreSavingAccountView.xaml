@@ -5,20 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
         mc:Ignorable="d"
-        Height="600" Width="400"
+        Height="600" Width="500"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
         TextElement.FontWeight="Regular"    
         TextElement.FontSize="13"     
         TextOptions.TextFormattingMode="Ideal" 
         ResizeMode="NoResize"
+        Title="Phục hồi sổ tiết kiệm"
         TextOptions.TextRenderingMode="Auto"    
         Background="{DynamicResource MaterialDesignPaper}"    
         FontFamily="{DynamicResource MaterialDesignFont}"
         x:Name="window"
-        WindowStartupLocation="CenterScreen"  
-        DataContext="{StaticResource SavingAccountVM}">
+        WindowStartupLocation="CenterScreen" >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5">
+            <materialDesign:Card>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button     
+                    Command="{Binding RestoreCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                    Background="Green"
+                    Content="Phục hồi" />
+ 
+                    <Button     
+                    Command="{Binding DeletePerformantlyCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    materialDesign:ShadowAssist.ShadowDepth="Depth2" 
+                    Background="Green"
+                    Content="Xóa" />
+                </StackPanel>
+
+            </materialDesign:Card>
+        </Grid>
+        <materialDesign:Card Margin="10" Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ListView ItemsSource="{Binding ListDaXoa}" SelectedItem="{Binding SelectedItemDaXoa}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã số" DisplayMemberBinding="{Binding MaSo}"></GridViewColumn>
+                            <GridViewColumn Header="Loại Tiết Kiệm" DisplayMemberBinding="{Binding LOAITIETKIEM.TenLoaiTietKiem}"></GridViewColumn>
+                            <GridViewColumn Header="Tên khách Hàng" DisplayMemberBinding="{Binding KHACHHANG.TenKhachHang}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </ScrollViewer>
+        </materialDesign:Card>
         
     </Grid>
 </Window>

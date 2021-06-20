@@ -104,9 +104,6 @@
     <Compile Include="EditCategoryView.xaml.cs">
       <DependentUpon>EditCategoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditSavingAccountView.xaml.cs">
-      <DependentUpon>EditSavingAccountView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="EnhanceView.xaml.cs">
       <DependentUpon>EnhanceView.xaml</DependentUpon>
     </Compile>
@@ -224,10 +221,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditCategoryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EditSavingAccountView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

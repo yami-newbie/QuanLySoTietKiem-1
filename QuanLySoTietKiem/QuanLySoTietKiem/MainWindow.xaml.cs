@@ -23,6 +23,7 @@ namespace QuanLySoTietKiem
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.MainViewModel();
         }
     }
 }

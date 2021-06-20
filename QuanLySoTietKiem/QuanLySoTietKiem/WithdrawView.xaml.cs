@@ -23,6 +23,7 @@ namespace QuanLySoTietKiem
         public WithdrawView()
         {
             InitializeComponent();
+            DataContext = new ViewModel.WithdrawViewModel();
         }
     }
 }

@@ -14,12 +14,16 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<SOTIETKIEM> _List;
         public ObservableCollection<SOTIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+            private ObservableCollection<SOTIETKIEM> _ListDaXoa;
+        public ObservableCollection<SOTIETKIEM> ListDaXoa { get => _ListDaXoa; set { _ListDaXoa = value; OnPropertyChanged(); } }
         private ObservableCollection<LOAITIETKIEM> _LoaiTietKiem;
         public ObservableCollection<LOAITIETKIEM> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
         private LOAITIETKIEM _SelectedLoai;
         public LOAITIETKIEM SelectedLoai { get => _SelectedLoai; set { _SelectedLoai = value; OnPropertyChanged(); } }
         private SOTIETKIEM _SelectedItem;
         public SOTIETKIEM SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
+        private SOTIETKIEM _SelectedItemDaXoa;
+        public SOTIETKIEM SelectedItemDaXoa { get => _SelectedItemDaXoa; set { _SelectedItemDaXoa = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
         public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
         private string _DiaChi;
@@ -29,28 +33,27 @@ namespace QuanLySoTietKiem.ViewModel
         private string _CMND;
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
         public ICommand AddFormCommand { get; set; }
-        public ICommand EditFormCommand { get; set; }
         public ICommand RestoreFormCommand { get; set; }
+        public ICommand RestoreCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand DeletePerformantlyCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
         public ICommand SaveEditCommand { get; set; }
         public SavingAccountViewModel()
         {
             List = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
+            ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == true));
             LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddSavingAccountView add = new AddSavingAccountView();
                 add.ShowDialog();
             });
-            EditFormCommand = new RelayCommand<object>((p) => { return (SelectedItem != null); }, (p) =>
-            {
-                EditSavingAccountView edit = new EditSavingAccountView();
-                edit.ShowDialog();
-            });
+
             RestoreFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+  
                 RestoreSavingAccountView restore = new RestoreSavingAccountView();
                 restore.ShowDialog();
             });
@@ -58,11 +61,50 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 p.Close();
             });
+            RestoreCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                {
+                    var result = MessageBox.Show("Bạn có muốn phục hồi sổ tiết kiệm này không?", "Phục hồi", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItemDaXoa.MaSo).SingleOrDefault();
+                        if (stk != null)
+                        {
+                            stk.BiXoa = false;
+                            DataProvider.Ins.DB.SaveChanges();
+                            List.Add(SelectedItemDaXoa);
+                            ListDaXoa.Remove(SelectedItemDaXoa);
+                            SelectedItemDaXoa = null;
+                        }
+                    }
+                }
+            });
+            DeletePerformantlyCommand = new RelayCommand<object>(
+                (p) =>
+                {
+                    if (SelectedItemDaXoa == null) return false;
+                    return (SelectedItemDaXoa.SoTienGoi <= 0); 
+                },
+                (p) =>
+                {
+                    var result = MessageBox.Show("Bạn có muốn xóa sổ tiết kiệm này vĩnh viễn không?", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItemDaXoa.MaSo).SingleOrDefault();
+                        if (stk != null)
+                        { 
+                            DataProvider.Ins.DB.SOTIETKIEMs.Remove(stk);
+                            DataProvider.Ins.DB.SaveChanges();
+                            ListDaXoa.Remove(SelectedItemDaXoa);
+                            SelectedItemDaXoa = null;
+                        }
+                    }
+                });
             DeleteCommand = new RelayCommand<object>(
                 (p) =>
                 {
                     if (SelectedItem == null) return false;
-                    return ( SelectedItem.SoTienGoi <= 0); 
+                    return (SelectedItem.SoTienGoi <= 0);
                 },
                 (p) =>
                 {

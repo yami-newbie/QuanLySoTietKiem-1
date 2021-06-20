@@ -23,6 +23,7 @@ namespace QuanLySoTietKiem
         public DepositView()
         {
             InitializeComponent();
+            DataContext = new ViewModel.DepositViewModel();
         }
     }
 }

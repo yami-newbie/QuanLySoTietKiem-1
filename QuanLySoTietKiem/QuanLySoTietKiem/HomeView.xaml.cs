@@ -23,6 +23,7 @@ namespace QuanLySoTietKiem
         public HomeView()
         {
             InitializeComponent();
+            DataContext = new ViewModel.HomeViewModel();
         }
     }
 }

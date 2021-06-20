@@ -24,6 +24,7 @@ namespace QuanLySoTietKiem
         public LoginWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.LoginViewModel();
         }
     }
 }

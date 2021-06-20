@@ -22,6 +22,7 @@ namespace QuanLySoTietKiem
         public RutTienWindow()
         {
             InitializeComponent();
+            DataContext = new ViewModel.WithdrawViewModel();
         }
     }
 }
