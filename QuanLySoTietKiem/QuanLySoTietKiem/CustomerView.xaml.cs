@@ -10,19 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace QuanLySoTietKiem
 {
     /// <summary>
-    /// Interaction logic for RestoreSavingAccountView.xaml
+    /// Interaction logic for CustomerView.xaml
     /// </summary>
-    public partial class RestoreSavingAccountView : Window
+    public partial class CustomerView : UserControl
     {
-        public RestoreSavingAccountView(object d)
+        public CustomerView()
         {
             InitializeComponent();
-            DataContext = d;
         }
     }
 }

@@ -19,10 +19,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class RutTienWindow : Window
     {
-        public RutTienWindow()
+        public RutTienWindow(object d)
         {
             InitializeComponent();
-            DataContext = new ViewModel.WithdrawViewModel();
+            DataContext = d;
         }
     }
 }

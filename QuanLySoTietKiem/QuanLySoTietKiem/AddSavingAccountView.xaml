@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
         TextElement.FontWeight="Regular"    
@@ -16,7 +17,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         x:Name="window"
         WindowStartupLocation="CenterScreen"
-        Height="600" Width="400"
+        Height="550" Width="450"
         DataContext="{StaticResource SavingAccountVM}">
     <Grid>
         <Grid.RowDefinitions>
@@ -40,15 +41,38 @@
                     FontWeight="SemiBold"
                     FontSize="18"
                     HorizontalAlignment="Left"                         
-                    Text="Tên khách hàng" VerticalAlignment="Center"/>
+                    Text="Số CMND" VerticalAlignment="Center"/>
 
-                <TextBox
+                <TextBox 
                     Width="180"
-                    materialDesign:HintAssist.Hint="Tên khách hàng"
-                    Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged}"
+                    materialDesign:HintAssist.Hint="Số CMND"
+                    Text="{Binding CMND, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
+                    HorizontalAlignment="Right"  >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding TextChangeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                    
+                
+            </Grid>
+            <Grid 
+                Width="450"              
+                Height="50"
+                VerticalAlignment="Top">
+                <Button   
+                    Command="{Binding SearchCommand}"
+                    Background="white"
+                    BorderBrush="White"
+                    HorizontalAlignment="Right" 
+                    Width="50"   
+                    Style="{StaticResource MaterialDesignFlatButton}"                      
+                    materialDesign:ButtonAssist.CornerRadius="10">
+                    <materialDesign:PackIcon HorizontalAlignment="Center" Kind="Search" Foreground="Black" Width="20" Height="20" VerticalAlignment="Center"/>
+                </Button>
             </Grid>
             <Grid Width="350"
                   Margin="0,60,0,0"
@@ -58,15 +82,17 @@
                     FontWeight="SemiBold"
                     FontSize="18"
                     HorizontalAlignment="Left"                         
-                    Text="Số CMND" VerticalAlignment="Center"/>
+                    Text="Tên khách hàng" VerticalAlignment="Center"/>
 
                 <TextBox
                     Width="180"
-                    materialDesign:HintAssist.Hint="Số CMND"
-                    Text="{Binding CMND, UpdateSourceTrigger=PropertyChanged}"
+                    IsEnabled="false"
+                    materialDesign:HintAssist.Hint="Tên khách hàng"
+                    Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Right"  />
+                
 
             </Grid>
             <Grid Width="350"
@@ -81,6 +107,7 @@
 
                 <TextBox
                     Width="180"
+                    IsEnabled="False"
                     materialDesign:HintAssist.Hint="Địa chỉ"
                     Text="{Binding DiaChi, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"

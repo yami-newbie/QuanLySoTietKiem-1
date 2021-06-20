@@ -15,14 +15,13 @@ using System.Windows.Shapes;
 namespace QuanLySoTietKiem
 {
     /// <summary>
-    /// Interaction logic for RestoreSavingAccountView.xaml
+    /// Interaction logic for AddCustomer.xaml
     /// </summary>
-    public partial class RestoreSavingAccountView : Window
+    public partial class AddCustomer : Window
     {
-        public RestoreSavingAccountView(object d)
+        public AddCustomer()
         {
             InitializeComponent();
-            DataContext = d;
         }
     }
 }

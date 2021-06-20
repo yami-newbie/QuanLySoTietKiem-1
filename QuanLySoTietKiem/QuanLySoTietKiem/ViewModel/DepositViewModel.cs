@@ -12,6 +12,7 @@ namespace QuanLySoTietKiem.ViewModel
 {
     public class DepositViewModel: BaseViewModel
     {
+        int tienLai = 0;
         private ObservableCollection<PHIEUGOITIEN> _List;
         public ObservableCollection<PHIEUGOITIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
@@ -22,15 +23,24 @@ namespace QuanLySoTietKiem.ViewModel
         public string SoTienGoi { get => _SoTienGoi; set { _SoTienGoi = value; OnPropertyChanged(); } }
         private string _CMND;
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
+            private string _SoDuCu;
+        public string SoDuCu { get => _SoDuCu; set { _SoDuCu = value; OnPropertyChanged(); } }
+        private string _Lai;
+        public string Lai { get => _Lai; set { _Lai = value; OnPropertyChanged(); } }
+        private string _SoDuMoi;
+        public string SoDuMoi { get => _SoDuMoi; set { _SoDuMoi = value; OnPropertyChanged(); } }
         public ICommand AddCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand TextChangeCommand { get; set; }
         public DepositViewModel()
         {
+            
             List = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                AddDepositView addDeposit = new AddDepositView();
+                AddDepositView addDeposit = new AddDepositView(this);
                 addDeposit.ShowDialog();
             });
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
@@ -47,38 +57,22 @@ namespace QuanLySoTietKiem.ViewModel
                 AddDeposit();
                 
                 });
-        }
-        private void ResetField()
-        {
-            MaSo = "";
-            CMND = "";
-            TenKhachHang = "";
-            SoTienGoi = ""; 
-        }
-        private void AddDeposit()
-        {
-            
-            bool isIntMaSo = int.TryParse(MaSo, out int maSo);
-            bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
-            if (!isIntMaSo || !isIntSoTienGoi) return;
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiXoa != true).SingleOrDefault();
-            if (stk == null) return;
-            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
-            if (soTienGoi < thamSo.SoTienGoiThemToiThieu)
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
-                return;
-            }
-            if (stk.KHACHHANG.TenKhachHang == TenKhachHang && stk.KHACHHANG.CMND == CMND)
-            {
+                var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
+
+                if (stk == null)
+                {
+                    MessageBox.Show("Không tìm thấy sổ tài khoản này!");
+                    return;
+                }
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
-                    stk.SoTienGoi +=  (int)((decimal)stk.SoTienGoi* (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
-                    MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
+                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                 }
-                    
                 else
                 {
+                    MessageBox.Show((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays.ToString ());
                     if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
                         MessageBox.Show("Chưa đến kì hạn tính lãi suất để có thể gửi tiền!");
@@ -91,7 +85,6 @@ namespace QuanLySoTietKiem.ViewModel
                     int laiKhongKiHan;
                     if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
-                        MessageBox.Show("cc");
                         laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
                         laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
                     }
@@ -100,16 +93,65 @@ namespace QuanLySoTietKiem.ViewModel
                         laiKiHan = 0;
                         laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                     }
-                    stk.SoTienGoi += laiKiHan + laiKhongKiHan;
-                }               
-                stk.SoTienGoi += soTienGoi;
+                    tienLai = laiKiHan + laiKhongKiHan;
+                }
+                TenKhachHang = stk.KHACHHANG.TenKhachHang;
+                CMND = stk.KHACHHANG.CMND;
+                SoDuCu = stk.SoTienGoi.ToString();
+                Lai = tienLai.ToString();
+            });
+            TextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                CMND = "";
+                TenKhachHang = "";
+                Lai = "0";
+                SoDuCu = "0";
+                SoDuMoi = "0";
+                tienLai = 0;
+            });
+        }
+        private void ResetField()
+        {
+            MaSo = "";
+            CMND = "";
+            TenKhachHang = "";
+            SoTienGoi = ""; 
+        }
+        private void AddDeposit()
+        {
+            
+            bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
+            if (!isIntSoTienGoi)
+            {
+                MessageBox.Show("Vui lòng nhập đúng định dạng tiền");
+                return;
+            }
+            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
+            if (stk == null) return;
+            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+            if (soTienGoi < thamSo.SoTienGoiThemToiThieu)
+            {
+                MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
+                return;
+            }
+
+                if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
+                {
+                    stk.SoTienGoi +=  (int)((decimal)stk.SoTienGoi* (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
+                }
+                    
+                else
+                {
+                    
+                      
+                stk.SoTienGoi += soTienGoi + tienLai;
                 stk.NgayTinhLaiGanNhat = DateTime.Now;
-                var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = maSo, NgayGoi = DateTime.Now };
+                SoDuMoi = stk.SoTienGoi.ToString();
+                var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };
                 DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
                 DataProvider.Ins.DB.SaveChanges();
                 List.Add(PHIEUGOITIEN);
-                
-                ResetField();
             }
         }
     }

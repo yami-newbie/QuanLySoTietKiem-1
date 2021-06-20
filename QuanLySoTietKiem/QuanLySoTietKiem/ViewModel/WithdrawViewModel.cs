@@ -36,7 +36,7 @@ namespace QuanLySoTietKiem.ViewModel
             List = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                RutTienWindow addWithDraw = new RutTienWindow();
+                RutTienWindow addWithDraw = new RutTienWindow(this);
                 addWithDraw.ShowDialog();
             });
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>

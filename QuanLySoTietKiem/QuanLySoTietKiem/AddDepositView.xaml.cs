@@ -19,9 +19,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class AddDepositView : Window
     {
-        public AddDepositView()
+        public AddDepositView(object d)
         {
-            InitializeComponent(); DataContext = new ViewModel.DepositViewModel();
+            InitializeComponent();
+            DataContext = d;
         }
     }
 }

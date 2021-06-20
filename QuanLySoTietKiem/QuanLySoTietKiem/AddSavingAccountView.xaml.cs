@@ -19,10 +19,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class AddSavingAccountView : Window
     {
-        public AddSavingAccountView()
+        public AddSavingAccountView(object d)
         {
             InitializeComponent();
-            DataContext = new ViewModel.SavingAccountViewModel();
+            DataContext = d;
         }
     }
 }

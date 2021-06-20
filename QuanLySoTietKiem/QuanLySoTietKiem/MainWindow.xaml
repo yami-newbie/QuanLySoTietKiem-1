@@ -77,10 +77,16 @@
                             <TextBlock  Text="Thống kê" Foreground="{Binding TextIconColor[4]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <Button Background="{Binding BackgroundColor[5]}" Command="{Binding EnhanceCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <Button Background="{Binding BackgroundColor[5]}" Command="{Binding CustomerCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Settings" Foreground="{Binding TextIconColor[5]}" Width="25" Height="25" VerticalAlignment="Center"/>
-                            <TextBlock  Text="Nâng cao" Foreground="{Binding TextIconColor[5]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                            <materialDesign:PackIcon Kind="People" Foreground="{Binding TextIconColor[5]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock  Text="Khách hàng" Foreground="{Binding TextIconColor[5]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Background="{Binding BackgroundColor[6]}" Command="{Binding EnhanceCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Settings" Foreground="{Binding TextIconColor[6]}" Width="25" Height="25" VerticalAlignment="Center"/>
+                            <TextBlock  Text="Nâng cao" Foreground="{Binding TextIconColor[6]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
                         </StackPanel>
                     </Button>
                     <Grid Height="280">

@@ -58,6 +58,8 @@
                             <GridViewColumn Header="Loại Tiết Kiệm" DisplayMemberBinding="{Binding LOAITIETKIEM.TenLoaiTietKiem}"></GridViewColumn>
                             <GridViewColumn Header="Tên khách Hàng" DisplayMemberBinding="{Binding KHACHHANG.TenKhachHang}"></GridViewColumn>
                             <GridViewColumn Header="Số Dư" DisplayMemberBinding="{Binding SoTienGoi}"></GridViewColumn>
+                            <GridViewColumn Header="Ngày mở sổ" DisplayMemberBinding="{Binding NgayMoSo, StringFormat=dd/MM/yyyy}"></GridViewColumn>
+                            <GridViewColumn Header="Ngày cập nhật" DisplayMemberBinding="{Binding NgayTinhLaiGanNhat, StringFormat=dd/MM/yyyy}"></GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

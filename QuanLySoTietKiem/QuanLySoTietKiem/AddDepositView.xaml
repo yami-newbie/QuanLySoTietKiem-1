@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Name="window"
         DataContext="{StaticResource DepositVM}"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
@@ -18,62 +19,145 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
 
         WindowStartupLocation="CenterScreen"  
-        Height="450" Width="500">
+        Height="600" Width="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" >
+        
+        <Grid Grid.Row="0" Margin="5">
             <TextBlock HorizontalAlignment="Center"
                        FontWeight="DemiBold"
                        Grid.Row="0"
-                       Margin="16 16 16 4"
+                       Margin="15"
                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                        Text="Lập phiếu gởi tiền" />
         </Grid>
-        <Grid Margin="0,20,0,0" Grid.Row="1">
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:Card
+                    Margin="10 0 0 0"
+                    Background="Black"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Padding="0"
+                    Width="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Grid.Row="0"
+                            Margin="16 16 16 4"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Số dư cũ" />
+                        <Separator
+                            Grid.Row="1"
+                            Style="{StaticResource MaterialDesignLightSeparator}" />
+      
+                        <TextBlock
+                            Grid.Row="2"
+                            Margin="16 0 16 8"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody2TextBlock}"
+                            Text="{Binding SoDuCu}" />
+                        <StackPanel  
+                            Grid.Row="2"
+                            Orientation="Horizontal"     
+                            Margin="16 0 16 8"
+                            HorizontalAlignment="Right">
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Margin="10 0 0 0"
+                    Background="Black"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Padding="0"
+                    Width="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Grid.Row="0"
+                            Margin="16 16 16 4"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Lãi" />
+                        <Separator
+                            Grid.Row="1"
+                            Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Margin="16 0 16 8"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody2TextBlock}"
+                            Text="{Binding Lai}" />
+                        <StackPanel  
+                            Grid.Row="2"
+                            Orientation="Horizontal"     
+                            Margin="16 0 16 8"
+                            HorizontalAlignment="Right">
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card
+                    Margin="10 0 0 0"
+                    Background="Black"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Padding="0"
+                    Width="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition  Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Grid.Row="0"
+                            Margin="16 16 16 4"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="{Binding SoDuMoi}" />
+                        <Separator
+                            Grid.Row="1"
+                            Style="{StaticResource MaterialDesignLightSeparator}" />
+
+                        <TextBlock
+
+                            Grid.Row="2"
+                            Margin="16 0 16 8"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MaterialDesignBody2TextBlock}"
+                            Text="100.000.000 đồng" />
+                        <StackPanel  
+                            Grid.Row="2"
+                            Orientation="Horizontal"     
+                            Margin="16 0 16 8"
+                            HorizontalAlignment="Right">
+                        </StackPanel>
+                    </Grid>
+                </materialDesign:Card>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="0,20,0,0" Grid.Row="2">
             <Grid 
                 Width="350"              
                 Height="50"
                 VerticalAlignment="Top">
-                <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Tên khách hàng" VerticalAlignment="Center"/>
-
-                <TextBox
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Tên khách hàng"
-                    Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
-            </Grid>
-            <Grid Width="350"
-                  Margin="0,60,0,0"
-                  Height="50"
-                  VerticalAlignment="Top">
-                <TextBlock 
-                    FontWeight="SemiBold"
-                    FontSize="18"
-                    HorizontalAlignment="Left"                         
-                    Text="Số CMND" VerticalAlignment="Center"/>
-
-                <TextBox
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Số CMND"
-                    Text="{Binding CMND, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
-                
-            </Grid>
-            <Grid Width="350"
-                  Margin="0,120,0,0"
-                  Height="50"
-                  VerticalAlignment="Top">
                 <TextBlock 
                     FontWeight="SemiBold"
                     FontSize="18"
@@ -86,8 +170,69 @@
                     Text="{Binding MaSo, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalAlignment="Center"
+                    HorizontalAlignment="Right"  >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding TextChangeCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+            </Grid>
+            <Grid 
+                Width="450"              
+                Height="50"
+                VerticalAlignment="Top">
+                <Button   
+                    Command="{Binding SearchCommand}"
+                    Background="white"
+                    BorderBrush="White"
+                    HorizontalAlignment="Right" 
+                    Width="50"   
+                    Style="{StaticResource MaterialDesignFlatButton}"                      
+                    materialDesign:ButtonAssist.CornerRadius="10">
+                    <materialDesign:PackIcon HorizontalAlignment="Center" Kind="Search" Foreground="Black" Width="20" Height="20" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+            <Grid Width="350"
+                  Margin="0,60,0,0"
+                  Height="50"
+                  VerticalAlignment="Top">
+                <TextBlock 
+                    FontWeight="SemiBold"
+                    FontSize="18"
+                    HorizontalAlignment="Left"                         
+                    Text="Số CMND" VerticalAlignment="Center"/>
+
+                <TextBox
+                    IsEnabled="False"
+                    Width="180"
+                    materialDesign:HintAssist.Hint="Số CMND"
+                    Text="{Binding CMND, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalAlignment="Center"
                     HorizontalAlignment="Right"  />
-                
+
+            </Grid>
+            <Grid Width="350"
+                  Margin="0,120,0,0"
+                  Height="50"
+                  VerticalAlignment="Top">
+                <TextBlock 
+                    FontWeight="SemiBold"
+                    FontSize="18"
+                    HorizontalAlignment="Left"                         
+                    Text="Tên khách hàng" VerticalAlignment="Center"/>
+
+                <TextBox
+                    Width="180"
+                    IsEnabled="False"
+                    materialDesign:HintAssist.Hint="Tên khách hàng"
+                    Text="{Binding TenKhachHang, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"  />
+
+
             </Grid>
             <Grid Width="350"
                   Margin="0,180,0,0"
@@ -134,5 +279,8 @@
                 </Button>
             </Grid>
         </Grid>
+        
+
+
     </Grid>
 </Window>

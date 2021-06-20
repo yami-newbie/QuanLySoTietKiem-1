@@ -33,13 +33,14 @@ namespace QuanLySoTietKiem.ViewModel
         private string _CMND;
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
         public ICommand AddFormCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
         public ICommand RestoreFormCommand { get; set; }
         public ICommand RestoreCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand DeletePerformantlyCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
-        public ICommand SaveEditCommand { get; set; }
+        public ICommand TextChangeCommand { get; set; }
         public SavingAccountViewModel()
         {
             List = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
@@ -47,14 +48,14 @@ namespace QuanLySoTietKiem.ViewModel
             LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                AddSavingAccountView add = new AddSavingAccountView();
+                AddSavingAccountView add = new AddSavingAccountView(this);
                 add.ShowDialog();
             });
 
             RestoreFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
   
-                RestoreSavingAccountView restore = new RestoreSavingAccountView();
+                RestoreSavingAccountView restore = new RestoreSavingAccountView(this);
                 restore.ShowDialog();
             });
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
@@ -118,6 +119,7 @@ namespace QuanLySoTietKiem.ViewModel
                         SelectedItem = null;
                     }
                 });
+            
             SaveAddCommand = new RelayCommand<object>(
                 (p) =>
                 {
@@ -128,10 +130,24 @@ namespace QuanLySoTietKiem.ViewModel
                     AddSavingAccount();
                     
                 });
-            SaveEditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
                 
+                if (kh == null)
+                {
+                    MessageBox.Show("Không tìm thấy khách hàng này! Bạn có thể qua tab khách hàng để đăng kí thông tin khách hàng");
+                    return;
+                }
+                TenKhachHang = kh.TenKhachHang;
+                DiaChi = kh.DiaChi;
             });
+            TextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                DiaChi = "";
+                TenKhachHang = "";
+            });
+
         }
         private void ResetField()
         {
@@ -152,27 +168,16 @@ namespace QuanLySoTietKiem.ViewModel
             }
             var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
             var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+            if (kh == null || thamSo == null) return;
             if (soTienGoi < thamSo.SoTienGoiBanDauToiThieu)
             {
                 MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.SoTienGoiBanDauToiThieu.ToString());
                 return;
             }
-            if (kh != null)
-            {
-                if(kh.TenKhachHang != TenKhachHang)
-                {
-                    MessageBox.Show("Thông tin khách hàng tồn tại nhưng không chính xác!");
-                    return;
-                }
-            }
-            else
-            {
-                kh = new KHACHHANG {  CMND = CMND, DiaChi = DiaChi, TenKhachHang = TenKhachHang };
-                DataProvider.Ins.DB.KHACHHANGs.Add(kh);
-                DataProvider.Ins.DB.SaveChanges();
-            }
             var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
+            var goi = new PHIEUGOITIEN { MaSo = SOTIETKIEM.MaSo, SOTIETKIEM = SOTIETKIEM, NgayGoi = SOTIETKIEM.NgayMoSo, SoTienGoi = SOTIETKIEM.SoTienGoi };
             DataProvider.Ins.DB.SOTIETKIEMs.Add(SOTIETKIEM);
+            DataProvider.Ins.DB.PHIEUGOITIENs.Add(goi);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(SOTIETKIEM);
             ResetField();
