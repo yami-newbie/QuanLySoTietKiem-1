@@ -150,7 +150,7 @@ namespace QuanLySoTietKiem.ViewModel
                 if (ngayMoSo.Month == soThang)
                 {
                     stt++;
-                    List2.Add(new ThongKe2 { STT = stt, Ngay= ngayMoSo,SoMo = item.MaSo.ToString(), SoDong = "Null", ChenhLech2 = 0 });
+                    List2.Add(new ThongKe2 { STT = stt, Ngay= ngayMoSo,SoMo = item.MaSo.ToString(), SoDong = "0", ChenhLech2 = 0 });
                 }
             }
             foreach (var item in listSTK2)
@@ -160,7 +160,7 @@ namespace QuanLySoTietKiem.ViewModel
                 if (ngayTinhLaiGanNhat.Month == soThang&&item.BiXoa==true)
                 {
                     stt++;
-                    List2.Add(new ThongKe2 { STT = stt, Ngay = ngayTinhLaiGanNhat, SoMo = "Null", SoDong = item.MaSo.ToString(), ChenhLech2 = 0 });
+                    List2.Add(new ThongKe2 { STT = stt, Ngay = ngayTinhLaiGanNhat, SoMo = "0", SoDong = item.MaSo.ToString(), ChenhLech2 = 0 });
                 }
             }
 

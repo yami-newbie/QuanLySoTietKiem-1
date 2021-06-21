@@ -64,7 +64,7 @@
                 Height="50"
                 VerticalAlignment="Top">
                 <Button   
-                    Command="{Binding SearchCommand}"
+                    Command="{Binding SearchCMNDCommand}"
                     Background="white"
                     BorderBrush="White"
                     HorizontalAlignment="Right" 

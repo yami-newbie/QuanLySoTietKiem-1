@@ -14,8 +14,16 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<KHACHHANG> _List;
         public ObservableCollection<KHACHHANG> List { get => _List; set { _List = value; OnPropertyChanged(); } }
-        
-       
+        private ObservableCollection<KHACHHANG> _Init;
+        public ObservableCollection<KHACHHANG> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
+
+        private String[] _FilterList;
+        public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+        private string _SelectedFilter;
+        public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
+
         private KHACHHANG _SelectedItem;
         public KHACHHANG SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
@@ -28,10 +36,14 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand EditFormCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
         public ICommand SaveEditCommand { get; set; }
+      
         public CustomerViewModel()
         {
-            List = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs.Where(x => x.BiXoa != true));
+            FilterList = new String[] { "Tên khách hàng", "Số CMND" };
+            Init = new ObservableCollection<KHACHHANG>(DataProvider.Ins.DB.KHACHHANGs.Where(x => x.BiXoa != true));
+            List = Init;
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ResetField();
@@ -86,6 +98,24 @@ namespace QuanLySoTietKiem.ViewModel
 
                 MessageBox.Show("Cập nhật thành công!");
                 (p as Window).Close();
+            });
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                List = Init;
+                if (SelectedFilter == null || String.IsNullOrEmpty(Query))
+                    List = Init;
+                else
+                {
+                    switch (SelectedFilter)
+                    {
+                        case "Tên khách hàng":
+                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.TenKhachHang.Contains(Query)));
+                            break;
+                        case "Số CMND":
+                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.CMND.Contains(Query)));
+                            break;
+                    }
+                }
             });
         }
         private void ResetField()

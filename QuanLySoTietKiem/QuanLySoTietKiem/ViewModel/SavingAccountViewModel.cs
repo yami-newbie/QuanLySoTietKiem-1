@@ -14,10 +14,14 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<SOTIETKIEM> _List;
         public ObservableCollection<SOTIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
-            private ObservableCollection<SOTIETKIEM> _ListDaXoa;
+        private ObservableCollection<SOTIETKIEM> _Init;
+        public ObservableCollection<SOTIETKIEM> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
+        private ObservableCollection<SOTIETKIEM> _ListDaXoa;
         public ObservableCollection<SOTIETKIEM> ListDaXoa { get => _ListDaXoa; set { _ListDaXoa = value; OnPropertyChanged(); } }
         private ObservableCollection<LOAITIETKIEM> _LoaiTietKiem;
         public ObservableCollection<LOAITIETKIEM> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
+        private String[] _FilterList;
+        public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
         private LOAITIETKIEM _SelectedLoai;
         public LOAITIETKIEM SelectedLoai { get => _SelectedLoai; set { _SelectedLoai = value; OnPropertyChanged(); } }
         private SOTIETKIEM _SelectedItem;
@@ -32,8 +36,14 @@ namespace QuanLySoTietKiem.ViewModel
         public string SoTienGoi { get => _SoTienGoi; set { _SoTienGoi = value; OnPropertyChanged(); } }
         private string _CMND;
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+        private string _SelectedFilter;
+        public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
+
         public ICommand AddFormCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand SearchCMNDCommand { get; set; }
         public ICommand RestoreFormCommand { get; set; }
         public ICommand RestoreCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
@@ -43,7 +53,9 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand TextChangeCommand { get; set; }
         public SavingAccountViewModel()
         {
-            List = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
+            FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
+            Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
+            List = Init;
             ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == true));
             LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -130,7 +142,7 @@ namespace QuanLySoTietKiem.ViewModel
                     AddSavingAccount();
                     
                 });
-            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SearchCMNDCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
                 
@@ -146,6 +158,28 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 DiaChi = "";
                 TenKhachHang = "";
+            });
+            
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                List = Init;
+                if (SelectedFilter == null || String.IsNullOrEmpty(Query))
+                    List = Init;
+                else
+                {
+                    switch (SelectedFilter)
+                    {
+                        case "Tên khách hàng":
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.KHACHHANG.TenKhachHang.Contains(Query)));
+                            break;
+                        case "Mã sổ tiết kiệm":
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            break;
+                        case "Loại tiết kiệm":
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            break;
+                    }
+                }
             });
 
         }

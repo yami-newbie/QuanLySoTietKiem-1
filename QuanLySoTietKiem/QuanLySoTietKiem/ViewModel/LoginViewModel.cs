@@ -58,10 +58,10 @@ namespace QuanLySoTietKiem.ViewModel
         {
             if (p == null) return;
             var passEncode = ComputeSha256Hash(Password);
-            var accCount = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName && x.MatKhau == passEncode).Count();
-            if (accCount > 0)
+            var accCount = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName && x.MatKhau == passEncode && x.BiXoa != true).FirstOrDefault();
+            if (accCount != null)
             {
-                MainWindow main = new MainWindow();
+                MainWindow main = new MainWindow(accCount);
                 main.Show();
                 p.Close();
             }

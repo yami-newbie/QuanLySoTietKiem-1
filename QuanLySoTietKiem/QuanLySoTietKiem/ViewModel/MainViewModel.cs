@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLySoTietKiem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,8 @@ namespace QuanLySoTietKiem.ViewModel
         public String[] BackgroundColor { get => _backgroundColor; set { _backgroundColor = value; OnPropertyChanged(); } }
         private String[] _textIconColor = { "White", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3" };
         public String[] TextIconColor { get => _textIconColor; set { _textIconColor = value; OnPropertyChanged(); } }
+        private Visibility _EnhanceVisible;
+        public Visibility EnhanceVisible { get => _EnhanceVisible; set { _EnhanceVisible = value; OnPropertyChanged(); } }
         public ICommand HomeCommand { get; set; }
         public ICommand SavingAccountCommand { get; set; }
         public ICommand DepositCommand { get; set; }
@@ -25,8 +28,9 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand CustomerCommand { get; set; }
         private object _currentView = new HomeView();
         public object CurrentView { get => _currentView; set { _currentView = value; OnPropertyChanged(); } }        
-        public MainViewModel()
+        public MainViewModel(NGUOIDUNG n)
         {
+            EnhanceVisible = (n.MaNhom == 1) ? Visibility.Visible : Visibility.Hidden;
             HomeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 BackgroundColor = new String[] { "#5EB2FF", "",  "", "", "", "" };
@@ -71,7 +75,13 @@ namespace QuanLySoTietKiem.ViewModel
             LogoutCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 var result = MessageBox.Show("Bạn có muốn đăng xuất không?", "Đăng xuất", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-                if (result == MessageBoxResult.Yes) p.Close();
+                if (result == MessageBoxResult.Yes)
+                {
+                    LoginWindow l = new LoginWindow();
+                    l.Show();
+                    p.Close();
+                   
+                }
             });
         }
     }

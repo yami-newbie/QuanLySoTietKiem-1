@@ -15,6 +15,10 @@ namespace QuanLySoTietKiem.ViewModel
         int tienLai = 0;
         private ObservableCollection<PHIEUGOITIEN> _List;
         public ObservableCollection<PHIEUGOITIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<PHIEUGOITIEN> _Init;
+        public ObservableCollection<PHIEUGOITIEN> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
+        private String[] _FilterList;
+        public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
         public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
         private string _MaSo;
@@ -29,15 +33,22 @@ namespace QuanLySoTietKiem.ViewModel
         public string Lai { get => _Lai; set { _Lai = value; OnPropertyChanged(); } }
         private string _SoDuMoi;
         public string SoDuMoi { get => _SoDuMoi; set { _SoDuMoi = value; OnPropertyChanged(); } }
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
+        private string _SelectedFilter;
+        public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
+
         public ICommand AddCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand SearchMaSoCommand { get; set; }
         public ICommand TextChangeCommand { get; set; }
         public DepositViewModel()
         {
-            
-            List = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
+            FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
+            Init = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
+            List = Init;
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddDepositView addDeposit = new AddDepositView(this);
@@ -57,7 +68,7 @@ namespace QuanLySoTietKiem.ViewModel
                 AddDeposit();
                 
                 });
-            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SearchMaSoCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
 
@@ -109,6 +120,27 @@ namespace QuanLySoTietKiem.ViewModel
                 SoDuMoi = "0";
                 tienLai = 0;
             });
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                List = Init;
+                if (SelectedFilter == null || String.IsNullOrEmpty(Query))
+                    List = Init;
+                else
+                {
+                    switch (SelectedFilter)
+                    {
+                        case "Tên khách hàng":
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
+                            break;
+                        case "Mã sổ tiết kiệm":
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            break;
+                        case "Loại tiết kiệm":
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            break;
+                    }
+                }
+            });
         }
         private void ResetField()
         {
@@ -143,8 +175,8 @@ namespace QuanLySoTietKiem.ViewModel
                     
                 else
                 {
-                    
-                      
+
+                
                 stk.SoTienGoi += soTienGoi + tienLai;
                 stk.NgayTinhLaiGanNhat = DateTime.Now;
                 SoDuMoi = stk.SoTienGoi.ToString();
@@ -152,6 +184,7 @@ namespace QuanLySoTietKiem.ViewModel
                 DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
                 DataProvider.Ins.DB.SaveChanges();
                 List.Add(PHIEUGOITIEN);
+                MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);
             }
         }
     }

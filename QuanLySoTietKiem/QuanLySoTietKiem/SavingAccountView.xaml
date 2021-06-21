@@ -17,6 +17,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="5">
@@ -27,10 +28,15 @@
                     HorizontalAlignment="Right"            
                     Style="{DynamicResource MaterialDesignRaisedButton}"          
                     materialDesign:ShadowAssist.ShadowDepth="Depth2" 
-                    Background="Green"
-                    Content="Thêm" />
+                    Background="Blue"
+                     >
+                        <materialDesign:PackIcon Kind="Add" Width="20" Height="20"/>
+                    </Button>
 
-                    <Button     
+                    <!--Không đc xóa, xóa tao đấm-->
+                    
+                    <!--<Button  
+                        Visibility="Hidden"
                     Command="{Binding DeleteCommand}"
                     HorizontalAlignment="Right"            
                     Style="{DynamicResource MaterialDesignRaisedButton}"          
@@ -39,17 +45,47 @@
                     Content="Xóa" />
                     
                     <Button     
+                        Visibility="Hidden"
                     Command="{Binding RestoreFormCommand}"
                     HorizontalAlignment="Right"            
                     Style="{DynamicResource MaterialDesignRaisedButton}"          
                     materialDesign:ShadowAssist.ShadowDepth="Depth2" 
                     Background="Green"
-                    Content="Phục hồi" />
+                    Content="Phục hồi" />-->
                 </StackPanel>
                 
             </materialDesign:Card>
         </Grid>
-        <materialDesign:Card Margin="10" Grid.Row="1">
+        <materialDesign:Card Grid.Row="1" Margin="5">
+            <Grid>
+                <Grid Margin="10" Width="350" HorizontalAlignment="Left">
+                    <TextBox
+                        Text="{Binding Query}"
+                        Padding="10"
+                        materialDesign:HintAssist.Hint="Tìm kiếm"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </Grid>
+                <Grid Margin="380 0 0 0" Width="250" HorizontalAlignment="Left">
+                    <ComboBox
+                        SelectedItem="{Binding SelectedFilter}"
+                        Margin="10 10 10 10"
+                        ItemsSource="{Binding FilterList}"
+                        Padding="10"
+                        materialDesign:HintAssist.Hint="Tiêu chí"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+                </Grid>
+                <Grid Margin="650 0 0 0" Width="140" HorizontalAlignment="Left">
+                    <Button Width="110"
+                            Command="{Binding SearchCommand}"
+                            Background="ForestGreen"
+                            BorderBrush="ForestGreen"
+                            Foreground="White"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            Content="Tìm kiếm"/>
+                </Grid>
+             </Grid>
+        </materialDesign:Card>
+        <materialDesign:Card Margin="5" Grid.Row="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" >
                     <ListView.View>

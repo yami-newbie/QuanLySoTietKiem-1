@@ -1,5 +1,4 @@
-﻿using QuanLySoTietKiem.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace QuanLySoTietKiem
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for UserView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserView : UserControl
     {
-        public MainWindow(NGUOIDUNG n)
+        public UserView()
         {
             InitializeComponent();
-            DataContext = new ViewModel.MainViewModel(n);
         }
     }
 }

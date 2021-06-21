@@ -27,6 +27,7 @@ namespace QuanLySoTietKiem.ViewModel
             UserCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 BackgroundColor = new String[] {  "", "#D3DCD2", ""};
+                CurrentView = new UserView();
             });
             MinimalDepositCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {

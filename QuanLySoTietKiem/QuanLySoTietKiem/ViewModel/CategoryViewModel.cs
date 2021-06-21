@@ -54,6 +54,22 @@ namespace QuanLySoTietKiem.ViewModel
                 AddCategoryView add = new AddCategoryView();
                 add.ShowDialog();
             });
+            DeleteCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItem != null)
+                {
+                    var result = MessageBox.Show("Bạn có muốn xóa loại tiết kiệm  này không (Tất cả dữ liệu của loại tiết kiệm này vẫn sẽ tồn tại)?", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItem.MaLoaiTietKiem).SingleOrDefault();
+                        ltk.BiXoa = true;
+                        DataProvider.Ins.DB.SaveChanges();
+                        List.Remove(ltk);
+                        MessageBox.Show("Xóa thành công!");
+                        p.Close();
+                    }
+                }
+            });
             EditFormCommand = new RelayCommand<object>((p) => { return (SelectedItem != null); }, (p) =>
             {
 

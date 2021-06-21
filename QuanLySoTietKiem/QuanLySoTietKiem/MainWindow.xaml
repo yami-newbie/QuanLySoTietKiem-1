@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
         xmlns:uc="clr-namespace:QuanLySoTietKiem.UserControlSTK"
-        mc:Ignorable="d"            
+        mc:Ignorable="d"   
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         x:Name="Main"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
@@ -15,13 +16,10 @@
         TextOptions.TextRenderingMode="Auto"    
         Background="{DynamicResource MaterialDesignPaper}"    
         FontFamily="{DynamicResource MaterialDesignFont}"
-
         WindowStartupLocation="CenterScreen"  
-        Title="Quản lý sổ tiết kiệm" Height="700" Width="1200"
+        Title="Quản lý sổ tiết kiệm" Height="760" Width="1200"
         ResizeMode="NoResize"
-        WindowStyle="None"
-        
-        DataContext="{StaticResource MainVM}">
+        WindowStyle="None">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
@@ -83,13 +81,13 @@
                             <TextBlock  Text="Khách hàng" Foreground="{Binding TextIconColor[5]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <Button Background="{Binding BackgroundColor[6]}" Command="{Binding EnhanceCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                    <Button Visibility="{Binding EnhanceVisible}" Background="{Binding BackgroundColor[6]}" Command="{Binding EnhanceCommand}" materialDesign:ButtonAssist.CornerRadius="10" Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Settings" Foreground="{Binding TextIconColor[6]}" Width="25" Height="25" VerticalAlignment="Center"/>
                             <TextBlock  Text="Nâng cao" Foreground="{Binding TextIconColor[6]}" FontSize="15" VerticalAlignment="Center" Margin="10 0 0 0"/>
                         </StackPanel>
                     </Button>
-                    <Grid Height="280">
+                    <Grid Height="150">
                         <Image Source="Images/Bank.png" Margin="20"></Image>
                     </Grid>
                     <Button Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=Main}" materialDesign:ButtonAssist.CornerRadius="10"    Height="50" Margin="10 0 10 0" Style="{StaticResource MaterialDesignFlatButton}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Bottom">

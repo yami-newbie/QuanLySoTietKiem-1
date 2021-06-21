@@ -1,11 +1,13 @@
-﻿<Window x:Class="QuanLySoTietKiem.EditCategoryView"
+﻿<Window x:Class="QuanLySoTietKiem.EditUser"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLySoTietKiem"
         mc:Ignorable="d"
-        x:Name="window"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+         x:Name="window"
+        DataContext="{StaticResource UserVM}"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
         TextElement.FontWeight="Regular"    
@@ -16,8 +18,7 @@
         Background="{DynamicResource MaterialDesignPaper}"    
         FontFamily="{DynamicResource MaterialDesignFont}"
         WindowStartupLocation="CenterScreen"  
-        Title="" Height="500" Width="400"
-        DataContext="{StaticResource CategoryVM}">
+        Title="" Height="420" Width="400">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -26,94 +27,68 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" >
                 <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
                        FontWeight="DemiBold"
                        Grid.Row="0"
-                       Margin="16 0 16 0"
+                       Margin="16 16 16 4"
                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                       Text="Cập nhật loại tiết kiệm" />
-                <Button HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Background="White"
-                        Foreground="Red"
-                        Command="{Binding DeleteCommand}"
-                        CommandParameter="{Binding ElementName=window}"
-                        Style="{StaticResource MaterialDesignIconButton}" 
-                        ToolTip="Xóa loại tiết kiệm">
-                    <materialDesign:PackIcon Kind="Delete" />
-                </Button>
+                       Text="Cập nhật người dùng" />
             </Grid>
             <Grid Margin="0,20,0,0" Grid.Row="1">
                 <Grid 
                 Width="350"              
                 Height="50"
                 VerticalAlignment="Top">
+
                     <TextBox
-                    Width="180"
-                    IsEnabled="False"
-                    materialDesign:HintAssist.Hint="Mã loại tiết kiệm"
-                    Text="{Binding SelectedItem.MaLoaiTietKiem, Mode=OneTime}"
+                        IsEnabled="False"
+                    Width="220"
+                    materialDesign:HintAssist.Hint="Tên đăng nhập"
+                    Text="{Binding SelectedItem.TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    VerticalAlignment="Center"/>
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"  />
                 </Grid>
-                <Grid
-                Margin="0,60,0,0"
-                Width="350"              
-                Height="50"
-                VerticalAlignment="Top">
-                    <TextBox
-                    IsEnabled="False"
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Tên loại tiết kiệm"
-                    Text="{Binding SelectedItem.TenLoaiTietKiem, Mode=OneTime}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                </Grid>
+                
+
                 <Grid Width="350"
-                  Margin="0,180,0,0"
+                  Margin="0,60,0,0"
                   Height="50"
                   VerticalAlignment="Top">
-                    <TextBox
-                    IsEnabled="{Binding isKhongKiHan, UpdateSourceTrigger=PropertyChanged}"
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Thời gian gởi tối thiểu (Ngày)"
-                    Text="{Binding ThoiGianGoiToiThieu, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 
+                    <TextBox
+                    Width="220"
+                    materialDesign:HintAssist.Hint="Họ tên người dùng"
+                    Text="{Binding TenThat, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"  />
                 </Grid>
                 <Grid Width="350"
                   Margin="0,120,0,0"
                   Height="50"
                   VerticalAlignment="Top">
-                    <TextBox
-                    Width="180"
-                    IsEnabled="False"
-                    materialDesign:HintAssist.Hint="Yêu cầu rút toàn bộ"
-                    Text="{Binding SelectedYesNo, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    VerticalAlignment="Center"/>
-
+                    <ComboBox
+                        ItemsSource="{Binding GroupList}"
+                        DisplayMemberPath="TenNhom"
+                        SelectedItem="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged}"
+                        Width="220"
+                        materialDesign:HintAssist.Hint="Nhóm người dùng"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        HorizontalAlignment="Center"/>
                 </Grid>
-                <Grid Width="350"
-                  Margin="0,240,0,0"
-                  Height="50"
-                  VerticalAlignment="Top">
-                    <TextBox
-                    Width="180"
-                    materialDesign:HintAssist.Hint="Lãi suất(%)"
-                    Text="{Binding LaiSuat, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    VerticalAlignment="Center"/>
-
-                </Grid>
-
 
                 <Grid Width="220"
                   Margin="0,0,0,20"
-                  Height="50"
+                  Height="100"
                   VerticalAlignment="Bottom">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
                     <Button
                     Command="{Binding SaveEditCommand}"
-                        CommandParameter="{Binding ElementName=window}"
+                    CommandParameter="{Binding ElementName=window}"
                     Background="ForestGreen"
                     BorderBrush="ForestGreen"               
                     HorizontalAlignment="Left"                    
@@ -132,6 +107,17 @@
                     Style="{StaticResource MaterialDesignRaisedButton}"                      
                     materialDesign:ButtonAssist.CornerRadius="10">
                         <TextBlock Text="Bỏ qua" />
+                    </Button>
+                    <Button Grid.Row="1"  
+                    Command="{Binding DisableCommand}"
+                    CommandParameter="{Binding ElementName=window}"
+                    Background="Red"
+                    BorderBrush="Gray"
+                    HorizontalAlignment="Center"                      
+                    Width="200"     
+                    Style="{StaticResource MaterialDesignRaisedButton}"                      
+                    materialDesign:ButtonAssist.CornerRadius="10">
+                        <TextBlock Text="Vô hiệu hóa" />
                     </Button>
                 </Grid>
             </Grid>

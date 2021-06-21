@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:QuanLySoTietKiem.ResourceXAML"
                     xmlns:viewmodel="clr-namespace:QuanLySoTietKiem.ViewModel">
-    <viewmodel:MainViewModel x:Key="MainVM"></viewmodel:MainViewModel>
     <viewmodel:SavingAccountViewModel x:Key="SavingAccountVM"></viewmodel:SavingAccountViewModel>
     <viewmodel:HomeViewModel x:Key="HomeVM"></viewmodel:HomeViewModel>
     <viewmodel:DepositViewModel x:Key="DepositVM"></viewmodel:DepositViewModel>
@@ -14,4 +13,5 @@
     <viewmodel:CategoryViewModel x:Key="CategoryVM"></viewmodel:CategoryViewModel>
     <viewmodel:MinimalDepositInitViewModel x:Key="MinimalVM"></viewmodel:MinimalDepositInitViewModel>
     <viewmodel:CustomerViewModel x:Key="CustomerVM"></viewmodel:CustomerViewModel>
+    <viewmodel:UserViewModel x:Key="UserVM"></viewmodel:UserViewModel>
 </ResourceDictionary>
