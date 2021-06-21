@@ -14,6 +14,8 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<PHIEURUTTIEN> _List;
         public ObservableCollection<PHIEURUTTIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<SOTIETKIEM> _ListSTK;
+        public ObservableCollection<SOTIETKIEM> ListSTK { get => _ListSTK; set { _ListSTK = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
         public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
         private string _MaSo;
@@ -34,6 +36,8 @@ namespace QuanLySoTietKiem.ViewModel
         public WithdrawViewModel()
         {
             List = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
+            ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
+
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 RutTienWindow addWithDraw = new RutTienWindow(this);
@@ -70,7 +74,7 @@ namespace QuanLySoTietKiem.ViewModel
         {
             bool isIntMaSo = int.TryParse(maSTK, out int mastk);
 
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
             if (stk == null)
             {
                 clicked = false;
@@ -109,7 +113,7 @@ namespace QuanLySoTietKiem.ViewModel
                 clicked = false;
                 return false;
             }
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
             if (stk == null)
             {
                 clicked = false;
@@ -162,8 +166,7 @@ namespace QuanLySoTietKiem.ViewModel
             bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
             if (!isIntMaSo ) return 0;
 
-            var countPhieuRutTien = DataProvider.Ins.DB.PHIEURUTTIENs.Where(x => x.MaSo == _mastk && x.BiXoa !=true).Count();
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == _mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiXoa != true).SingleOrDefault();
             if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
             {
                 if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu) return 0;
