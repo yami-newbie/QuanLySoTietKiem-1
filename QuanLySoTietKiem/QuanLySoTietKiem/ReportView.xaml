@@ -90,6 +90,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <ComboBox
@@ -125,7 +127,24 @@
                             </ComboBox.ItemsPanel>
                         </ComboBox>
                     </Grid>
-                 
+                    <Grid Grid.Column="2">
+                        <ComboBox
+                          materialDesign:HintAssist.Hint="Năm"
+                          Margin="10,0,10,0"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding cbxNam}"
+                          SelectedItem="{Binding SelectedNam, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+
                 </Grid>
             </Grid>
             

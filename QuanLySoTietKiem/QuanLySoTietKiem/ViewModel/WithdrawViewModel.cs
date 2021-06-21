@@ -54,7 +54,6 @@ namespace QuanLySoTietKiem.ViewModel
                 },
                 (p) =>
                 {
-                    MessageBox.Show("vao chua dkm");
                     AddDeposit();
                     ResetField();
                 });
