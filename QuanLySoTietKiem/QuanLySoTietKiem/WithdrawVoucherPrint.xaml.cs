@@ -19,9 +19,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class WithdrawVoucherPrint : Window
     {
-        public WithdrawVoucherPrint()
+        public WithdrawVoucherPrint(object d)
         {
             InitializeComponent();
+            DataContext = d;
         }
     }
 }
