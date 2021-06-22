@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace QuanLySoTietKiem.ViewModel
 {
@@ -14,6 +16,8 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<PHIEURUTTIEN> _List;
         public ObservableCollection<PHIEURUTTIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<PHIEURUTTIEN> _Init;
+        public ObservableCollection<PHIEURUTTIEN> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
         private ObservableCollection<SOTIETKIEM> _ListSTK;
         public ObservableCollection<SOTIETKIEM> ListSTK { get => _ListSTK; set { _ListSTK = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
@@ -29,13 +33,23 @@ namespace QuanLySoTietKiem.ViewModel
 
         private string _CMND;
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
+        private String[] _FilterList;
+        public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
+        private string _SelectedFilter;
+        public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
+        private string _Query;
+        public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
         bool clicked = false;
         public ICommand AddCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+
         public WithdrawViewModel()
         {
-            List = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
+            FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
+            Init = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
+            List = Init;
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
 
             AddCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -46,6 +60,7 @@ namespace QuanLySoTietKiem.ViewModel
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 ResetField();
+                MaSo = "";
                 p.Close();
             });
             SaveCommand = new RelayCommand<Window>(
@@ -61,9 +76,31 @@ namespace QuanLySoTietKiem.ViewModel
                     AddDeposit();
                     ResetField();
                 });
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                List = Init;
+                if (SelectedFilter == null || String.IsNullOrEmpty(Query))
+                    List = Init;
+                else
+                {
+                    switch (SelectedFilter)
+                    {
+                        case "Tên khách hàng":
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
+                            break;
+                        case "Mã sổ tiết kiệm":
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            break;
+                        case "Loại tiết kiệm":
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            break;
+                    }
+                }
+            });
         }
         private void ResetField()
         {
+     
             CMND = "";
             TenKhachHang = "";
             SoTienRut = "";
@@ -171,7 +208,7 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu) return 0;
                 else
-                soDu= (long)(stk.SoTienGoi+((int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000)));
+                soDu= (long)(stk.SoTienGoi+((int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000)));
               //  MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
                 return soDu;
             }
@@ -193,12 +230,12 @@ namespace QuanLySoTietKiem.ViewModel
                 {
                  //   MessageBox.Show("cc");
                     laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
                 }
                 else
                 {
                     laiKiHan = 0;
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                 }
                 soDu = (int)(stk.SoTienGoi+ laiKiHan + laiKhongKiHan);
                 return soDu;
@@ -218,19 +255,31 @@ namespace QuanLySoTietKiem.ViewModel
             CheckMaSTK(MaSo);
             if (checkTienRut(MaSo))
             {
-                MessageBox.Show("Vô nút save"+ "sotiengoi: "+stk.SoTienGoi);
+               // MessageBox.Show("Vô nút save"+ "sotiengoi: "+stk.SoTienGoi);
                 stk.SoTienGoi = (int)(TinhSoDu(MaSo) - soTienRut);
-                MessageBox.Show(stk.SoTienGoi.ToString()+"= sodu:"+TinhSoDu(MaSo)+"+ sotienrut: "+soTienRut);
+               // MessageBox.Show(stk.SoTienGoi.ToString()+"= sodu:"+TinhSoDu(MaSo)+"+ sotienrut: "+soTienRut);
                 stk.NgayTinhLaiGanNhat = DateTime.Now;
                 if (stk.SoTienGoi == 0)
                 {
                     stk.BiXoa = true;
                 }
-                
-                var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
-                DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
-                DataProvider.Ins.DB.SaveChanges();
-                List.Add(PHIEURUTTIEN);
+                var result2 = MessageBox.Show("Bạn muốn rút số tiền: "+SoTienRut.ToString(),
+                "Kiểm tra lại thao tác",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+                if (result2.ToString() == "Yes")
+                {
+                    var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
+                    DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
+                    DataProvider.Ins.DB.SaveChanges();
+                    List.Add(PHIEURUTTIEN);
+                    MaSo = "";
+                }
+                else {
+
+                    MaSo = "";
+                }
+               
             }
 
         }

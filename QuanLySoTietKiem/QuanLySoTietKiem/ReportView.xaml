@@ -53,7 +53,7 @@
             <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
                 <materialDesign:Card VerticalAlignment="Stretch">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA">
+                        <ListView materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA" FontWeight="Bold">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Width="Auto" Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
@@ -151,22 +151,12 @@
             <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
                 <materialDesign:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView  ItemsSource="{Binding List2}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" SnapsToDevicePixels="True" BorderBrush="#89FABF07" FontSize="16">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.Resources>
-                                <Style TargetType="{x:Type GridViewColumnHeader}">
-                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                                </Style>
-                            </ListView.Resources>
+                        <ListView  materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List2}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" SnapsToDevicePixels="True" BorderBrush="#89FABF07" FontWeight="Bold">
+                            
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Width="50"  Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
-                                    <GridViewColumn Width="200" Header="Ngày" DisplayMemberBinding="{Binding Ngay, StringFormat=dd/MM/yyyy hh:mm tt }"></GridViewColumn>
+                                    <GridViewColumn   Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Width="200" Header="Ngày" DisplayMemberBinding="{Binding Ngay, StringFormat=dd/MM/yyyy }"></GridViewColumn>
                                     <GridViewColumn Width="150" Header="Sổ mở" DisplayMemberBinding="{Binding SoMo}"></GridViewColumn>
                                     <GridViewColumn Width="150" Header="Sổ đóng" DisplayMemberBinding="{Binding SoDong}"></GridViewColumn>
                                     <GridViewColumn Width="500" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech2}"></GridViewColumn>
