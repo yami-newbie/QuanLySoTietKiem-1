@@ -14,7 +14,7 @@
              Background="{DynamicResource MaterialDesignPaper}"          
              FontFamily="{DynamicResource MaterialDesignFont}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -32,26 +32,6 @@
                      >
                         <materialDesign:PackIcon Kind="Add" Width="20" Height="20"/>
                     </Button>
-
-                    <!--Không đc xóa, xóa tao đấm-->
-                    
-                    <!--<Button  
-                        Visibility="Hidden"
-                    Command="{Binding DeleteCommand}"
-                    HorizontalAlignment="Right"            
-                    Style="{DynamicResource MaterialDesignRaisedButton}"          
-                    materialDesign:ShadowAssist.ShadowDepth="Depth2" 
-                    Background="Green"
-                    Content="Xóa" />
-                    
-                    <Button     
-                        Visibility="Hidden"
-                    Command="{Binding RestoreFormCommand}"
-                    HorizontalAlignment="Right"            
-                    Style="{DynamicResource MaterialDesignRaisedButton}"          
-                    materialDesign:ShadowAssist.ShadowDepth="Depth2" 
-                    Background="Green"
-                    Content="Phục hồi" />-->
                 </StackPanel>
                 
             </materialDesign:Card>
@@ -87,7 +67,7 @@
         </materialDesign:Card>
         <materialDesign:Card Margin="5" Grid.Row="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" >
+                <ListView materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" >
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Mã số" DisplayMemberBinding="{Binding MaSo}"></GridViewColumn>

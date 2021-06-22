@@ -79,6 +79,7 @@ namespace QuanLySoTietKiem.ViewModel
                 }
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
+                    MessageBox.Show((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays.ToString());
                     tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                 }
                 else
@@ -166,26 +167,15 @@ namespace QuanLySoTietKiem.ViewModel
                 MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
                 return;
             }
-
-                if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
-                {
-                    stk.SoTienGoi +=  (int)((decimal)stk.SoTienGoi* (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
-                    MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
-                }
-                    
-                else
-                {
-
-                
-                stk.SoTienGoi += soTienGoi + tienLai;
-                stk.NgayTinhLaiGanNhat = DateTime.Now;
-                SoDuMoi = stk.SoTienGoi.ToString();
-                var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };
-                DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
-                DataProvider.Ins.DB.SaveChanges();
-                List.Add(PHIEUGOITIEN);
-                MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);
-            }
+            stk.SoTienGoi += soTienGoi + tienLai;             
+            stk.NgayTinhLaiGanNhat = DateTime.Now;             
+            SoDuMoi = stk.SoTienGoi.ToString();    
+            
+            var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };          
+            DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
+            DataProvider.Ins.DB.SaveChanges();
+            List.Add(PHIEUGOITIEN);         
+            MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);
         }
     }
 }
