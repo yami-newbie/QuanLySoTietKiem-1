@@ -242,7 +242,13 @@
                     Text="{Binding SoTienGoi, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
                     VerticalAlignment="Center"
-                    HorizontalAlignment="Right"  />
+                    HorizontalAlignment="Right"  >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding DepositChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
             </Grid>
             <Grid Width="220"
                   Margin="0,0,0,20"

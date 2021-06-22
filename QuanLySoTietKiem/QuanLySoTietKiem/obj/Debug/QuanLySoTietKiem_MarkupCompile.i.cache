@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 G:\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
-25-308997372
+27-148112696
 2-1556844510
-591677544768
+61102374233
 26-621124984
-AddCategoryView.xaml;AddCustomer.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;AddUser.xaml;CategoryView.xaml;CustomerView.xaml;DepositView.xaml;EditCategoryView.xaml;EditCustomerWindow.xaml;EditUser.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;MinimalDepositView.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;UserControlSTK\ControlBarUC.xaml;UserView.xaml;WithdrawView.xaml;
+AddCategoryView.xaml;AddCustomer.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;AddUser.xaml;CategoryView.xaml;CustomerView.xaml;DepositView.xaml;DepositVoucherPrintView.xaml;EditCategoryView.xaml;EditCustomerWindow.xaml;EditUser.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;MinimalDepositView.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;UserControlSTK\ControlBarUC.xaml;UserView.xaml;WithdrawView.xaml;WithdrawVoucherPrint.xaml;
 
 True
 
