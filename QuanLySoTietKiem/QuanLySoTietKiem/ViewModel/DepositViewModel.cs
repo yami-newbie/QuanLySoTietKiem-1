@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace QuanLySoTietKiem.ViewModel
@@ -13,12 +14,17 @@ namespace QuanLySoTietKiem.ViewModel
     public class DepositViewModel: BaseViewModel
     {
         int tienLai = 0;
+        int tienGoi = 0;
+        THAMSO thamSo;
+        SOTIETKIEM stk;
         private ObservableCollection<PHIEUGOITIEN> _List;
         public ObservableCollection<PHIEUGOITIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
         private ObservableCollection<PHIEUGOITIEN> _Init;
         public ObservableCollection<PHIEUGOITIEN> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
         private String[] _FilterList;
         public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
+        private PHIEUGOITIEN _SelectedItem;
+        public PHIEUGOITIEN SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
         private string _TenKhachHang;
         public string TenKhachHang { get => _TenKhachHang; set { _TenKhachHang = value; OnPropertyChanged(); } }
         private string _MaSo;
@@ -44,8 +50,12 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand SearchCommand { get; set; }
         public ICommand SearchMaSoCommand { get; set; }
         public ICommand TextChangeCommand { get; set; }
+        public ICommand DepositChangedCommand { get; set; }
+        public ICommand PrintWindowCommand { get; set; }
+        public ICommand PrintCommand { get; set; }
         public DepositViewModel()
         {
+             thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
             Init = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
             List = Init;
@@ -54,6 +64,16 @@ namespace QuanLySoTietKiem.ViewModel
                 AddDepositView addDeposit = new AddDepositView(this);
                 addDeposit.ShowDialog();
             });
+            PrintCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                PrintDialog print = new PrintDialog();
+                print.PrintVisual(p as Grid, "Phiếu gởi tiền");
+            });
+            PrintWindowCommand = new RelayCommand<object>((p) => { return (SelectedItem != null); }, (p) =>
+            {
+                DepositVoucherPrintView d = new DepositVoucherPrintView(this);
+                d.ShowDialog();
+            });
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 p.Close();
@@ -61,7 +81,7 @@ namespace QuanLySoTietKiem.ViewModel
             SaveCommand = new RelayCommand<Window>(
                 (p) =>
                 {
-                    return !(String.IsNullOrEmpty(MaSo) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang) || String.IsNullOrEmpty(SoTienGoi)); 
+                    return CheckValidAdd();
                 },
                 (p) =>
                 {
@@ -70,7 +90,7 @@ namespace QuanLySoTietKiem.ViewModel
                 });
             SearchMaSoCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
+                stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
 
                 if (stk == null)
                 {
@@ -80,7 +100,7 @@ namespace QuanLySoTietKiem.ViewModel
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
                     MessageBox.Show((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays.ToString());
-                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                 }
                 else
                 {
@@ -98,12 +118,12 @@ namespace QuanLySoTietKiem.ViewModel
                     if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
                         laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
-                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
                     }
                     else
                     {
                         laiKiHan = 0;
-                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
                     }
                     tienLai = laiKiHan + laiKhongKiHan;
                 }
@@ -120,6 +140,20 @@ namespace QuanLySoTietKiem.ViewModel
                 SoDuCu = "0";
                 SoDuMoi = "0";
                 tienLai = 0;
+            });
+            DepositChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                SoDuMoi = "0";
+                if (stk == null) return;
+                bool isIntSoTienGoi = int.TryParse(SoTienGoi, out tienGoi);
+                if (!isIntSoTienGoi)
+                {
+                    SoDuMoi = "0";
+                }
+                else
+                {
+                    SoDuMoi = (stk.SoTienGoi + tienGoi + tienLai).ToString();
+                }
             });
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -152,30 +186,27 @@ namespace QuanLySoTietKiem.ViewModel
         }
         private void AddDeposit()
         {
-            
-            bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
-            if (!isIntSoTienGoi)
-            {
-                MessageBox.Show("Vui lòng nhập đúng định dạng tiền");
-                return;
-            }
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
             if (stk == null) return;
-            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
-            if (soTienGoi < thamSo.SoTienGoiThemToiThieu)
+            if (tienGoi < thamSo.SoTienGoiThemToiThieu)
             {
                 MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
                 return;
             }
-            stk.SoTienGoi += soTienGoi + tienLai;             
-            stk.NgayTinhLaiGanNhat = DateTime.Now;             
-            SoDuMoi = stk.SoTienGoi.ToString();    
-            
-            var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = soTienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };          
+            stk.SoTienGoi += tienGoi + tienLai;
+            stk.NgayTinhLaiGanNhat = DateTime.Now;
+            var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = tienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };          
             DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(PHIEUGOITIEN);         
             MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);
+            ResetField();
+        }
+        private bool CheckValidAdd()
+        {
+            bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int i);
+            if (!isIntSoTienGoi) return false;
+            if (String.IsNullOrEmpty(MaSo) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang) || String.IsNullOrEmpty(SoTienGoi)) return false;
+            return true;
         }
     }
 }

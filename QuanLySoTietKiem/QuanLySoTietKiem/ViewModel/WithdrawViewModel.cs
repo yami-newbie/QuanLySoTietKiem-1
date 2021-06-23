@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -35,6 +36,8 @@ namespace QuanLySoTietKiem.ViewModel
         public string CMND { get => _CMND; set { _CMND = value; OnPropertyChanged(); } }
         private String[] _FilterList;
         public String[] FilterList { get => _FilterList; set { _FilterList = value; OnPropertyChanged(); } }
+        private PHIEURUTTIEN _SelectedItem;
+        public PHIEURUTTIEN SelectedItem { get => _SelectedItem; set { _SelectedItem = value; OnPropertyChanged(); } }
         private string _SelectedFilter;
         public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
         private string _Query;
@@ -44,6 +47,8 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand ExitCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand PrintCommand { get; set; }
+        public ICommand PrintWindowCommand { get; set; }
 
         public WithdrawViewModel()
         {
@@ -96,6 +101,16 @@ namespace QuanLySoTietKiem.ViewModel
                             break;
                     }
                 }
+            });
+            PrintCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                System.Windows.Controls.PrintDialog print = new System.Windows.Controls.PrintDialog();
+                print.PrintVisual(p as Grid, "Phiếu rút tiền");
+            });
+            PrintWindowCommand = new RelayCommand<object>((p) => { return (SelectedItem != null); }, (p) =>
+            {
+                WithdrawVoucherPrint d = new WithdrawVoucherPrint(this);
+                d.ShowDialog();
             });
         }
         private void ResetField()
