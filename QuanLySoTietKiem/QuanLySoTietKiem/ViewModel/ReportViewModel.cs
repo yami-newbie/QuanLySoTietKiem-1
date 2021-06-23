@@ -2,11 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Input;
+using MessageBox = System.Windows.MessageBox;
 
 namespace QuanLySoTietKiem.ViewModel
 {
@@ -67,6 +72,9 @@ namespace QuanLySoTietKiem.ViewModel
 
         private int _ChenhLech;
         public int ChenhLech { get => _ChenhLech; set { _ChenhLech = value; OnPropertyChanged(); } }
+        public ICommand ExcelDate { get; set; }
+        public ICommand ExcelMonth { get; set; }
+
 
         public ReportViewModel()
         {
@@ -77,6 +85,68 @@ namespace QuanLySoTietKiem.ViewModel
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
             ListGoiTien = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
             ListRutTien = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
+            ExcelDate = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if (List1.Count() > 0)
+                {
+                    SaveFileDialog saveFile = new SaveFileDialog();
+                    saveFile.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm| CSV|*.csv";
+                    if (saveFile.ShowDialog() == DialogResult.OK)
+                    {
+                        using (StreamWriter sw = new StreamWriter(new FileStream(saveFile.FileName, FileMode.Create), Encoding.UTF8))
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            string date = DateTime.Now.ToString("dd/M/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                            sb.AppendLine("BÁO CÁO THỐNG KÊ THEO NGÀY " + DateInput.Value.ToString("dd/MM/yyyy"));
+                            //   sb.AppendLine("Thời gian xuất file: "+date);
+                            sb.AppendLine("STT, Tên loại tiết kiệm ,Tổng thu(VNĐ), Tổng chi(VNĐ), Chênh lệch(VNĐ)");
+                            foreach (var item in List1)
+                            {
+                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.LoaiTietKiem, item.TongThu, item.TongChi, item.ChenhLech));
+
+                            }
+                            await sw.WriteAsync(sb.ToString());
+                            MessageBox.Show("Báo cáo của bạn đã được xuất ra file thành công", "Tin nhắn", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Thống kê đang trống, không xuất được file", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+               
+            });
+            ExcelMonth = new RelayCommand<object>((p) => { return true; }, async (p) =>
+            {
+                if(List2.Count()>0)
+                {
+                    SaveFileDialog saveFile = new SaveFileDialog();
+                    saveFile.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm| CSV|*.csv";
+                    if (saveFile.ShowDialog() == DialogResult.OK)
+                    {
+                        using (StreamWriter sw = new StreamWriter(new FileStream(saveFile.FileName, FileMode.Create), Encoding.UTF8))
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            string date = DateTime.Now.ToString("dd/M/yyyy hh:mm:ss", CultureInfo.InvariantCulture);
+                            sb.AppendLine("BÁO CÁO THỐNG KÊ THEO THÁNG " + SelectedThang.ToString() + "/" + SelectedNam.ToString());
+                            //   sb.AppendLine("Thời gian xuất file: " + date);
+                            sb.AppendLine("Loại tiết kiệm: " + SelectedLoai.TenLoaiTietKiem);
+                            sb.AppendLine("STT, Thời gian ,Tổng sổ mở ,Tổng sổ đóng, Chênh lệch(Sổ)");
+                            foreach (var item in List2)
+                            {
+                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString("dd/M/yyyy"),item.SoMo, item.SoDong, item.ChenhLech2));
+
+                            }
+                            await sw.WriteAsync(sb.ToString());
+                            MessageBox.Show("Báo cáo của bạn đã được xuất ra file thành công", "Tin nhắn", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Thống kê đang trống, không xuất được file", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            });
         }
         public void CheckDateIn()
         {
