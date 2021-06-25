@@ -46,7 +46,7 @@ namespace QuanLySoTietKiem.ViewModel
         public CategoryViewModel()
         {
             YesNo = new ObservableCollection<string> {"Có", "Không"};
-            List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+            List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiXoa!=true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ResetField();
