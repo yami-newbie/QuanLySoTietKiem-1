@@ -76,14 +76,15 @@
                             </Viewbox>
                         </Grid>
                         <Grid Grid.Row="1" Margin="5">
-                            <TextBlock Text="Đăng ký tài khoản" FontSize="30" Foreground="WhiteSmoke" HorizontalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock Text="Đổi mật khẩu" FontSize="30" Foreground="WhiteSmoke" HorizontalAlignment="Center" FontWeight="Bold"/>
                         </Grid>
                         <Grid Grid.Row="2" >
-                            <TextBlock Text="Tên*" Foreground="White" FontSize="18" Height="20"/>
+                            <TextBlock Text="Tên đăng nhập*" Foreground="White" FontSize="18" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="3" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
                                 <TextBox
+                                      Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtName"
@@ -91,29 +92,29 @@
                             </Border>
                         </Grid>
                         <Grid Grid.Row="4" >
-                            <TextBlock Text="Email*" Foreground="White" FontSize="18" Height="20"/>
+                            <TextBlock Text="Mật khẩu cũ*" Foreground="White" FontSize="18" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="5" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
                                 <TextBox
-                                    Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding MatKhauCu, UpdateSourceTrigger=PropertyChanged}"
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtEmail"
-                                    materialDesign:HintAssist.Hint="vhao1509@gmail.com"/>
+                                    materialDesign:HintAssist.Hint="*******"/>
                             </Border>
                         </Grid>
                         <Grid Grid.Row="6" >
-                            <TextBlock Text="Mật khẩu*" Foreground="White" FontSize="18" Height="20"/>
+                            <TextBlock Text="Mật khẩu mới*" Foreground="White" FontSize="18" Height="20"/>
                         </Grid>
                         <Grid Grid.Row="7" Margin="20,0,20,0">
                             <Border CornerRadius="20,20,20,20" BorderBrush="Wheat" BorderThickness="2">
                                 <TextBox
-                                    Text="{Binding MatKhau, UpdateSourceTrigger=PropertyChanged}"
+                                    Text="{Binding MatKhauMoi, UpdateSourceTrigger=PropertyChanged}"
                                     Foreground="Black"
                                     FontSize="15" VerticalContentAlignment="Center" Margin="20,0,0,0" 
                                     x:Name="txtPassword"
-                                    materialDesign:HintAssist.Hint="Password"/>
+                                    materialDesign:HintAssist.Hint="*******"/>
                             </Border>
                         </Grid>
                         <Grid Grid.Row="8">
@@ -125,10 +126,10 @@
                                                 Style="{StaticResource MaterialDesignRaisedDarkButton}"   
                                                 materialDesign:ButtonAssist.CornerRadius="25"
                                                 ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
-                                                Content="Đăng ký"
+                                                Content="Đổi mật khẩu"
                                                 FontWeight="Bold"
                                                 FontSize="20"
-                                Command="{Binding Login}"
+                                Command="{Binding DoiMatKhau}"
                                 CommandParameter="{Binding ElementName=window}">
                             </Button>
                         </Grid>

@@ -32,6 +32,21 @@
                        Margin="16 16 16 4"
                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                        Text="Cập nhật người dùng" />
+                <Button
+                         Command="{Binding ResetPassCommand}"
+                    CommandParameter="{Binding ElementName=window}"
+                    Margin="0,5,5,0"
+                        Background="Transparent"
+                         HorizontalAlignment="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                        ToolTip="Cập nhật lại mật khẩu">
+                   
+                        <materialDesign:PackIcon
+                            Foreground="Black"
+                            Kind="LockReset"
+                            Height="30"
+                            Width="30" />
+                </Button>
             </Grid>
             <Grid Margin="0,20,0,0" Grid.Row="1">
                 <Grid 
