@@ -85,12 +85,32 @@
                                 <i:InvokeCommandAction Command="{Binding EditFormCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
+                        <ListView.Resources>
+                            <Style x:Key="ColHeaderText" TargetType="TextBlock">
+                                <Setter Property="Width" Value="140" />
+                                <Setter Property="Height" Value="29" />
+                                <Setter Property="FontSize" Value="17" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </ListView.Resources>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn  Header="Mã khách hàng" DisplayMemberBinding="{Binding MaKhachHang }"></GridViewColumn>
-                                <GridViewColumn Header="Tên khách hàng" DisplayMemberBinding="{Binding TenKhachHang}"></GridViewColumn>
-                                <GridViewColumn Header="Số CMND" DisplayMemberBinding="{Binding CMND}"></GridViewColumn>
-                                <GridViewColumn Header="Địa chỉ" DisplayMemberBinding="{Binding DiaChi }"></GridViewColumn>
+                                <GridViewColumn   DisplayMemberBinding="{Binding MaKhachHang }">
+                                    <TextBlock Text="Mã khách hàng"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                                </GridViewColumn>
+                                <GridViewColumn  DisplayMemberBinding="{Binding TenKhachHang}">
+                                    <TextBlock Text="Tên khách hàng"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                                </GridViewColumn>
+                                <GridViewColumn  DisplayMemberBinding="{Binding CMND}">
+                                    <TextBlock Text="Số CMND"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                                </GridViewColumn>
+                                <GridViewColumn  DisplayMemberBinding="{Binding DiaChi }">
+                                    <TextBlock Text="Địa chỉ"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

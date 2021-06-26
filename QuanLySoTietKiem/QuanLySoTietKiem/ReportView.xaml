@@ -75,9 +75,9 @@
                                 <GridView>
                                     <GridViewColumn Width="Auto" Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
                                     <GridViewColumn Width="Auto" Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LoaiTietKiem}"></GridViewColumn>
-                                    <GridViewColumn Width="Auto" Header="Tổng thu" DisplayMemberBinding="{Binding TongThu}"></GridViewColumn>
-                                    <GridViewColumn Width="Auto" Header="Tổng chi" DisplayMemberBinding="{Binding TongChi}"></GridViewColumn>
-                                    <GridViewColumn Width="Auto" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng thu(VNĐ)" DisplayMemberBinding="{Binding TongThu}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng chi(VNĐ)" DisplayMemberBinding="{Binding TongChi}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Chênh lệch(VNĐ)" DisplayMemberBinding="{Binding ChenhLech}"></GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
