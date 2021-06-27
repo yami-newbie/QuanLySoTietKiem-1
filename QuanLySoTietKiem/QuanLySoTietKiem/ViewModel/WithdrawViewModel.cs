@@ -50,6 +50,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand PrintCommand { get; set; }
         public ICommand PrintWindowCommand { get; set; }
 
+
         public WithdrawViewModel()
         {
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
@@ -112,6 +113,7 @@ namespace QuanLySoTietKiem.ViewModel
                 WithdrawVoucherPrint d = new WithdrawVoucherPrint(this);
                 d.ShowDialog();
             });
+            
         }
         private void ResetField()
         {

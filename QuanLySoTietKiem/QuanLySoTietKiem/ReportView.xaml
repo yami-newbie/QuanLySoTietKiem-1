@@ -30,6 +30,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <TextBlock 
@@ -37,8 +38,24 @@
                         Text="Báo cáo doanh số hoạt động ngày"
                            FontSize="30"
                            FontWeight="Bold"/>
+                    
                 </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Grid Grid.Column="1" HorizontalAlignment="Center">
+                    <Button     
+                    Command="{Binding ExcelDate}"
+                    HorizontalAlignment="Left"    
+                        VerticalAlignment="Bottom"
+                    Foreground="Green"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"                              
+                    Background="White">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="MicrosoftExcel" Width="20" Height="20"/>
+                            <TextBlock Margin="5 2 5 0">Xuất excel</TextBlock>
+                        </StackPanel>
+
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <DatePicker
                         FontWeight="Bold"
                         Margin="0,10,10,0"
@@ -53,7 +70,7 @@
             <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
                 <materialDesign:Card VerticalAlignment="Stretch">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ListView materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA" FontWeight="Bold">
+                        <ListView x:Name="ListTK1" materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA" FontWeight="Bold">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Width="Auto" Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
@@ -78,6 +95,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <TextBlock 
@@ -86,16 +104,32 @@
                            FontSize="28"
                            FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right">
+                <Grid Grid.Column="1" HorizontalAlignment="Center" >
+                    <Button     
+                    Command="{Binding ExcelMonth}"
+                    HorizontalAlignment="Left"    
+                        VerticalAlignment="Bottom"
+                    Foreground="Green"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"                              
+                    Background="White">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="MicrosoftExcel" Width="20" Height="20"/>
+                            <TextBlock Margin="5 2 5 0">Xuất excel</TextBlock>
+                        </StackPanel>
+
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition ></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
 
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
                         <ComboBox
-                            Margin="0,0,20,0"
+                            Margin="0,0,10,0"
                           materialDesign:HintAssist.Hint="Loại tiết kiệm"
                           FontSize="17"
                           FontWeight="Bold"
@@ -157,8 +191,8 @@
                                 <GridView>
                                     <GridViewColumn   Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
                                     <GridViewColumn Width="200" Header="Ngày" DisplayMemberBinding="{Binding Ngay, StringFormat=dd/MM/yyyy }"></GridViewColumn>
-                                    <GridViewColumn Width="150" Header="Sổ mở" DisplayMemberBinding="{Binding SoMo}"></GridViewColumn>
-                                    <GridViewColumn Width="150" Header="Sổ đóng" DisplayMemberBinding="{Binding SoDong}"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Tổng sổ mở" DisplayMemberBinding="{Binding SoMo}"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Tổng sổ đóng" DisplayMemberBinding="{Binding SoDong}"></GridViewColumn>
                                     <GridViewColumn Width="500" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech2}"></GridViewColumn>
                                 </GridView>
                             </ListView.View>

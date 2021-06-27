@@ -127,16 +127,17 @@
 
 
                                     </Grid>
+                          
                                     <Grid Grid.Row="2" >
                                         <Grid >
-                                            <Button 
+                                            <Button
                                                 VerticalAlignment="Top"
                                                 Margin="0,10,0,0"
                                                 Width="290"
                                                 Height="40"
                                                 Style="{StaticResource MaterialDesignRaisedDarkButton}"   
                                                 materialDesign:ButtonAssist.CornerRadius="25"
-                                                ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
+                                                ToolTip="Đăng nhập"
                                                 Content="Đăng nhập"
                                                 FontWeight="Bold" 
                                                 Command="{Binding LoginCommand}"

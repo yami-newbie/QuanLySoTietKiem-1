@@ -127,12 +127,20 @@ namespace QuanLySoTietKiem.ViewModel
         }
         private void AddCustomer()
         {
-            var kh = new KHACHHANG() { TenKhachHang = TenKhachHang, DiaChi = DiaChi, CMND = CMND};
-            DataProvider.Ins.DB.KHACHHANGs.Add(kh);
-            DataProvider.Ins.DB.SaveChanges();
-            List.Add(kh);
-            MessageBox.Show("Thêm thành công!");
-            ResetField();
+            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND) == null)
+            {
+                var kh = new KHACHHANG() { TenKhachHang = TenKhachHang, DiaChi = DiaChi, CMND = CMND };
+                DataProvider.Ins.DB.KHACHHANGs.Add(kh);
+                DataProvider.Ins.DB.SaveChanges();
+                List.Add(kh);
+                MessageBox.Show("Thêm thành công!");
+                ResetField();
+            }
+            else
+            {
+                MessageBox.Show("CMND đã tồn tại","Cảnh báo lỗi",MessageBoxButton.OK,MessageBoxImage.Warning);
+            }
+           
         }
         private bool isEditFormValidate()
         {
