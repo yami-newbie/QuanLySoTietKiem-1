@@ -201,11 +201,11 @@ namespace QuanLySoTietKiem.ViewModel
                 return; 
             }
             var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
-            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.TenThamSo == "SoTienGoiBanDau").SingleOrDefault();
             if (kh == null || thamSo == null) return;
-            if (soTienGoi < thamSo.SoTienGoiBanDauToiThieu)
+            if (soTienGoi < thamSo.GiaTri)
             {
-                MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.SoTienGoiBanDauToiThieu.ToString());
+                MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.GiaTri.ToString());
                 return;
             }
             var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };

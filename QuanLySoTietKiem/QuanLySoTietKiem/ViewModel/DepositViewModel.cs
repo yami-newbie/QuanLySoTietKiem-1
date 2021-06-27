@@ -55,7 +55,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand PrintCommand { get; set; }
         public DepositViewModel()
         {
-             thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.Id == "1").SingleOrDefault();
+             thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.TenThamSo== "SoTienGoiThemToiThieu").SingleOrDefault();
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
             Init = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
             List = Init;
@@ -187,9 +187,9 @@ namespace QuanLySoTietKiem.ViewModel
         private void AddDeposit()
         {
             if (stk == null) return;
-            if (tienGoi < thamSo.SoTienGoiThemToiThieu)
+            if (tienGoi < thamSo.GiaTri)
             {
-                MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.SoTienGoiThemToiThieu.ToString());
+                MessageBox.Show("Số tiền gởi thêm tối thiểu là: " + thamSo.GiaTri.ToString());
                 return;
             }
             stk.SoTienGoi += tienGoi + tienLai;

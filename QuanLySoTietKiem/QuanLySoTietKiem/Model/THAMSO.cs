@@ -14,9 +14,7 @@ namespace QuanLySoTietKiem.Model
     
     public partial class THAMSO
     {
-        public Nullable<int> SoTienGoiBanDauToiThieu { get; set; }
-        public Nullable<int> SoTienGoiThemToiThieu { get; set; }
-        public Nullable<bool> TuDongSoKhiRutHetTien { get; set; }
-        public string Id { get; set; }
+        public string TenThamSo { get; set; }
+        public Nullable<int> GiaTri { get; set; }
     }
 }
