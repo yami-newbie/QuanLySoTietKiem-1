@@ -146,10 +146,10 @@
                                             </Button>
                                         </Grid>
 
-                                        <TextBlock Text="Chưa có tài khoản?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
-                                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="20,0,0,2" FontSize="13" Foreground="Purple" FontWeight="Bold" >
+                                        <TextBlock Text="Muốn thay đổi mật khẩu?" VerticalAlignment="Bottom" Margin="0,0,0,1" HorizontalAlignment="Left" Foreground="Black"/>
+                                        <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="60,0,0,2" FontSize="13" Foreground="Purple" FontWeight="Bold" >
                                             <Hyperlink Command="{Binding RegisterCommand}" CommandParameter="{Binding ElementName=window}">
-                                                Tạo tài khoản mới
+                                                Đổi mật khẩu
                                             </Hyperlink>
 
                                         </TextBlock>

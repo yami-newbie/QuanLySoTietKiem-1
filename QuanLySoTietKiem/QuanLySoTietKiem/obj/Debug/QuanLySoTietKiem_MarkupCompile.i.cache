@@ -16,5 +16,5 @@ H:\Real_Quanlysotk\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\App.xaml
 26-23291111
 AddCategoryView.xaml;AddCustomer.xaml;AddDepositView.xaml;AddSavingAccountView.xaml;AddUser.xaml;CategoryView.xaml;CustomerView.xaml;DepositView.xaml;DepositVoucherPrintView.xaml;EditCategoryView.xaml;EditCustomerWindow.xaml;EditUser.xaml;EnhanceView.xaml;HomeView.xaml;LoginWindow.xaml;MainWindow.xaml;MinimalDepositView.xaml;RegisterWindow.xaml;ReportView.xaml;ResourceXAML\MainResource.xaml;RestoreSavingAccountView.xaml;RutTienWindow.xaml;SavingAccountView.xaml;UserControlSTK\ControlBarUC.xaml;UserView.xaml;WithdrawView.xaml;WithdrawVoucherPrint.xaml;
 
-False
+True
 

@@ -16,15 +16,18 @@ namespace QuanLySoTietKiem.ViewModel
         public LoginWindow LoginWindow { get => _loginWindow; set { _loginWindow = value; OnPropertyChanged(); } }
         private string _tenDangNhap;
         public string TenDangNhap { get => _tenDangNhap; set { _tenDangNhap = value; OnPropertyChanged(); } }
-        private string _matKhau;
-        public string MatKhau { get => _matKhau; set { _matKhau = value; OnPropertyChanged(); } }
+        private string _matKhaucu;
+        public string MatKhauCu { get => _matKhaucu; set { _matKhaucu = value; OnPropertyChanged(); } }
+        private string _matKhaumoi;
+        public string MatKhauMoi { get => _matKhaumoi; set { _matKhaumoi = value; OnPropertyChanged(); } }
         public ICommand SignInCommand { get; set; }
         public ICommand DragMoveCommand { get; set; }
-        public ICommand Login { get; set; }
+        public ICommand DoiMatKhau { get; set; }
         public RegisterViewModel()
         {
             SignInCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
+                ResetAll();
                 p.Close();
                 LoginWindow.Show();
             });
@@ -33,36 +36,43 @@ namespace QuanLySoTietKiem.ViewModel
                 if (p != null) p.DragMove();
 
             });
-            Login = new RelayCommand<Window>((p) => { return !(String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(MatKhau)); }, (p) =>
+            DoiMatKhau = new RelayCommand<Window>((p) => { return !(String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(MatKhauMoi)|| String.IsNullOrEmpty(MatKhauCu)); }, (p) =>
             {
-                if(checkEmail(TenDangNhap))
+                if(checkEmailvsMatKhau(TenDangNhap,MatKhauCu))
                 {
-                    var passChanged = ComputeSha256Hash(MatKhau);
-                    var _nguoiDung = new NGUOIDUNG { TenDangNhap = TenDangNhap, MatKhau = passChanged };
-                    DataProvider.Ins.DB.NGUOIDUNGs.Add(_nguoiDung);
+                    var nguoi=DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap).SingleOrDefault();
+                    nguoi.MatKhau = ComputeSha256Hash(MatKhauMoi);
                     DataProvider.Ins.DB.SaveChanges();
-                    MessageBox.Show("Đăng ký tài khoản thành công");
+                    MessageBox.Show("Cập nhật tài khoản thành công");
+                    ResetAll();
                     p.Close();
                     LoginWindow.ShowDialog();
                 }
                 else
                 {
-                    MessageBox.Show("Tên đăng nhập tồn tại");
+                    MessageBox.Show("Tên đăng nhập,mật khẩu sai hoặc không tồn tại");
                 }
               
             });
 
         }
-        private bool checkEmail(string email)
+        private void ResetAll()
         {
-            var nguoidung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap).Count();
+            TenDangNhap = "";
+            MatKhauCu = "";
+            MatKhauMoi = "";
+        }
+        private bool checkEmailvsMatKhau(string email,string matkhaucu)
+        {
+            matkhaucu = ComputeSha256Hash(matkhaucu);
+            var nguoidung = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap&&x.MatKhau==matkhaucu).Count();
             if (nguoidung > 0)
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
         static string ComputeSha256Hash(string rawData)

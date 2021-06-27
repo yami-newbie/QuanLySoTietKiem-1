@@ -68,14 +68,40 @@
         <materialDesign:Card Margin="5" Grid.Row="2">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ListView materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" >
+                    <ListView.Resources>
+                        <Style x:Key="ColHeaderText" TargetType="TextBlock">
+                            <Setter Property="Width" Value="90" />
+                            <Setter Property="Height" Value="29" />
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Style>
+                    </ListView.Resources>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Mã số" DisplayMemberBinding="{Binding MaSo}"></GridViewColumn>
-                            <GridViewColumn Header="Loại Tiết Kiệm" DisplayMemberBinding="{Binding LOAITIETKIEM.TenLoaiTietKiem}"></GridViewColumn>
-                            <GridViewColumn Header="Tên khách Hàng" DisplayMemberBinding="{Binding KHACHHANG.TenKhachHang}"></GridViewColumn>
-                            <GridViewColumn Header="Số Dư" DisplayMemberBinding="{Binding SoTienGoi}"></GridViewColumn>
-                            <GridViewColumn Header="Ngày mở sổ" DisplayMemberBinding="{Binding NgayMoSo, StringFormat=dd/MM/yyyy}"></GridViewColumn>
-                            <GridViewColumn Header="Ngày cập nhật" DisplayMemberBinding="{Binding NgayTinhLaiGanNhat, StringFormat=dd/MM/yyyy}"></GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding MaSo}">
+                                <TextBlock Text="Mã sổ"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding LOAITIETKIEM.TenLoaiTietKiem}">
+                                <TextBlock Text="Loại tiết kiệm"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding KHACHHANG.TenKhachHang}">
+                                <TextBlock Text="Tên khách hàng"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding SoTienGoi}">
+                                <TextBlock Text="Số dư(VNĐ)"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding NgayMoSo, StringFormat=dd/MM/yyyy}">
+                                <TextBlock Text="Ngày mở sổ"  Style="{StaticResource ColHeaderText}"></TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  DisplayMemberBinding="{Binding NgayTinhLaiGanNhat, StringFormat=dd/MM/yyyy}">
+                                <TextBlock Text="Ngày cập nhật"  Style="{StaticResource ColHeaderText}" Width="100"></TextBlock>
+
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

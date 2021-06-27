@@ -44,6 +44,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand SaveAddCommand { get; set; }
         public ICommand SaveEditCommand { get; set; }
         public ICommand DisableCommand { get; set; }
+        public ICommand ResetPassCommand { get; set; }
         public ICommand PasswordChangedCommand { get; set; }
         public UserViewModel()
         {
@@ -131,10 +132,29 @@ namespace QuanLySoTietKiem.ViewModel
                     MessageBox.Show("Cập nhật thành công!");
                     (p as Window).Close();
                 });
+            ResetPassCommand = new RelayCommand<object>(
+              (p) =>
+              {
+                  return CheckUserName();
+              },
+              (p) =>
+              {
+                  var user = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItem.TenDangNhap).SingleOrDefault();
+                  user.MatKhau = ComputeSha256Hash("1");
+                  DataProvider.Ins.DB.SaveChanges();
+                 
+                  MessageBox.Show("Cập nhật thành công, mật khẩu mới là: 1");
+                  (p as Window).Close();
+              });
         }
         private bool isValidatedAdd()
         {
             if (SelectedGroup == null || String.IsNullOrEmpty(TenThat) || String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(Password)) return false;
+            return true;
+        }
+        private bool CheckUserName()
+        {
+            if (SelectedItem == null) return false;
             return true;
         }
         private bool isValidatedEdit()
