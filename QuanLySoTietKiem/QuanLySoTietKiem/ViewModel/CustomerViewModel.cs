@@ -83,6 +83,11 @@ namespace QuanLySoTietKiem.ViewModel
             SaveEditCommand = new RelayCommand<object>((p) => { return isEditFormValidate(); }, (p) =>
             {
                 var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.MaKhachHang == SelectedItem.MaKhachHang).SingleOrDefault();
+                if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() > 0)
+                {
+                    MessageBox.Show("CMND đã tồn tại!");
+                    return;
+                }
                 kh.DiaChi = DiaChi;
                 kh.CMND = CMND;
                 kh.TenKhachHang = TenKhachHang;
@@ -91,7 +96,7 @@ namespace QuanLySoTietKiem.ViewModel
                 {
                     if (SelectedItem.MaKhachHang == List[i].MaKhachHang)
                     {
-                        List[i] = new KHACHHANG { TenKhachHang = List[i].TenKhachHang, CMND = List[i].CMND, SOTIETKIEMs = List[i].SOTIETKIEMs, DiaChi = List[i].DiaChi, BiXoa = List[i].BiXoa };
+                        List[i] = new KHACHHANG { MaKhachHang = List[i].MaKhachHang, TenKhachHang = List[i].TenKhachHang, CMND = List[i].CMND, SOTIETKIEMs = List[i].SOTIETKIEMs, DiaChi = List[i].DiaChi, BiXoa = List[i].BiXoa };
                         break;
                     }
                 }
@@ -127,7 +132,7 @@ namespace QuanLySoTietKiem.ViewModel
         }
         private void AddCustomer()
         {
-            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND) == null)
+            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() == 0)
             {
                 var kh = new KHACHHANG() { TenKhachHang = TenKhachHang, DiaChi = DiaChi, CMND = CMND };
                 DataProvider.Ins.DB.KHACHHANGs.Add(kh);
