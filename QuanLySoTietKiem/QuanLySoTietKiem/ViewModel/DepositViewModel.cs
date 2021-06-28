@@ -194,7 +194,24 @@ namespace QuanLySoTietKiem.ViewModel
             }
             stk.SoTienGoi += tienGoi + tienLai;
             stk.NgayTinhLaiGanNhat = DateTime.Now;
-            var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = tienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };          
+            var PHIEUGOITIEN = new PHIEUGOITIEN { SOTIETKIEM = stk, SoTienGoi = tienGoi, MaSo = int.Parse(MaSo), NgayGoi = DateTime.Now };
+            // Thêm hoặc cập nhật báo cáo
+            var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+            var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == PHIEUGOITIEN.SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).Count();
+            BCDOANHSOTHEONGAY bcaoNgay;
+
+            if (check > 0)
+            {
+                bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == PHIEUGOITIEN.SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).First();
+                bcaoNgay.TongThu += tienGoi;
+                bcaoNgay.ChenhLech += tienGoi;
+            }
+            else
+            {
+                bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = PHIEUGOITIEN.SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEUGOITIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = 0, TongThu = tienGoi, ChenhLech = tienGoi };
+                DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
+            }
+            //
             DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
             DataProvider.Ins.DB.SaveChanges();
             List.Add(PHIEUGOITIEN);         
