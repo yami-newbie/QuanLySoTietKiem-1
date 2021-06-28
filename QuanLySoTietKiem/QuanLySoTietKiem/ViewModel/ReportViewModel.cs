@@ -136,7 +136,7 @@ namespace QuanLySoTietKiem.ViewModel
                             sb.AppendLine("STT, Thời gian ,Tổng sổ mở ,Tổng sổ đóng, Chênh lệch(Sổ)");
                             foreach (var item in List2)
                             {
-                              //  sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString("dd/M/yyyy"),item.SoMo, item.SoDong, item.ChenhLech2));
+                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString(),item.SoMo, item.SoDong, item.ChenhLech2));
 
                             }
                             await sw.WriteAsync(sb.ToString());

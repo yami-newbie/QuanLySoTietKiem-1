@@ -318,3 +318,5 @@ C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKi
 C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.csproj.CopyComplete
 C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.exe
 C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.pdb
+C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\RestoreCategoryView.g.cs
+C:\Users\DELL\Desktop\MetMoiSTK\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\RestoreCategoryView.baml
