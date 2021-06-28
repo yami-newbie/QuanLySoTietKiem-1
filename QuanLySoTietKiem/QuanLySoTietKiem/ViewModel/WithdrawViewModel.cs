@@ -288,6 +288,25 @@ namespace QuanLySoTietKiem.ViewModel
                 {
                     var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
                     DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
+                    //  var bcTheoNgay = DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Where(x => x.Ngay.Value.Day == DateTime.Now.Day&&x.Ngay.Value.Month==DateTime.Now.Month&&x.Ngay.Value.Year==DateTime.Now.Year).SingleOrDefault();
+                    var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+                    var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
+                    BCDOANHSOTHEONGAY bcaoNgay;
+
+                    if (check > 0)
+                    {
+                        bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
+                        bcaoNgay.TongChi += soTienRut;
+                        bcaoNgay.ChenhLech -= bcaoNgay.TongChi;
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                    else
+                    {
+                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = soTienRut };
+                        DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
+                  
                     DataProvider.Ins.DB.SaveChanges();
                     List.Add(PHIEURUTTIEN);
                     MaSo = "";

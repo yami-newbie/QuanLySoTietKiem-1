@@ -23,6 +23,12 @@
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaNhom" />
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo" />
         <AssociationConnector Association="QuanLySoTietKiemModel.FK_PHIEURUTTIEN_MaSo" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.BCMODONGSOTHANG" Width="1.5" PointX="3" PointY="14" />
+        <EntityTypeShape EntityType="QuanLySoTietKiemModel.CTBCMODONGSOTHANG" Width="1.5" PointX="5.25" PointY="13.875" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem" />
+        <AssociationConnector Association="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

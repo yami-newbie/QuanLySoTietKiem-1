@@ -18,6 +18,8 @@ namespace QuanLySoTietKiem.Model
         public LOAITIETKIEM()
         {
             this.SOTIETKIEMs = new HashSet<SOTIETKIEM>();
+            this.BCDOANHSOTHEONGAYs = new HashSet<BCDOANHSOTHEONGAY>();
+            this.BCMODONGSOTHANGs = new HashSet<BCMODONGSOTHANG>();
         }
     
         public int MaLoaiTietKiem { get; set; }
@@ -29,5 +31,9 @@ namespace QuanLySoTietKiem.Model
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BCDOANHSOTHEONGAY> BCDOANHSOTHEONGAYs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
     }
 }

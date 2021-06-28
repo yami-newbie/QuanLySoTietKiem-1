@@ -31,6 +31,8 @@ namespace QuanLySoTietKiem.ViewModel
         public ObservableCollection<PHIEUGOITIEN> ListGoiTien { get => _ListGoiTien; set { _ListGoiTien = value; OnPropertyChanged(); } }
         private ObservableCollection<PHIEURUTTIEN> _ListRutTien;
         public ObservableCollection<PHIEURUTTIEN> ListRutTien { get => _ListRutTien; set { _ListRutTien = value; OnPropertyChanged(); } }
+        private string _TenLoaiTietKiem;
+        public string TenLoaiTietKiem { get => _TenLoaiTietKiem; set { _TenLoaiTietKiem = value; OnPropertyChanged(); } }
 
         private LOAITIETKIEM _SelectedLoai;
         public LOAITIETKIEM SelectedLoai { get => _SelectedLoai; set { _SelectedLoai = value; CheckLTKvsThangvsNam(); OnPropertyChanged(); } }
@@ -78,8 +80,6 @@ namespace QuanLySoTietKiem.ViewModel
 
         public ReportViewModel()
         {
-
-            List1 = new ObservableCollection<ThongKe1>();
             List2 = new ObservableCollection<ThongKe2>();
             ListLoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs);
@@ -87,7 +87,7 @@ namespace QuanLySoTietKiem.ViewModel
             ListRutTien = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
             ExcelDate = new RelayCommand<object>((p) => { return true; }, async (p) =>
             {
-                if (List1.Count() > 0)
+                if (List1!=null)
                 {
                     SaveFileDialog saveFile = new SaveFileDialog();
                     saveFile.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm| CSV|*.csv";
@@ -100,9 +100,11 @@ namespace QuanLySoTietKiem.ViewModel
                             sb.AppendLine("BÁO CÁO THỐNG KÊ THEO NGÀY " + DateInput.Value.ToString("dd/MM/yyyy"));
                             //   sb.AppendLine("Thời gian xuất file: "+date);
                             sb.AppendLine("STT, Tên loại tiết kiệm ,Tổng thu(VNĐ), Tổng chi(VNĐ), Chênh lệch(VNĐ)");
+                            var i = 0;
                             foreach (var item in List1)
                             {
-                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.LoaiTietKiem, item.TongThu, item.TongChi, item.ChenhLech));
+                                i++;
+                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", i, item.LoaiTietKiem, item.TongThu, item.TongChi, item.ChenhLech));
 
                             }
                             await sw.WriteAsync(sb.ToString());
@@ -150,14 +152,37 @@ namespace QuanLySoTietKiem.ViewModel
         }
         public void CheckDateIn()
         {
-            List1.Clear();
-            int i = 0;
-            if (ListLoaiTietKiem.Count() > 0)
-                foreach (var _ltk in ListLoaiTietKiem)
+            if (List1 != null)
+            {
+                List1.Clear();
+            }
+            var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+            var ListCopy = new ObservableCollection<BCDOANHSOTHEONGAY>(bcaoList.Where(x => x.Ngay.Value.Date == DateInput.Value.Date));
+           
+            if (ListCopy.Count() < 1)
+            {
+                List1 = null;
+                MessageBox.Show("Không có thông tin để hiển thị", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (ListCopy.Count() > 0)
+            {
+                List1 = new ObservableCollection<ThongKe1>();
+                for(int i = 0; i < ListCopy.Count(); i++)
                 {
-                    i++;
-                    List1.Add(new ThongKe1 { STT = i, LoaiTietKiem = _ltk.TenLoaiTietKiem, TongThu = (int)TongTienGoi1Ngay(_ltk.TenLoaiTietKiem), TongChi = (int)TongTienRut1Ngay(_ltk.TenLoaiTietKiem), ChenhLech = (int)TongTienGoi1Ngay(_ltk.TenLoaiTietKiem) - (int)TongTienRut1Ngay(_ltk.TenLoaiTietKiem) });
+                    List1.Add(new ThongKe1 { STT = i + 1,LoaiTietKiem=ListCopy[i].LOAITIETKIEM1.TenLoaiTietKiem, TongThu= (int)ListCopy[i].TongThu,TongChi=(int)ListCopy[i].TongChi,ChenhLech=(int)ListCopy[i].ChenhLech });
                 }
+            }
+            /*  int i = 0;
+              if (ListLoaiTietKiem.Count() > 0)
+                  foreach (var _ltk in ListLoaiTietKiem)
+                  {
+                      i++;
+                      List1.Add(new ThongKe1 { STT = i, LoaiTietKiem = _ltk.TenLoaiTietKiem, TongThu = (int)TongTienGoi1Ngay(_ltk.TenLoaiTietKiem), TongChi = (int)TongTienRut1Ngay(_ltk.TenLoaiTietKiem), ChenhLech = (int)TongTienGoi1Ngay(_ltk.TenLoaiTietKiem) - (int)TongTienRut1Ngay(_ltk.TenLoaiTietKiem) });
+                  }*/
+            // var formatDateInput = String.Format("{0:d}", DateInput);
+
         }
         public void CheckLTKvsThangvsNam()
         {
