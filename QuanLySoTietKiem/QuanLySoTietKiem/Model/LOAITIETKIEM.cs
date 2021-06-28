@@ -17,6 +17,8 @@ namespace QuanLySoTietKiem.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LOAITIETKIEM()
         {
+            this.BCDOANHSOTHEONGAYs = new HashSet<BCDOANHSOTHEONGAY>();
+            this.BCMODONGSOTHANGs = new HashSet<BCMODONGSOTHANG>();
             this.SOTIETKIEMs = new HashSet<SOTIETKIEM>();
         }
     
@@ -27,6 +29,10 @@ namespace QuanLySoTietKiem.Model
         public Nullable<int> ThoiGianGoiToiThieu { get; set; }
         public Nullable<bool> PhaiRutToanBo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BCDOANHSOTHEONGAY> BCDOANHSOTHEONGAYs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }
     }

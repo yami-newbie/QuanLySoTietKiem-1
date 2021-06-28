@@ -25,7 +25,10 @@ namespace QuanLySoTietKiem.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BCDOANHSOTHEONGAY> BCDOANHSOTHEONGAYs { get; set; }
+        public virtual DbSet<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
         public virtual DbSet<CHUCNANG> CHUCNANGs { get; set; }
+        public virtual DbSet<CTBCMODONGSOTHANG> CTBCMODONGSOTHANGs { get; set; }
         public virtual DbSet<KHACHHANG> KHACHHANGs { get; set; }
         public virtual DbSet<LOAITIETKIEM> LOAITIETKIEMs { get; set; }
         public virtual DbSet<NGUOIDUNG> NGUOIDUNGs { get; set; }

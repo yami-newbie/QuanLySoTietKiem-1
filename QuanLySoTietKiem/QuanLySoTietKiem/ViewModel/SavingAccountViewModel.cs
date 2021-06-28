@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace QuanLySoTietKiem.ViewModel
             Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
             List = Init;
             ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == true));
-            LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs);
+            LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiXoa != true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddSavingAccountView add = new AddSavingAccountView(this);
@@ -209,13 +210,74 @@ namespace QuanLySoTietKiem.ViewModel
                 return;
             }
             var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
-            var goi = new PHIEUGOITIEN { MaSo = SOTIETKIEM.MaSo, SOTIETKIEM = SOTIETKIEM, NgayGoi = SOTIETKIEM.NgayMoSo, SoTienGoi = SOTIETKIEM.SoTienGoi };
+            // Thêm hoặc cập nhật báo cáo doah số ngày
+            var bcaoList = new List<BCDOANHSOTHEONGAY> (DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+            var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).Count();
+            BCDOANHSOTHEONGAY bcaoNgay;
+           
+            if (check > 0)
+            {
+                bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).First();
+                bcaoNgay.TongThu += soTienGoi;
+                bcaoNgay.ChenhLech += soTienGoi;
+            }
+            else
+            {
+                bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = SOTIETKIEM.LOAITIETKIEM, TongChi = 0, TongThu = soTienGoi, ChenhLech = soTienGoi };
+                DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
+            }
+            // Thêm hoặc cập nhật báo cáo đóng mở sổ tháng
+            List<BCMODONGSOTHANG> bcaoDongMoList = new List<BCMODONGSOTHANG>(DataProvider.Ins.DB.BCMODONGSOTHANGs);
+            var bcaoThangCount = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).Count();
+            CTBCMODONGSOTHANG ctbcThang;
+            BCMODONGSOTHANG bcaoThang;
+            if (bcaoThangCount > 0)
+            {
+                bcaoThang = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).First();
+                List<CTBCMODONGSOTHANG> ctbcThangList = new List<CTBCMODONGSOTHANG>(DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Where(x => x.MaBaoCaoMoDongSo == bcaoThang.MaBaoCaoMoDongSo));
+                var ctbcCount = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Count();
+                if (ctbcCount > 0)
+                {
+                    ctbcThang = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Single();
+                    ctbcThang.SoMo += 1;
+                    ctbcThang.ChenhLech += 1;
+                }
+                else
+                {
+                    ctbcThang = new CTBCMODONGSOTHANG { ChenhLech = 1, 
+                        SoMo = 1, 
+                        SoDong = 0, 
+                        BCMODONGSOTHANG = bcaoThang, 
+                        MaBaoCaoMoDongSo = bcaoThang.MaBaoCaoMoDongSo,
+                        Ngay = DateTime.Now.Day
+                    };
+                    DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
+                }
+            }
+            else
+            {
+               
+                bcaoThang = new BCMODONGSOTHANG {
+                    LoaiTietKiem = SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem,
+                    Nam = DateTime.Now.Year,
+                    Thang = DateTime.Now.Month,
+                    LOAITIETKIEM1 = SOTIETKIEM.LOAITIETKIEM,
+                };
+                DataProvider.Ins.DB.BCMODONGSOTHANGs.Add(bcaoThang);
+                ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = 1, SoDong = 0, SoMo = 1, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang};
+                DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
+            }
             DataProvider.Ins.DB.SOTIETKIEMs.Add(SOTIETKIEM);
-            DataProvider.Ins.DB.PHIEUGOITIENs.Add(goi);
             DataProvider.Ins.DB.SaveChanges();
+
             List.Add(SOTIETKIEM);
             ResetField();
             MessageBox.Show("Mở sổ tiết kiệm thành công!");
         }
+        private bool CompareDay(DateTime d1, DateTime d2)
+        {
+            return (d1.Year == d2.Year && d1.Month == d2.Month && d1.Day == d2.Day);
+        }
     }
+    
 }

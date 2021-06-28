@@ -134,7 +134,16 @@
     <Compile Include="MinimalDepositView.xaml.cs">
       <DependentUpon>MinimalDepositView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\BCDOANHSOTHEONGAY.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BCMODONGSOTHANG.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\CHUCNANG.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CTBCMODONGSOTHANG.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
