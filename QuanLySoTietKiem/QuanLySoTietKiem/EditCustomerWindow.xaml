@@ -31,6 +31,16 @@
                        Margin="16 16 16 4"
                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                        Text="Cập nhật khách hàng" />
+                <Button HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="White"
+                        Foreground="Red"
+                        Command="{Binding DeleteCommand}"
+                        CommandParameter="{Binding ElementName=window}"
+                        Style="{StaticResource MaterialDesignIconButton}" 
+                        ToolTip="Xóa loại tiết kiệm">
+                    <materialDesign:PackIcon Kind="Delete" />
+                </Button>
             </Grid>
             <Grid Margin="0,20,0,0" Grid.Row="1">
                 <Grid 

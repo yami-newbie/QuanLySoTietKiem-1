@@ -97,35 +97,36 @@ namespace QuanLySoTietKiem.ViewModel
                     MessageBox.Show("Không tìm thấy sổ tài khoản này!");
                     return;
                 }
+                var span = (DateTime.Now.Date - stk.NgayTinhLaiGanNhat.Value.Date).TotalDays;
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
-                    MessageBox.Show((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays.ToString());
-                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                    MessageBox.Show(span.ToString());
+                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(int)span / 36000);
                 }
                 else
                 {
-                    MessageBox.Show((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays.ToString ());
-                    if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    MessageBox.Show(span.ToString ());
+                    if (span < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
-                        MessageBox.Show("Chưa đến kì hạn tính lãi suất để có thể gửi tiền!");
+                        MessageBox.Show(
+                            "Chưa đến kì hạn tính lãi suất để có thể gửi tiền! Khoảng thời gian từ lúc cập nhật mới nhất cho đến bây giờ là  "
+                            + span.ToString() + " ngày! Cần " + (stk.LOAITIETKIEM.ThoiGianGoiToiThieu - (int)span).ToString() + " ngày nữa mới có thể gửi tiền!");
                         return;
                     }
-                    var koKiHan = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == "Không kì hạn").SingleOrDefault();
-                    if (koKiHan == null) return;
-                    var laiSuatKoKiHan = koKiHan.LaiSuat;
-                    int laiKiHan;
-                    int laiKhongKiHan;
-                    if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    if ((int)span % stk.LOAITIETKIEM.ThoiGianGoiToiThieu != 0)
                     {
-                        laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
-                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                        MessageBox.Show(
+                            "Chưa đến kì hạn tính lãi suất để có thể gửi tiền! Khoảng thời gian từ lúc cập nhật mới nhất cho đến bây giờ là "
+                            + span.ToString() + " ngày! Cần " + (stk.LOAITIETKIEM.ThoiGianGoiToiThieu - (int)span % stk.LOAITIETKIEM.ThoiGianGoiToiThieu) .ToString() + " ngày nữa mới có thể gửi tiền!");
+                        return;
                     }
-                    else
+                    int soLanDaoHan = (int)span /(int) stk.LOAITIETKIEM.ThoiGianGoiToiThieu;
+                    int stg = (int)stk.SoTienGoi;
+                    for (int i = 0; i < soLanDaoHan; i++)
                     {
-                        laiKiHan = 0;
-                        laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (decimal)(int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
+                        tienLai = (int)((decimal)stg * (decimal)stk.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+                        stg += tienLai;
                     }
-                    tienLai = laiKiHan + laiKhongKiHan;
                 }
                 TenKhachHang = stk.KHACHHANG.TenKhachHang;
                 CMND = stk.KHACHHANG.CMND;

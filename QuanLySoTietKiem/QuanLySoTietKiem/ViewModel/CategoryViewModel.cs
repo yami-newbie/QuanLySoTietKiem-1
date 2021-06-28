@@ -15,6 +15,8 @@ namespace QuanLySoTietKiem.ViewModel
     {
         private ObservableCollection<LOAITIETKIEM> _List;
         public ObservableCollection<LOAITIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
+        private ObservableCollection<LOAITIETKIEM> _ListDaDong;
+        public ObservableCollection<LOAITIETKIEM> ListDaDong { get => _ListDaDong; set { _ListDaDong = value; OnPropertyChanged(); } }
         private ObservableCollection<string> _YesNo;
         public ObservableCollection<string> YesNo { get => _YesNo; set { _YesNo = value; OnPropertyChanged(); } }
         private string _SelectedYesNo;
@@ -37,9 +39,14 @@ namespace QuanLySoTietKiem.ViewModel
         public string ThoiGianGoiToiThieu { get => _ThoiGianGoiToiThieu; set { _ThoiGianGoiToiThieu = value; OnPropertyChanged(); } }
         private string _LaiSuat;
         public string LaiSuat { get => _LaiSuat; set { _LaiSuat = value; OnPropertyChanged(); } }
+        private LOAITIETKIEM _SelectedItemDaXoa;
+        public LOAITIETKIEM SelectedItemDaXoa { get => _SelectedItemDaXoa; set { _SelectedItemDaXoa = value; OnPropertyChanged(); } }
         public ICommand AddFormCommand { get; set; }
         public ICommand EditFormCommand { get; set; }
+        public ICommand RestoreFormCommand { get; set; }
+        public ICommand RestoreCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
+        public ICommand DeletePerformantlyCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
         public ICommand SaveEditCommand { get; set; }
@@ -47,6 +54,7 @@ namespace QuanLySoTietKiem.ViewModel
         {
             YesNo = new ObservableCollection<string> {"Có", "Không"};
             List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiDong != true));
+            ListDaDong = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiDong == true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ResetField();
@@ -54,22 +62,76 @@ namespace QuanLySoTietKiem.ViewModel
                 AddCategoryView add = new AddCategoryView();
                 add.ShowDialog();
             });
+            RestoreFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                RestoreCategoryView restore = new RestoreCategoryView(this);
+                restore.ShowDialog();
+            });
+            RestoreCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                {
+                    var result = MessageBox.Show("Bạn có muốn phục hồi loại tiết kiệm này không?", "Phục hồi", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItemDaXoa.MaLoaiTietKiem).SingleOrDefault();
+                        if (ltk != null)
+                        {
+                            ltk.BiDong = false;
+                            DataProvider.Ins.DB.SaveChanges();
+                            List.Add(SelectedItemDaXoa);
+                            ListDaDong.Remove(SelectedItemDaXoa);
+                            SelectedItemDaXoa = null;
+                        }
+                    }
+                }
+            });
             DeleteCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 if (SelectedItem != null)
                 {
-                    var result = MessageBox.Show("Bạn có muốn xóa loại tiết kiệm  này không (Tất cả dữ liệu của loại tiết kiệm này vẫn sẽ tồn tại)?", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    var result = MessageBox.Show("Bạn có muốn ngưng hoạt động loại tiết kiệm  này không ?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (result == MessageBoxResult.Yes)
                     {
                         var ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItem.MaLoaiTietKiem).SingleOrDefault();
                         ltk.BiDong = true;
                         DataProvider.Ins.DB.SaveChanges();
                         List.Remove(ltk);
-                        MessageBox.Show("Xóa thành công!");
+                        ListDaDong = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiDong == true));
+                        MessageBox.Show("Ngưng hoạt động loại tiết kiệm này thành công!");
                         p.Close();
                     }
                 }
             });
+            DeletePerformantlyCommand = new RelayCommand<object>(
+                (p) =>
+                {
+                    if (SelectedItemDaXoa == null) return false;
+                    return true;
+                },
+                (p) =>
+                {
+                    var check = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItemDaXoa.MaLoaiTietKiem && x.BiDong != true).Count();
+                    if (check > 0)
+                    {
+                        MessageBox.Show("Bạn không thể xóa loại tiết kiệm  này vì vẫn còn sổ tiết kiệm đang hoạt động sử dụng đến nó", "Nhắc nhở", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    var result = MessageBox.Show("Bạn có muốn xóa loại tiết kiệm này vĩnh viễn không? (Tất cả dữ liệu đi kèm  sẽ bị xóa)", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+
+                        var ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItemDaXoa.MaLoaiTietKiem).SingleOrDefault();
+                        if (ltk != null)
+                        {
+                            DataProvider.Ins.DB.LOAITIETKIEMs.Remove(ltk);
+                            DataProvider.Ins.DB.SaveChanges();
+                            ListDaDong.Remove(SelectedItemDaXoa);
+                            SelectedItemDaXoa = null;
+                            MessageBox.Show("Xóa loại tiết kiệm thành công");
+                        }
+                    }
+                });
             EditFormCommand = new RelayCommand<object>((p) => { return (SelectedItem != null); }, (p) =>
             {
 

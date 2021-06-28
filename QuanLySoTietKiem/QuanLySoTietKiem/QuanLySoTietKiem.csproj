@@ -195,6 +195,9 @@
     <Compile Include="ReportView.xaml.cs">
       <DependentUpon>ReportView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RestoreCategoryView.xaml.cs">
+      <DependentUpon>RestoreCategoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RestoreSavingAccountView.xaml.cs">
       <DependentUpon>RestoreSavingAccountView.xaml</DependentUpon>
     </Compile>
@@ -316,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RestoreCategoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

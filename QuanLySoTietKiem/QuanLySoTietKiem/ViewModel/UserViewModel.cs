@@ -65,13 +65,14 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    var result = MessageBox.Show("Bạn có muốn vô hiệu hóa tài khoản này không?", "Vô hiệu hóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    var result = MessageBox.Show("Bạn có muốn xóa tài khoản này không?", "Cảnh báo", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (result == MessageBoxResult.Yes)
                     {
                         var user = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItem.TenDangNhap).SingleOrDefault();
-                        //user.BiXoa = true;
+                        DataProvider.Ins.DB.NGUOIDUNGs.Remove(user);
                         DataProvider.Ins.DB.SaveChanges();
                         List.Remove(user);
+                        MessageBox.Show("Xóa người dùng thành công!");
                         p.Close();
                     }
                 }
