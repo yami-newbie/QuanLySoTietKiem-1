@@ -24,12 +24,20 @@
         <Grid Grid.Row="0" >
             <materialDesign:Card>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button     
+                    <Button   
+                        Margin="0 0 5 0"
                     Command="{Binding AddFormCommand}"
                     HorizontalAlignment="Right"            
                     Style="{DynamicResource MaterialDesignRaisedButton}"          
                     Background="Blue">
                         <materialDesign:PackIcon Kind="Add" Width="20" Height="20"/>
+                    </Button>
+                    <Button     
+                    Command="{Binding RestoreFormCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    Background="Green">
+                        <materialDesign:PackIcon Kind="Restore" Width="20" Height="20"/>
                     </Button>
                 </StackPanel>
             </materialDesign:Card>

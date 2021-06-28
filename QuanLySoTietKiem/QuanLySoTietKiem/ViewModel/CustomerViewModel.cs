@@ -35,6 +35,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand AddFormCommand { get; set; }
         public ICommand EditFormCommand { get; set; }
         public ICommand ExitCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand SaveEditCommand { get; set; }
@@ -67,8 +68,29 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 p.Close();
             });
-           
-        
+            DeleteCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItem != null)
+                {
+                    var check = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.KHACHHANG.MaKhachHang == SelectedItem.MaKhachHang && x.BiDong != true).Count();
+                    if (check > 0)
+                    {
+                        MessageBox.Show("Bạn không thể xóa khách hàng này vì khách hàng này vẫn còn sổ tiết kiệm đang hoạt động", "Nhắc nhở", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    var result = MessageBox.Show("Bạn có chắc chắn xóa khách hàng này không ?", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.MaKhachHang == SelectedItem.MaKhachHang).SingleOrDefault();
+                        DataProvider.Ins.DB.KHACHHANGs.Remove(kh);
+                        DataProvider.Ins.DB.SaveChanges();
+                        List.Remove(kh);
+                        MessageBox.Show("Xóa thành công!");
+                        p.Close();
+                    }
+                }
+            });
+
             SaveAddCommand = new RelayCommand<object>(
                 (p) =>
                 {

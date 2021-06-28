@@ -17,8 +17,8 @@ namespace QuanLySoTietKiem.ViewModel
         public ObservableCollection<SOTIETKIEM> List { get => _List; set { _List = value; OnPropertyChanged(); } }
         private ObservableCollection<SOTIETKIEM> _Init;
         public ObservableCollection<SOTIETKIEM> Init { get => _Init; set { _Init = value; OnPropertyChanged(); } }
-        private ObservableCollection<SOTIETKIEM> _ListDaXoa;
-        public ObservableCollection<SOTIETKIEM> ListDaXoa { get => _ListDaXoa; set { _ListDaXoa = value; OnPropertyChanged(); } }
+        private ObservableCollection<SOTIETKIEM> _ListDaDong;
+        public ObservableCollection<SOTIETKIEM> ListDaDong { get => _ListDaDong; set { _ListDaDong = value; OnPropertyChanged(); } }
         private ObservableCollection<LOAITIETKIEM> _LoaiTietKiem;
         public ObservableCollection<LOAITIETKIEM> LoaiTietKiem { get => _LoaiTietKiem; set { _LoaiTietKiem = value; OnPropertyChanged(); } }
         private String[] _FilterList;
@@ -57,7 +57,7 @@ namespace QuanLySoTietKiem.ViewModel
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
             Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong != true));
             List = Init;
-            ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong == true));
+            ListDaDong = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong == true));
             LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiDong != true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -87,7 +87,7 @@ namespace QuanLySoTietKiem.ViewModel
                             stk.BiDong = false;
                             DataProvider.Ins.DB.SaveChanges();
                             List.Add(SelectedItemDaXoa);
-                            ListDaXoa.Remove(SelectedItemDaXoa);
+                            ListDaDong.Remove(SelectedItemDaXoa);
                             SelectedItemDaXoa = null;
                         }
                     }
@@ -101,7 +101,7 @@ namespace QuanLySoTietKiem.ViewModel
                 },
                 (p) =>
                 {
-                    var result = MessageBox.Show("Bạn có muốn xóa sổ tiết kiệm này vĩnh viễn không?", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+                    var result = MessageBox.Show("Bạn có muốn xóa sổ tiết kiệm này vĩnh viễn không? (Tất cả dữ liệu đi kèm của sổ sẽ bị xóa)", "Xóa", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
                     if (result == MessageBoxResult.Yes)
                     {
                         var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItemDaXoa.MaSo).SingleOrDefault();
@@ -109,8 +109,9 @@ namespace QuanLySoTietKiem.ViewModel
                         { 
                             DataProvider.Ins.DB.SOTIETKIEMs.Remove(stk);
                             DataProvider.Ins.DB.SaveChanges();
-                            ListDaXoa.Remove(SelectedItemDaXoa);
+                            ListDaDong.Remove(SelectedItemDaXoa);
                             SelectedItemDaXoa = null;
+                            MessageBox.Show("Xóa sổ tiết kiệm thành công");
                         }
                     }
                 });
@@ -209,7 +210,7 @@ namespace QuanLySoTietKiem.ViewModel
                 MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.GiaTri.ToString());
                 return;
             }
-            var SOTIETKIEM = new SOTIETKIEM { NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
+            var SOTIETKIEM = new SOTIETKIEM { LaiSuat = SelectedLoai.LaiSuat, NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
             // Thêm hoặc cập nhật báo cáo doah số ngày
             var bcaoList = new List<BCDOANHSOTHEONGAY> (DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
             var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == SOTIETKIEM.LOAITIETKIEM.MaLoaiTietKiem).Count();
@@ -267,6 +268,7 @@ namespace QuanLySoTietKiem.ViewModel
                 ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = 1, SoDong = 0, SoMo = 1, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang};
                 DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
             }
+            //
             DataProvider.Ins.DB.SOTIETKIEMs.Add(SOTIETKIEM);
             DataProvider.Ins.DB.SaveChanges();
 
