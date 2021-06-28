@@ -244,7 +244,7 @@ namespace QuanLySoTietKiem.ViewModel
             int sumTongSoDong = 1;
             int stt = 0;
             var listSoMo = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayMoSo.Value.Month == soThang && x.NgayMoSo.Value.Year == soNam).OrderBy(v => v.NgayMoSo));
-            var listSoDong = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayTinhLaiGanNhat.Value.Month == soThang && x.NgayTinhLaiGanNhat.Value.Year == soNam && x.BiXoa == true).OrderBy(v => v.NgayTinhLaiGanNhat));
+            var listSoDong = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayTinhLaiGanNhat.Value.Month == soThang && x.NgayTinhLaiGanNhat.Value.Year == soNam && x.BiDong == true).OrderBy(v => v.NgayTinhLaiGanNhat));
             //  var listSoMo = (ObservableCollection<SOTIETKIEM>)ListSTK.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayMoSo.Value.Month==soThang &&x.BiXoa!=true).OrderBy(v=>v.NgayMoSo);
             // var listSoDong = ListSTK.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayTinhLaiGanNhat.Value.Month == soThang &&x.BiXoa==true).OrderBy(v => v.NgayTinhLaiGanNhat);
             List3 = new ObservableCollection<ThongKe2>();
@@ -412,7 +412,7 @@ namespace QuanLySoTietKiem.ViewModel
         public int TongSoDong(string strLoaiTietKiem, int soThang)
         {
             int sumTongSo = 0;
-            var inputSTK = ListSTK.Where(x => x.BiXoa == true);
+            var inputSTK = ListSTK.Where(x => x.BiDong == true);
             foreach (var item in inputSTK)
             {
                 DateTime ngayTinhLaiGanNhat = (DateTime)item.NgayTinhLaiGanNhat;

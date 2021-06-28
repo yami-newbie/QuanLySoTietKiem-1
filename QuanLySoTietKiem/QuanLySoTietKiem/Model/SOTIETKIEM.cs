@@ -26,8 +26,9 @@ namespace QuanLySoTietKiem.Model
         public int MaKhachHang { get; set; }
         public Nullable<System.DateTime> NgayMoSo { get; set; }
         public Nullable<int> SoTienGoi { get; set; }
-        public Nullable<bool> BiXoa { get; set; }
+        public Nullable<bool> BiDong { get; set; }
         public Nullable<System.DateTime> NgayTinhLaiGanNhat { get; set; }
+        public Nullable<decimal> LaiSuat { get; set; }
     
         public virtual KHACHHANG KHACHHANG { get; set; }
         public virtual LOAITIETKIEM LOAITIETKIEM { get; set; }

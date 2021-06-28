@@ -90,7 +90,7 @@ namespace QuanLySoTietKiem.ViewModel
                 });
             SearchMaSoCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiXoa != true).SingleOrDefault();
+                stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo.ToString() == MaSo && x.BiDong != true).SingleOrDefault();
 
                 if (stk == null)
                 {
@@ -165,13 +165,13 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x =>  x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
                             break;
                         case "Mã sổ tiết kiệm":
-                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x =>  x.MaSo.ToString().Contains(Query)));
                             break;
                         case "Loại tiết kiệm":
-                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            List = new ObservableCollection<PHIEUGOITIEN>(List.Where(x =>  x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
                             break;
                     }
                 }

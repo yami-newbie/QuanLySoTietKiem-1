@@ -48,7 +48,7 @@ namespace QuanLySoTietKiem.ViewModel
             List = new ObservableCollection<BieuDo1>();
             ListGoiTien = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
             ListRutTien = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
-            ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x=>x.BiXoa!=true));
+            ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x=>x.BiDong != true));
             TinhTongTungLoaiTietKiem();
 
             //also adding values updates and animates the chart automatically
@@ -63,7 +63,7 @@ namespace QuanLySoTietKiem.ViewModel
         public void TinhTongTungLoaiTietKiem()
         {
             SeriesCollection1 = new SeriesCollection();
-            var LoaiSTK = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiXoa!=true);
+            var LoaiSTK = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiDong!=true);
             int count = 0;
             foreach(var loaitk in LoaiSTK)
             {
@@ -139,8 +139,8 @@ namespace QuanLySoTietKiem.ViewModel
         public void TinhCacCount()
         {
             countCus = DataProvider.Ins.DB.KHACHHANGs.Count();
-            countSoMo = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true).Count();
-            countSoDong = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == true).Count();
+            countSoMo = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong != true).Count();
+            countSoDong = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong == true).Count();
         }
     }
     public class BieuDo1

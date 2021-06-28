@@ -18,7 +18,6 @@ namespace QuanLySoTietKiem.Model
         public int MaSo { get; set; }
         public Nullable<System.DateTime> NgayRut { get; set; }
         public Nullable<int> SoTienRut { get; set; }
-        public Nullable<bool> BiXoa { get; set; }
     
         public virtual SOTIETKIEM SOTIETKIEM { get; set; }
     }

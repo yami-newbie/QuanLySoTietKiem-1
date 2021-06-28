@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QuanLySoTietKiemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QuanLySoTietKiemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BCDOANHSOTHEONGAY">
           <Key>
             <PropertyRef Name="MaBaoCaoDoanhSo" />
@@ -61,7 +61,7 @@
           </Key>
           <Property Name="MaLoaiTietKiem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenLoaiTietKiem" Type="nvarchar" MaxLength="40" />
-          <Property Name="BiXoa" Type="bit" />
+          <Property Name="BiDong" Type="bit" />
           <Property Name="LaiSuat" Type="numeric" Precision="5" Scale="4" />
           <Property Name="ThoiGianGoiToiThieu" Type="int" />
           <Property Name="PhaiRutToanBo" Type="bit" />
@@ -73,7 +73,6 @@
           <Property Name="TenDangNhap" Type="nvarchar" MaxLength="40" Nullable="false" />
           <Property Name="MatKhau" Type="nvarchar" MaxLength="100" />
           <Property Name="MaNhom" Type="int" />
-          <Property Name="BiXoa" Type="bit" />
           <Property Name="TenThat" Type="nvarchar" MaxLength="40" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
@@ -82,7 +81,6 @@
           </Key>
           <Property Name="MaNhom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TenNhom" Type="nvarchar" MaxLength="40" />
-          <Property Name="BiXoa" Type="bit" />
         </EntityType>
         <EntityType Name="PHANQUYEN">
           <Key>
@@ -91,7 +89,6 @@
           </Key>
           <Property Name="MaNhom" Type="int" Nullable="false" />
           <Property Name="MaChucNang" Type="int" Nullable="false" />
-          <Property Name="BiXoa" Type="bit" />
         </EntityType>
         <EntityType Name="PHIEUGOITIEN">
           <Key>
@@ -101,7 +98,6 @@
           <Property Name="MaSo" Type="int" Nullable="false" />
           <Property Name="NgayGoi" Type="smalldatetime" />
           <Property Name="SoTienGoi" Type="int" />
-          <Property Name="BiXoa" Type="bit" />
         </EntityType>
         <EntityType Name="PHIEURUTTIEN">
           <Key>
@@ -111,7 +107,6 @@
           <Property Name="MaSo" Type="int" Nullable="false" />
           <Property Name="NgayRut" Type="smalldatetime" />
           <Property Name="SoTienRut" Type="int" />
-          <Property Name="BiXoa" Type="bit" />
         </EntityType>
         <EntityType Name="SOTIETKIEM">
           <Key>
@@ -122,8 +117,9 @@
           <Property Name="MaKhachHang" Type="int" Nullable="false" />
           <Property Name="NgayMoSo" Type="smalldatetime" />
           <Property Name="SoTienGoi" Type="int" />
-          <Property Name="BiXoa" Type="bit" />
+          <Property Name="BiDong" Type="bit" />
           <Property Name="NgayTinhLaiGanNhat" Type="smalldatetime" />
+          <Property Name="LaiSuat" Type="numeric" Precision="5" Scale="4" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -338,81 +334,11 @@
             <End Role="SOTIETKIEM" EntitySet="SOTIETKIEM" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLySoTietKiemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="QuanLySoTietKiemEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BCDOANHSOTHEONGAYs" EntityType="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY" />
-          <EntitySet Name="BCMODONGSOTHANGs" EntityType="QuanLySoTietKiemModel.BCMODONGSOTHANG" />
-          <EntitySet Name="CHUCNANGs" EntityType="QuanLySoTietKiemModel.CHUCNANG" />
-          <EntitySet Name="CTBCMODONGSOTHANGs" EntityType="QuanLySoTietKiemModel.CTBCMODONGSOTHANG" />
-          <EntitySet Name="KHACHHANGs" EntityType="QuanLySoTietKiemModel.KHACHHANG" />
-          <EntitySet Name="LOAITIETKIEMs" EntityType="QuanLySoTietKiemModel.LOAITIETKIEM" />
-          <EntitySet Name="NGUOIDUNGs" EntityType="QuanLySoTietKiemModel.NGUOIDUNG" />
-          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="QuanLySoTietKiemModel.NHOMNGUOIDUNG" />
-          <EntitySet Name="PHANQUYENs" EntityType="QuanLySoTietKiemModel.PHANQUYEN" />
-          <EntitySet Name="PHIEUGOITIENs" EntityType="QuanLySoTietKiemModel.PHIEUGOITIEN" />
-          <EntitySet Name="PHIEURUTTIENs" EntityType="QuanLySoTietKiemModel.PHIEURUTTIEN" />
-          <EntitySet Name="SOTIETKIEMs" EntityType="QuanLySoTietKiemModel.SOTIETKIEM" />
-          <EntitySet Name="sysdiagrams" EntityType="QuanLySoTietKiemModel.sysdiagram" />
-          <EntitySet Name="THAMSOes" EntityType="QuanLySoTietKiemModel.THAMSO" />
-          <AssociationSet Name="FK_BCDOANHSOTHEONGAY_LoaiTietKiem" Association="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="BCDOANHSOTHEONGAY" EntitySet="BCDOANHSOTHEONGAYs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BCMODONGSOTHANG_LoaiTietKiem" Association="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" Association="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo">
-            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
-            <End Role="CTBCMODONGSOTHANG" EntitySet="CTBCMODONGSOTHANGs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHANQUYEN_MaChucNang" Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang">
-            <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
-            <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SOTIETKIEM_MaKhachHang" Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang">
-            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SOTIETKIEM_MaLoaiTietKiem" Association="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_NGUOIDUNG_MaNhom" Association="QuanLySoTietKiemModel.FK_NGUOIDUNG_MaNhom">
-            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
-            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHANQUYEN_MaNhom" Association="QuanLySoTietKiemModel.FK_PHANQUYEN_MaNhom">
-            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
-            <End Role="PHANQUYEN" EntitySet="PHANQUYENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHIEUGOITIEN_MaSo" Association="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo">
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-            <End Role="PHIEUGOITIEN" EntitySet="PHIEUGOITIENs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PHIEURUTTIEN_MaSo" Association="QuanLySoTietKiemModel.FK_PHIEURUTTIEN_MaSo">
-            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
-            <End Role="PHIEURUTTIEN" EntitySet="PHIEURUTTIENs" />
-          </AssociationSet>
-          <EntitySet Name="BCDOANHSOTHEONGAYs" EntityType="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY" />
-          <EntitySet Name="BCMODONGSOTHANGs" EntityType="QuanLySoTietKiemModel.BCMODONGSOTHANG" />
-          <EntitySet Name="CTBCMODONGSOTHANGs" EntityType="QuanLySoTietKiemModel.CTBCMODONGSOTHANG" />
-          <AssociationSet Name="FK_BCDOANHSOTHEONGAY_LoaiTietKiem" Association="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="BCDOANHSOTHEONGAY" EntitySet="BCDOANHSOTHEONGAYs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BCMODONGSOTHANG_LoaiTietKiem" Association="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem">
-            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
-            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" Association="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo">
-            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
-            <End Role="CTBCMODONGSOTHANG" EntitySet="CTBCMODONGSOTHANGs" />
-          </AssociationSet>
-        </EntityContainer>
         <EntityType Name="BCDOANHSOTHEONGAY">
           <Key>
             <PropertyRef Name="MaBaoCaoDoanhSo" />
@@ -423,7 +349,7 @@
           <Property Name="TongThu" Type="Int32" />
           <Property Name="TongChi" Type="Int32" />
           <Property Name="ChenhLech" Type="Int32" />
-          <NavigationProperty Name="LOAITIETKIEM1" Relationship="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="BCDOANHSOTHEONGAY" ToRole="LOAITIETKIEM" />
+          <NavigationProperty Name="LOAITIETKIEM1" Relationship="Self.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="BCDOANHSOTHEONGAY" ToRole="LOAITIETKIEM" />
         </EntityType>
         <EntityType Name="BCMODONGSOTHANG">
           <Key>
@@ -433,8 +359,8 @@
           <Property Name="LoaiTietKiem" Type="Int32" />
           <Property Name="Thang" Type="Int32" />
           <Property Name="Nam" Type="Int32" />
-          <NavigationProperty Name="LOAITIETKIEM1" Relationship="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="BCMODONGSOTHANG" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="CTBCMODONGSOTHANGs" Relationship="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="BCMODONGSOTHANG" ToRole="CTBCMODONGSOTHANG" />
+          <NavigationProperty Name="LOAITIETKIEM1" Relationship="Self.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="BCMODONGSOTHANG" ToRole="LOAITIETKIEM" />
+          <NavigationProperty Name="CTBCMODONGSOTHANGs" Relationship="Self.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="BCMODONGSOTHANG" ToRole="CTBCMODONGSOTHANG" />
         </EntityType>
         <EntityType Name="CHUCNANG">
           <Key>
@@ -444,7 +370,7 @@
           <Property Name="TenChucNang" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="TenManHinhDuocLoad" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="PHANQUYENs" Relationship="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang" FromRole="CHUCNANG" ToRole="PHANQUYEN" />
+          <NavigationProperty Name="NHOMNGUOIDUNGs" Relationship="Self.PHANQUYEN" FromRole="CHUCNANG" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="CTBCMODONGSOTHANG">
           <Key>
@@ -456,7 +382,7 @@
           <Property Name="SoMo" Type="Int32" />
           <Property Name="SoDong" Type="Int32" />
           <Property Name="ChenhLech" Type="Int32" />
-          <NavigationProperty Name="BCMODONGSOTHANG" Relationship="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="CTBCMODONGSOTHANG" ToRole="BCMODONGSOTHANG" />
+          <NavigationProperty Name="BCMODONGSOTHANG" Relationship="Self.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="CTBCMODONGSOTHANG" ToRole="BCMODONGSOTHANG" />
         </EntityType>
         <EntityType Name="KHACHHANG">
           <Key>
@@ -467,7 +393,7 @@
           <Property Name="CMND" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="DiaChi" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="SOTIETKIEMs" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang" FromRole="KHACHHANG" ToRole="SOTIETKIEM" />
+          <NavigationProperty Name="SOTIETKIEMs" Relationship="Self.FK_SOTIETKIEM_MaKhachHang" FromRole="KHACHHANG" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="LOAITIETKIEM">
           <Key>
@@ -475,26 +401,23 @@
           </Key>
           <Property Name="MaLoaiTietKiem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenLoaiTietKiem" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="BiXoa" Type="Boolean" />
+          <Property Name="BiDong" Type="Boolean" />
           <Property Name="LaiSuat" Type="Decimal" Precision="5" Scale="4" />
           <Property Name="ThoiGianGoiToiThieu" Type="Int32" />
           <Property Name="PhaiRutToanBo" Type="Boolean" />
-          <NavigationProperty Name="BCDOANHSOTHEONGAYs" Relationship="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCDOANHSOTHEONGAY" />
-          <NavigationProperty Name="BCMODONGSOTHANGs" Relationship="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCMODONGSOTHANG" />
-          <NavigationProperty Name="SOTIETKIEMs" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
-          <NavigationProperty Name="BCDOANHSOTHEONGAYs" Relationship="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCDOANHSOTHEONGAY" />
-          <NavigationProperty Name="BCMODONGSOTHANGs" Relationship="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCMODONGSOTHANG" />
+          <NavigationProperty Name="BCDOANHSOTHEONGAYs" Relationship="Self.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCDOANHSOTHEONGAY" />
+          <NavigationProperty Name="BCMODONGSOTHANGs" Relationship="Self.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="BCMODONGSOTHANG" />
+          <NavigationProperty Name="SOTIETKIEMs" Relationship="Self.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="LOAITIETKIEM" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="NGUOIDUNG">
           <Key>
             <PropertyRef Name="TenDangNhap" />
           </Key>
-          <Property Name="TenDangNhap" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="TenDangNhap" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MaNhom" Type="Int32" />
-          <Property Name="BiXoa" Type="Boolean" />
           <Property Name="TenThat" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QuanLySoTietKiemModel.FK_NGUOIDUNG_MaNhom" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
+          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="Self.FK_NGUOIDUNG_MaNhom" FromRole="NGUOIDUNG" ToRole="NHOMNGUOIDUNG" />
         </EntityType>
         <EntityType Name="NHOMNGUOIDUNG">
           <Key>
@@ -502,20 +425,8 @@
           </Key>
           <Property Name="MaNhom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenNhom" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="NGUOIDUNGs" Relationship="QuanLySoTietKiemModel.FK_NGUOIDUNG_MaNhom" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
-          <NavigationProperty Name="PHANQUYENs" Relationship="QuanLySoTietKiemModel.FK_PHANQUYEN_MaNhom" FromRole="NHOMNGUOIDUNG" ToRole="PHANQUYEN" />
-        </EntityType>
-        <EntityType Name="PHANQUYEN">
-          <Key>
-            <PropertyRef Name="MaNhom" />
-            <PropertyRef Name="MaChucNang" />
-          </Key>
-          <Property Name="MaNhom" Type="Int32" Nullable="false" />
-          <Property Name="MaChucNang" Type="Int32" Nullable="false" />
-          <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="CHUCNANG" Relationship="QuanLySoTietKiemModel.FK_PHANQUYEN_MaChucNang" FromRole="PHANQUYEN" ToRole="CHUCNANG" />
-          <NavigationProperty Name="NHOMNGUOIDUNG" Relationship="QuanLySoTietKiemModel.FK_PHANQUYEN_MaNhom" FromRole="PHANQUYEN" ToRole="NHOMNGUOIDUNG" />
+          <NavigationProperty Name="NGUOIDUNGs" Relationship="Self.FK_NGUOIDUNG_MaNhom" FromRole="NHOMNGUOIDUNG" ToRole="NGUOIDUNG" />
+          <NavigationProperty Name="CHUCNANGs" Relationship="Self.PHANQUYEN" FromRole="NHOMNGUOIDUNG" ToRole="CHUCNANG" />
         </EntityType>
         <EntityType Name="PHIEUGOITIEN">
           <Key>
@@ -525,8 +436,7 @@
           <Property Name="MaSo" Type="Int32" Nullable="false" />
           <Property Name="NgayGoi" Type="DateTime" Precision="0" />
           <Property Name="SoTienGoi" Type="Int32" />
-          <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="SOTIETKIEM" Relationship="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo" FromRole="PHIEUGOITIEN" ToRole="SOTIETKIEM" />
+          <NavigationProperty Name="SOTIETKIEM" Relationship="Self.FK_PHIEUGOITIEN_MaSo" FromRole="PHIEUGOITIEN" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="PHIEURUTTIEN">
           <Key>
@@ -536,8 +446,7 @@
           <Property Name="MaSo" Type="Int32" Nullable="false" />
           <Property Name="NgayRut" Type="DateTime" Precision="0" />
           <Property Name="SoTienRut" Type="Int32" />
-          <Property Name="BiXoa" Type="Boolean" />
-          <NavigationProperty Name="SOTIETKIEM" Relationship="QuanLySoTietKiemModel.FK_PHIEURUTTIEN_MaSo" FromRole="PHIEURUTTIEN" ToRole="SOTIETKIEM" />
+          <NavigationProperty Name="SOTIETKIEM" Relationship="Self.FK_PHIEURUTTIEN_MaSo" FromRole="PHIEURUTTIEN" ToRole="SOTIETKIEM" />
         </EntityType>
         <EntityType Name="SOTIETKIEM">
           <Key>
@@ -548,18 +457,19 @@
           <Property Name="MaKhachHang" Type="Int32" Nullable="false" />
           <Property Name="NgayMoSo" Type="DateTime" Precision="0" />
           <Property Name="SoTienGoi" Type="Int32" />
-          <Property Name="BiXoa" Type="Boolean" />
+          <Property Name="BiDong" Type="Boolean" />
           <Property Name="NgayTinhLaiGanNhat" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="KHACHHANG" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaKhachHang" FromRole="SOTIETKIEM" ToRole="KHACHHANG" />
-          <NavigationProperty Name="LOAITIETKIEM" Relationship="QuanLySoTietKiemModel.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="PHIEUGOITIENs" Relationship="QuanLySoTietKiemModel.FK_PHIEUGOITIEN_MaSo" FromRole="SOTIETKIEM" ToRole="PHIEUGOITIEN" />
-          <NavigationProperty Name="PHIEURUTTIENs" Relationship="QuanLySoTietKiemModel.FK_PHIEURUTTIEN_MaSo" FromRole="SOTIETKIEM" ToRole="PHIEURUTTIEN" />
+          <Property Name="LaiSuat" Type="Decimal" Precision="5" Scale="4" />
+          <NavigationProperty Name="KHACHHANG" Relationship="Self.FK_SOTIETKIEM_MaKhachHang" FromRole="SOTIETKIEM" ToRole="KHACHHANG" />
+          <NavigationProperty Name="LOAITIETKIEM" Relationship="Self.FK_SOTIETKIEM_MaLoaiTietKiem" FromRole="SOTIETKIEM" ToRole="LOAITIETKIEM" />
+          <NavigationProperty Name="PHIEUGOITIENs" Relationship="Self.FK_PHIEUGOITIEN_MaSo" FromRole="SOTIETKIEM" ToRole="PHIEUGOITIEN" />
+          <NavigationProperty Name="PHIEURUTTIENs" Relationship="Self.FK_PHIEURUTTIEN_MaSo" FromRole="SOTIETKIEM" ToRole="PHIEURUTTIEN" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -569,14 +479,14 @@
           <Key>
             <PropertyRef Name="TenThamSo" />
           </Key>
-          <Property Name="TenThamSo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="TenThamSo" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GiaTri" Type="Int32" />
         </EntityType>
         <Association Name="FK_BCDOANHSOTHEONGAY_LoaiTietKiem">
-          <End Type="QuanLySoTietKiemModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="0..1">
+          <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY" Role="BCDOANHSOTHEONGAY" Multiplicity="*" />
+          <End Role="BCDOANHSOTHEONGAY" Type="Self.BCDOANHSOTHEONGAY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOAITIETKIEM">
               <PropertyRef Name="MaLoaiTietKiem" />
@@ -587,10 +497,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BCMODONGSOTHANG_LoaiTietKiem">
-          <End Type="QuanLySoTietKiemModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="0..1">
+          <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.BCMODONGSOTHANG" Role="BCMODONGSOTHANG" Multiplicity="*" />
+          <End Role="BCMODONGSOTHANG" Type="Self.BCMODONGSOTHANG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOAITIETKIEM">
               <PropertyRef Name="MaLoaiTietKiem" />
@@ -601,10 +511,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo">
-          <End Type="QuanLySoTietKiemModel.BCMODONGSOTHANG" Role="BCMODONGSOTHANG" Multiplicity="0..1">
+          <End Role="BCMODONGSOTHANG" Type="Self.BCMODONGSOTHANG" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.CTBCMODONGSOTHANG" Role="CTBCMODONGSOTHANG" Multiplicity="*" />
+          <End Role="CTBCMODONGSOTHANG" Type="Self.CTBCMODONGSOTHANG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BCMODONGSOTHANG">
               <PropertyRef Name="MaBaoCaoMoDongSo" />
@@ -614,25 +524,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PHANQUYEN_MaChucNang">
-          <End Type="QuanLySoTietKiemModel.CHUCNANG" Role="CHUCNANG" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLySoTietKiemModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CHUCNANG">
-              <PropertyRef Name="MaChucNang" />
-            </Principal>
-            <Dependent Role="PHANQUYEN">
-              <PropertyRef Name="MaChucNang" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SOTIETKIEM_MaKhachHang">
-          <End Type="QuanLySoTietKiemModel.KHACHHANG" Role="KHACHHANG" Multiplicity="1">
+          <End Role="KHACHHANG" Type="Self.KHACHHANG" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="*" />
+          <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="KHACHHANG">
               <PropertyRef Name="MaKhachHang" />
@@ -643,10 +539,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SOTIETKIEM_MaLoaiTietKiem">
-          <End Type="QuanLySoTietKiemModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="1">
+          <End Role="LOAITIETKIEM" Type="Self.LOAITIETKIEM" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="*" />
+          <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LOAITIETKIEM">
               <PropertyRef Name="MaLoaiTietKiem" />
@@ -657,10 +553,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NGUOIDUNG_MaNhom">
-          <End Type="QuanLySoTietKiemModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="0..1">
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.NGUOIDUNG" Role="NGUOIDUNG" Multiplicity="*" />
+          <End Role="NGUOIDUNG" Type="Self.NGUOIDUNG" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NHOMNGUOIDUNG">
               <PropertyRef Name="MaNhom" />
@@ -670,25 +566,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PHANQUYEN_MaNhom">
-          <End Type="QuanLySoTietKiemModel.NHOMNGUOIDUNG" Role="NHOMNGUOIDUNG" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLySoTietKiemModel.PHANQUYEN" Role="PHANQUYEN" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="NHOMNGUOIDUNG">
-              <PropertyRef Name="MaNhom" />
-            </Principal>
-            <Dependent Role="PHANQUYEN">
-              <PropertyRef Name="MaNhom" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PHIEUGOITIEN_MaSo">
-          <End Type="QuanLySoTietKiemModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1">
+          <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.PHIEUGOITIEN" Role="PHIEUGOITIEN" Multiplicity="*" />
+          <End Role="PHIEUGOITIEN" Type="Self.PHIEUGOITIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SOTIETKIEM">
               <PropertyRef Name="MaSo" />
@@ -699,10 +581,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PHIEURUTTIEN_MaSo">
-          <End Type="QuanLySoTietKiemModel.SOTIETKIEM" Role="SOTIETKIEM" Multiplicity="1">
+          <End Role="SOTIETKIEM" Type="Self.SOTIETKIEM" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="QuanLySoTietKiemModel.PHIEURUTTIEN" Role="PHIEURUTTIEN" Multiplicity="*" />
+          <End Role="PHIEURUTTIEN" Type="Self.PHIEURUTTIEN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SOTIETKIEM">
               <PropertyRef Name="MaSo" />
@@ -712,273 +594,213 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BCDOANHSOTHEONGAY">
-          <Key>
-            <PropertyRef Name="MaBaoCaoDoanhSo" />
-          </Key>
-          <Property Name="MaBaoCaoDoanhSo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ngay" Type="DateTime" Precision="0" />
-          <Property Name="LoaiTietKiem" Type="Int32" />
-          <Property Name="TongThu" Type="Int32" />
-          <Property Name="TongChi" Type="Int32" />
-          <Property Name="ChenhLech" Type="Int32" />
-          <NavigationProperty Name="LOAITIETKIEM1" Relationship="QuanLySoTietKiemModel.FK_BCDOANHSOTHEONGAY_LoaiTietKiem" FromRole="BCDOANHSOTHEONGAY" ToRole="LOAITIETKIEM" />
-        </EntityType>
-        <EntityType Name="BCMODONGSOTHANG">
-          <Key>
-            <PropertyRef Name="MaBaoCaoMoDongSo" />
-          </Key>
-          <Property Name="MaBaoCaoMoDongSo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LoaiTietKiem" Type="Int32" />
-          <Property Name="Thang" Type="Int32" />
-          <Property Name="Nam" Type="Int32" />
-          <NavigationProperty Name="LOAITIETKIEM1" Relationship="QuanLySoTietKiemModel.FK_BCMODONGSOTHANG_LoaiTietKiem" FromRole="BCMODONGSOTHANG" ToRole="LOAITIETKIEM" />
-          <NavigationProperty Name="CTBCMODONGSOTHANGs" Relationship="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="BCMODONGSOTHANG" ToRole="CTBCMODONGSOTHANG" />
-        </EntityType>
-        <EntityType Name="CTBCMODONGSOTHANG">
-          <Key>
-            <PropertyRef Name="MaCTBaoCaoMoDongSo" />
-          </Key>
-          <Property Name="MaCTBaoCaoMoDongSo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MaBaoCaoMoDongSo" Type="Int32" />
-          <Property Name="Ngay" Type="Int32" />
-          <Property Name="SoMo" Type="Int32" />
-          <Property Name="SoDong" Type="Int32" />
-          <Property Name="ChenhLech" Type="Int32" />
-          <NavigationProperty Name="BCMODONGSOTHANG" Relationship="QuanLySoTietKiemModel.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" FromRole="CTBCMODONGSOTHANG" ToRole="BCMODONGSOTHANG" />
-        </EntityType>
-        <Association Name="FK_BCDOANHSOTHEONGAY_LoaiTietKiem">
-          <End Type="QuanLySoTietKiemModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY" Role="BCDOANHSOTHEONGAY" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOAITIETKIEM">
-              <PropertyRef Name="MaLoaiTietKiem" />
-            </Principal>
-            <Dependent Role="BCDOANHSOTHEONGAY">
-              <PropertyRef Name="LoaiTietKiem" />
-            </Dependent>
-          </ReferentialConstraint>
+        <Association Name="PHANQUYEN">
+          <End Role="CHUCNANG" Type="Self.CHUCNANG" Multiplicity="*" />
+          <End Role="NHOMNGUOIDUNG" Type="Self.NHOMNGUOIDUNG" Multiplicity="*" />
         </Association>
-        <Association Name="FK_BCMODONGSOTHANG_LoaiTietKiem">
-          <End Type="QuanLySoTietKiemModel.LOAITIETKIEM" Role="LOAITIETKIEM" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLySoTietKiemModel.BCMODONGSOTHANG" Role="BCMODONGSOTHANG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LOAITIETKIEM">
-              <PropertyRef Name="MaLoaiTietKiem" />
-            </Principal>
-            <Dependent Role="BCMODONGSOTHANG">
-              <PropertyRef Name="LoaiTietKiem" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo">
-          <End Type="QuanLySoTietKiemModel.BCMODONGSOTHANG" Role="BCMODONGSOTHANG" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="QuanLySoTietKiemModel.CTBCMODONGSOTHANG" Role="CTBCMODONGSOTHANG" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BCMODONGSOTHANG">
-              <PropertyRef Name="MaBaoCaoMoDongSo" />
-            </Principal>
-            <Dependent Role="CTBCMODONGSOTHANG">
-              <PropertyRef Name="MaBaoCaoMoDongSo" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        </Schema>
+        <EntityContainer Name="QuanLySoTietKiemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BCDOANHSOTHEONGAYs" EntityType="Self.BCDOANHSOTHEONGAY" />
+          <EntitySet Name="BCMODONGSOTHANGs" EntityType="Self.BCMODONGSOTHANG" />
+          <EntitySet Name="CHUCNANGs" EntityType="Self.CHUCNANG" />
+          <EntitySet Name="CTBCMODONGSOTHANGs" EntityType="Self.CTBCMODONGSOTHANG" />
+          <EntitySet Name="KHACHHANGs" EntityType="Self.KHACHHANG" />
+          <EntitySet Name="LOAITIETKIEMs" EntityType="Self.LOAITIETKIEM" />
+          <EntitySet Name="NGUOIDUNGs" EntityType="Self.NGUOIDUNG" />
+          <EntitySet Name="NHOMNGUOIDUNGs" EntityType="Self.NHOMNGUOIDUNG" />
+          <EntitySet Name="PHIEUGOITIENs" EntityType="Self.PHIEUGOITIEN" />
+          <EntitySet Name="PHIEURUTTIENs" EntityType="Self.PHIEURUTTIEN" />
+          <EntitySet Name="SOTIETKIEMs" EntityType="Self.SOTIETKIEM" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="THAMSOes" EntityType="Self.THAMSO" />
+          <AssociationSet Name="FK_BCDOANHSOTHEONGAY_LoaiTietKiem" Association="Self.FK_BCDOANHSOTHEONGAY_LoaiTietKiem">
+            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
+            <End Role="BCDOANHSOTHEONGAY" EntitySet="BCDOANHSOTHEONGAYs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BCMODONGSOTHANG_LoaiTietKiem" Association="Self.FK_BCMODONGSOTHANG_LoaiTietKiem">
+            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
+            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo" Association="Self.FK_CTBCMODONGSOTHANG_MaBaoCaoMoDongSo">
+            <End Role="BCMODONGSOTHANG" EntitySet="BCMODONGSOTHANGs" />
+            <End Role="CTBCMODONGSOTHANG" EntitySet="CTBCMODONGSOTHANGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOTIETKIEM_MaKhachHang" Association="Self.FK_SOTIETKIEM_MaKhachHang">
+            <End Role="KHACHHANG" EntitySet="KHACHHANGs" />
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOTIETKIEM_MaLoaiTietKiem" Association="Self.FK_SOTIETKIEM_MaLoaiTietKiem">
+            <End Role="LOAITIETKIEM" EntitySet="LOAITIETKIEMs" />
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NGUOIDUNG_MaNhom" Association="Self.FK_NGUOIDUNG_MaNhom">
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+            <End Role="NGUOIDUNG" EntitySet="NGUOIDUNGs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHIEUGOITIEN_MaSo" Association="Self.FK_PHIEUGOITIEN_MaSo">
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+            <End Role="PHIEUGOITIEN" EntitySet="PHIEUGOITIENs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PHIEURUTTIEN_MaSo" Association="Self.FK_PHIEURUTTIEN_MaSo">
+            <End Role="SOTIETKIEM" EntitySet="SOTIETKIEMs" />
+            <End Role="PHIEURUTTIEN" EntitySet="PHIEURUTTIENs" />
+          </AssociationSet>
+          <AssociationSet Name="PHANQUYEN" Association="Self.PHANQUYEN">
+            <End Role="CHUCNANG" EntitySet="CHUCNANGs" />
+            <End Role="NHOMNGUOIDUNG" EntitySet="NHOMNGUOIDUNGs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLySoTietKiemModelStoreContainer" CdmEntityContainer="QuanLySoTietKiemEntities">
+        <EntityContainerMapping StorageEntityContainer="QuanLySoTietKiemModelStoreContainer" CdmEntityContainer="QuanLySoTietKiemEntities1">
           <EntitySetMapping Name="BCDOANHSOTHEONGAYs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY">
               <MappingFragment StoreEntitySet="BCDOANHSOTHEONGAY">
-                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
-                <ScalarProperty Name="TongChi" ColumnName="TongChi" />
-                <ScalarProperty Name="TongThu" ColumnName="TongThu" />
-                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
-                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
                 <ScalarProperty Name="MaBaoCaoDoanhSo" ColumnName="MaBaoCaoDoanhSo" />
+                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
+                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
+                <ScalarProperty Name="TongThu" ColumnName="TongThu" />
+                <ScalarProperty Name="TongChi" ColumnName="TongChi" />
+                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BCMODONGSOTHANGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.BCMODONGSOTHANG">
               <MappingFragment StoreEntitySet="BCMODONGSOTHANG">
-                <ScalarProperty Name="Nam" ColumnName="Nam" />
-                <ScalarProperty Name="Thang" ColumnName="Thang" />
-                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
                 <ScalarProperty Name="MaBaoCaoMoDongSo" ColumnName="MaBaoCaoMoDongSo" />
+                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
+                <ScalarProperty Name="Thang" ColumnName="Thang" />
+                <ScalarProperty Name="Nam" ColumnName="Nam" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CHUCNANGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.CHUCNANG">
               <MappingFragment StoreEntitySet="CHUCNANG">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
-                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
                 <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+                <ScalarProperty Name="TenChucNang" ColumnName="TenChucNang" />
+                <ScalarProperty Name="TenManHinhDuocLoad" ColumnName="TenManHinhDuocLoad" />
+                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CTBCMODONGSOTHANGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.CTBCMODONGSOTHANG">
               <MappingFragment StoreEntitySet="CTBCMODONGSOTHANG">
-                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
-                <ScalarProperty Name="SoDong" ColumnName="SoDong" />
-                <ScalarProperty Name="SoMo" ColumnName="SoMo" />
-                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
-                <ScalarProperty Name="MaBaoCaoMoDongSo" ColumnName="MaBaoCaoMoDongSo" />
                 <ScalarProperty Name="MaCTBaoCaoMoDongSo" ColumnName="MaCTBaoCaoMoDongSo" />
+                <ScalarProperty Name="MaBaoCaoMoDongSo" ColumnName="MaBaoCaoMoDongSo" />
+                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
+                <ScalarProperty Name="SoMo" ColumnName="SoMo" />
+                <ScalarProperty Name="SoDong" ColumnName="SoDong" />
+                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="KHACHHANGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.KHACHHANG">
               <MappingFragment StoreEntitySet="KHACHHANG">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
-                <ScalarProperty Name="CMND" ColumnName="CMND" />
-                <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
                 <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+                <ScalarProperty Name="TenKhachHang" ColumnName="TenKhachHang" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOAITIETKIEMs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.LOAITIETKIEM">
               <MappingFragment StoreEntitySet="LOAITIETKIEM">
-                <ScalarProperty Name="PhaiRutToanBo" ColumnName="PhaiRutToanBo" />
-                <ScalarProperty Name="ThoiGianGoiToiThieu" ColumnName="ThoiGianGoiToiThieu" />
-                <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="TenLoaiTietKiem" ColumnName="TenLoaiTietKiem" />
                 <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
+                <ScalarProperty Name="TenLoaiTietKiem" ColumnName="TenLoaiTietKiem" />
+                <ScalarProperty Name="BiDong" ColumnName="BiDong" />
+                <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
+                <ScalarProperty Name="ThoiGianGoiToiThieu" ColumnName="ThoiGianGoiToiThieu" />
+                <ScalarProperty Name="PhaiRutToanBo" ColumnName="PhaiRutToanBo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NGUOIDUNGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NGUOIDUNG">
               <MappingFragment StoreEntitySet="NGUOIDUNG">
-                <ScalarProperty Name="TenThat" ColumnName="TenThat" />
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
-                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
                 <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+                <ScalarProperty Name="TenThat" ColumnName="TenThat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NHOMNGUOIDUNGs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.NHOMNGUOIDUNG">
               <MappingFragment StoreEntitySet="NHOMNGUOIDUNG">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
+                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
                 <ScalarProperty Name="TenNhom" ColumnName="TenNhom" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PHANQUYENs">
-            <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHANQUYEN">
-              <MappingFragment StoreEntitySet="PHANQUYEN">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
-                <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHIEUGOITIENs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHIEUGOITIEN">
               <MappingFragment StoreEntitySet="PHIEUGOITIEN">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
-                <ScalarProperty Name="NgayGoi" ColumnName="NgayGoi" />
-                <ScalarProperty Name="MaSo" ColumnName="MaSo" />
                 <ScalarProperty Name="MaPhieuGoiTien" ColumnName="MaPhieuGoiTien" />
+                <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+                <ScalarProperty Name="NgayGoi" ColumnName="NgayGoi" />
+                <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PHIEURUTTIENs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.PHIEURUTTIEN">
               <MappingFragment StoreEntitySet="PHIEURUTTIEN">
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="SoTienRut" ColumnName="SoTienRut" />
-                <ScalarProperty Name="NgayRut" ColumnName="NgayRut" />
-                <ScalarProperty Name="MaSo" ColumnName="MaSo" />
                 <ScalarProperty Name="MaPhieuRutTien" ColumnName="MaPhieuRutTien" />
+                <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+                <ScalarProperty Name="NgayRut" ColumnName="NgayRut" />
+                <ScalarProperty Name="SoTienRut" ColumnName="SoTienRut" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SOTIETKIEMs">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.SOTIETKIEM">
               <MappingFragment StoreEntitySet="SOTIETKIEM">
-                <ScalarProperty Name="NgayTinhLaiGanNhat" ColumnName="NgayTinhLaiGanNhat" />
-                <ScalarProperty Name="BiXoa" ColumnName="BiXoa" />
-                <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
-                <ScalarProperty Name="NgayMoSo" ColumnName="NgayMoSo" />
-                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
-                <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
                 <ScalarProperty Name="MaSo" ColumnName="MaSo" />
+                <ScalarProperty Name="MaLoaiTietKiem" ColumnName="MaLoaiTietKiem" />
+                <ScalarProperty Name="MaKhachHang" ColumnName="MaKhachHang" />
+                <ScalarProperty Name="NgayMoSo" ColumnName="NgayMoSo" />
+                <ScalarProperty Name="SoTienGoi" ColumnName="SoTienGoi" />
+                <ScalarProperty Name="BiDong" ColumnName="BiDong" />
+                <ScalarProperty Name="NgayTinhLaiGanNhat" ColumnName="NgayTinhLaiGanNhat" />
+                <ScalarProperty Name="LaiSuat" ColumnName="LaiSuat" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="THAMSOes">
             <EntityTypeMapping TypeName="QuanLySoTietKiemModel.THAMSO">
               <MappingFragment StoreEntitySet="THAMSO">
-                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
                 <ScalarProperty Name="TenThamSo" ColumnName="TenThamSo" />
+                <ScalarProperty Name="GiaTri" ColumnName="GiaTri" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BCDOANHSOTHEONGAYs">
-            <EntityTypeMapping TypeName="QuanLySoTietKiemModel.BCDOANHSOTHEONGAY">
-              <MappingFragment StoreEntitySet="BCDOANHSOTHEONGAY">
-                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
-                <ScalarProperty Name="TongChi" ColumnName="TongChi" />
-                <ScalarProperty Name="TongThu" ColumnName="TongThu" />
-                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
-                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
-                <ScalarProperty Name="MaBaoCaoDoanhSo" ColumnName="MaBaoCaoDoanhSo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BCMODONGSOTHANGs">
-            <EntityTypeMapping TypeName="QuanLySoTietKiemModel.BCMODONGSOTHANG">
-              <MappingFragment StoreEntitySet="BCMODONGSOTHANG">
-                <ScalarProperty Name="Nam" ColumnName="Nam" />
-                <ScalarProperty Name="Thang" ColumnName="Thang" />
-                <ScalarProperty Name="LoaiTietKiem" ColumnName="LoaiTietKiem" />
-                <ScalarProperty Name="MaBaoCaoMoDongSo" ColumnName="MaBaoCaoMoDongSo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CTBCMODONGSOTHANGs">
-            <EntityTypeMapping TypeName="QuanLySoTietKiemModel.CTBCMODONGSOTHANG">
-              <MappingFragment StoreEntitySet="CTBCMODONGSOTHANG">
-                <ScalarProperty Name="ChenhLech" ColumnName="ChenhLech" />
-                <ScalarProperty Name="SoDong" ColumnName="SoDong" />
-                <ScalarProperty Name="SoMo" ColumnName="SoMo" />
-                <ScalarProperty Name="Ngay" ColumnName="Ngay" />
-                <ScalarProperty Name="MaBaoCaoMoDongSo" ColumnName="MaBaoCaoMoDongSo" />
-                <ScalarProperty Name="MaCTBaoCaoMoDongSo" ColumnName="MaCTBaoCaoMoDongSo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <AssociationSetMapping Name="PHANQUYEN" TypeName="QuanLySoTietKiemModel.PHANQUYEN" StoreEntitySet="PHANQUYEN">
+            <EndProperty Name="CHUCNANG">
+              <ScalarProperty Name="MaChucNang" ColumnName="MaChucNang" />
+            </EndProperty>
+            <EndProperty Name="NHOMNGUOIDUNG">
+              <ScalarProperty Name="MaNhom" ColumnName="MaNhom" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

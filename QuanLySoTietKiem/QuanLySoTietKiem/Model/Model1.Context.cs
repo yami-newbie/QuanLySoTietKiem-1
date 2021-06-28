@@ -33,14 +33,10 @@ namespace QuanLySoTietKiem.Model
         public virtual DbSet<LOAITIETKIEM> LOAITIETKIEMs { get; set; }
         public virtual DbSet<NGUOIDUNG> NGUOIDUNGs { get; set; }
         public virtual DbSet<NHOMNGUOIDUNG> NHOMNGUOIDUNGs { get; set; }
-        public virtual DbSet<PHANQUYEN> PHANQUYENs { get; set; }
         public virtual DbSet<PHIEUGOITIEN> PHIEUGOITIENs { get; set; }
         public virtual DbSet<PHIEURUTTIEN> PHIEURUTTIENs { get; set; }
         public virtual DbSet<SOTIETKIEM> SOTIETKIEMs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<THAMSO> THAMSOes { get; set; }
-        public virtual DbSet<BCDOANHSOTHEONGAY> BCDOANHSOTHEONGAYs { get; set; }
-        public virtual DbSet<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
-        public virtual DbSet<CTBCMODONGSOTHANG> CTBCMODONGSOTHANGs { get; set; }
     }
 }

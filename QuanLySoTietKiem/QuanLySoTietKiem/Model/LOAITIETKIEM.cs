@@ -20,13 +20,11 @@ namespace QuanLySoTietKiem.Model
             this.BCDOANHSOTHEONGAYs = new HashSet<BCDOANHSOTHEONGAY>();
             this.BCMODONGSOTHANGs = new HashSet<BCMODONGSOTHANG>();
             this.SOTIETKIEMs = new HashSet<SOTIETKIEM>();
-            this.BCDOANHSOTHEONGAYs = new HashSet<BCDOANHSOTHEONGAY>();
-            this.BCMODONGSOTHANGs = new HashSet<BCMODONGSOTHANG>();
         }
     
         public int MaLoaiTietKiem { get; set; }
         public string TenLoaiTietKiem { get; set; }
-        public Nullable<bool> BiXoa { get; set; }
+        public Nullable<bool> BiDong { get; set; }
         public Nullable<decimal> LaiSuat { get; set; }
         public Nullable<int> ThoiGianGoiToiThieu { get; set; }
         public Nullable<bool> PhaiRutToanBo { get; set; }
@@ -37,9 +35,5 @@ namespace QuanLySoTietKiem.Model
         public virtual ICollection<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SOTIETKIEM> SOTIETKIEMs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BCDOANHSOTHEONGAY> BCDOANHSOTHEONGAYs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BCMODONGSOTHANG> BCMODONGSOTHANGs { get; set; }
     }
 }

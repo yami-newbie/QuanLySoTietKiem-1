@@ -48,7 +48,7 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand PasswordChangedCommand { get; set; }
         public UserViewModel()
         {
-            List = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.BiXoa != true));
+            List = new ObservableCollection<NGUOIDUNG>(DataProvider.Ins.DB.NGUOIDUNGs);
             GroupList = new ObservableCollection<NHOMNGUOIDUNG>(DataProvider.Ins.DB.NHOMNGUOIDUNGs);
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
@@ -69,7 +69,7 @@ namespace QuanLySoTietKiem.ViewModel
                     if (result == MessageBoxResult.Yes)
                     {
                         var user = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == SelectedItem.TenDangNhap).SingleOrDefault();
-                        user.BiXoa = true;
+                        //user.BiXoa = true;
                         DataProvider.Ins.DB.SaveChanges();
                         List.Remove(user);
                         p.Close();
@@ -125,7 +125,7 @@ namespace QuanLySoTietKiem.ViewModel
                     {
                         if (SelectedItem.TenDangNhap == List[i].TenDangNhap)
                         {
-                            List[i] = new NGUOIDUNG { TenDangNhap = List[i].TenDangNhap, TenThat = List[i].TenThat, NHOMNGUOIDUNG = List[i].NHOMNGUOIDUNG, BiXoa = List[i].BiXoa, MaNhom = List[i].MaNhom, MatKhau = List[i].MatKhau};
+                            List[i] = new NGUOIDUNG { TenDangNhap = List[i].TenDangNhap, TenThat = List[i].TenThat, NHOMNGUOIDUNG = List[i].NHOMNGUOIDUNG, MaNhom = List[i].MaNhom, MatKhau = List[i].MatKhau};
                             break;
                         }
                     }

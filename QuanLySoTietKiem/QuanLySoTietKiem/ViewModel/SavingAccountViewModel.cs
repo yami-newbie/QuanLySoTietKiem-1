@@ -55,10 +55,10 @@ namespace QuanLySoTietKiem.ViewModel
         public SavingAccountViewModel()
         {
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
-            Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa != true));
+            Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong != true));
             List = Init;
-            ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiXoa == true));
-            LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiXoa != true));
+            ListDaXoa = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong == true));
+            LoaiTietKiem = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.BiDong != true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddSavingAccountView add = new AddSavingAccountView(this);
@@ -84,7 +84,7 @@ namespace QuanLySoTietKiem.ViewModel
                         var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItemDaXoa.MaSo).SingleOrDefault();
                         if (stk != null)
                         {
-                            stk.BiXoa = false;
+                            stk.BiDong = false;
                             DataProvider.Ins.DB.SaveChanges();
                             List.Add(SelectedItemDaXoa);
                             ListDaXoa.Remove(SelectedItemDaXoa);
@@ -126,7 +126,7 @@ namespace QuanLySoTietKiem.ViewModel
                     if (result == MessageBoxResult.Yes)
                     {
                         var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItem.MaSo).SingleOrDefault();
-                        stk.BiXoa = true;
+                        stk.BiDong = true;
                         DataProvider.Ins.DB.SaveChanges();
                         List.Remove(SelectedItem);
                         SelectedItem = null;
@@ -171,13 +171,13 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.KHACHHANG.TenKhachHang.Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.KHACHHANG.TenKhachHang.Contains(Query)));
                             break;
                         case "Mã sổ tiết kiệm":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.MaSo.ToString().Contains(Query)));
                             break;
                         case "Loại tiết kiệm":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiXoa != true && x.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
                             break;
                     }
                 }

@@ -46,7 +46,7 @@ namespace QuanLySoTietKiem.ViewModel
         public CategoryViewModel()
         {
             YesNo = new ObservableCollection<string> {"Có", "Không"};
-            List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiXoa!=true));
+            List = new ObservableCollection<LOAITIETKIEM>(DataProvider.Ins.DB.LOAITIETKIEMs.Where(x=>x.BiDong != true));
             AddFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ResetField();
@@ -62,7 +62,7 @@ namespace QuanLySoTietKiem.ViewModel
                     if (result == MessageBoxResult.Yes)
                     {
                         var ltk = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.MaLoaiTietKiem == SelectedItem.MaLoaiTietKiem).SingleOrDefault();
-                        ltk.BiXoa = true;
+                        ltk.BiDong = true;
                         DataProvider.Ins.DB.SaveChanges();
                         List.Remove(ltk);
                         MessageBox.Show("Xóa thành công!");
@@ -97,7 +97,7 @@ namespace QuanLySoTietKiem.ViewModel
                     int time = int.Parse(ThoiGianGoiToiThieu);
                     decimal laiSuat = decimal.Parse(LaiSuat);
                     bool rutHet = SelectedYesNo == "Có";
-                    var ltk = new LOAITIETKIEM() { BiXoa = false, TenLoaiTietKiem = TenLoaiTietKiem, LaiSuat = laiSuat, ThoiGianGoiToiThieu = time, PhaiRutToanBo = rutHet };
+                    var ltk = new LOAITIETKIEM() { BiDong = false, TenLoaiTietKiem = TenLoaiTietKiem, LaiSuat = laiSuat, ThoiGianGoiToiThieu = time, PhaiRutToanBo = rutHet };
                     DataProvider.Ins.DB.LOAITIETKIEMs.Add(ltk);
                     DataProvider.Ins.DB.SaveChanges();
                     List.Add(ltk);
@@ -122,7 +122,7 @@ namespace QuanLySoTietKiem.ViewModel
                     {
                         if (SelectedItem.MaLoaiTietKiem == List[i].MaLoaiTietKiem)
                         {
-                            List[i] = new LOAITIETKIEM { MaLoaiTietKiem = List[i].MaLoaiTietKiem, SOTIETKIEMs = List[i].SOTIETKIEMs, TenLoaiTietKiem = List[i].TenLoaiTietKiem, ThoiGianGoiToiThieu = time, LaiSuat = laiSuat, PhaiRutToanBo = List[i].PhaiRutToanBo, BiXoa = List[i].BiXoa };
+                            List[i] = new LOAITIETKIEM { MaLoaiTietKiem = List[i].MaLoaiTietKiem, SOTIETKIEMs = List[i].SOTIETKIEMs, TenLoaiTietKiem = List[i].TenLoaiTietKiem, ThoiGianGoiToiThieu = time, LaiSuat = laiSuat, PhaiRutToanBo = List[i].PhaiRutToanBo, BiDong = List[i].BiDong };
                             break;
                         }
                     }

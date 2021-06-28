@@ -92,13 +92,13 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x=> x.SOTIETKIEM.KHACHHANG.TenKhachHang.Contains(Query)));
                             break;
                         case "Mã sổ tiết kiệm":
-                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.MaSo.ToString().Contains(Query)));
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.MaSo.ToString().Contains(Query)));
                             break;
                         case "Loại tiết kiệm":
-                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.BiXoa != true && x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.SOTIETKIEM.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
                             break;
                     }
                 }
@@ -128,7 +128,7 @@ namespace QuanLySoTietKiem.ViewModel
         {
             bool isIntMaSo = int.TryParse(maSTK, out int mastk);
 
-            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiDong != true).SingleOrDefault();
             if (stk == null)
             {
                 clicked = false;
@@ -167,7 +167,7 @@ namespace QuanLySoTietKiem.ViewModel
                 clicked = false;
                 return false;
             }
-            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiDong != true).SingleOrDefault();
             if (stk == null)
             {
                 clicked = false;
@@ -220,7 +220,7 @@ namespace QuanLySoTietKiem.ViewModel
             bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
             if (!isIntMaSo ) return 0;
 
-            var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiXoa != true).SingleOrDefault();
+            var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
             if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
             {
                 if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu) return 0;
@@ -266,7 +266,7 @@ namespace QuanLySoTietKiem.ViewModel
             bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienRut);
             if (!isIntMaSo || !isIntSoTienRut) return;
 
-            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiXoa !=true).SingleOrDefault();
+            var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiDong != true).SingleOrDefault();
             if (stk == null) return;
 
             CheckMaSTK(MaSo);
@@ -278,7 +278,7 @@ namespace QuanLySoTietKiem.ViewModel
                 stk.NgayTinhLaiGanNhat = DateTime.Now;
                 if (stk.SoTienGoi == 0)
                 {
-                    stk.BiXoa = true;
+                    stk.BiDong = true;
                 }
                 var result2 = MessageBox.Show("Bạn muốn rút số tiền: "+SoTienRut.ToString(),
                 "Kiểm tra lại thao tác",
