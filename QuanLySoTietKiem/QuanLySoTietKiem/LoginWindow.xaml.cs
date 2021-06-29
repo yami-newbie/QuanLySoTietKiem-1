@@ -26,5 +26,10 @@ namespace QuanLySoTietKiem
             InitializeComponent();
             DataContext = new ViewModel.LoginViewModel();
         }
+
+        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("Vui lòng thông báo với quản lý", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 }

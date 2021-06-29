@@ -121,7 +121,7 @@
                                                 <ColumnDefinition Width="274*"/>
                                                 <ColumnDefinition Width="17*"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Text="Quên mật khẩu?" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" Foreground="Purple" Margin="0,6,9.4,0.8" Grid.ColumnSpan="2"/>
+                                            <TextBlock Text="Quên mật khẩu?" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" Foreground="Purple" Margin="0,6,9.4,0.8" Grid.ColumnSpan="2" PreviewMouseDown="TextBlock_PreviewMouseDown"/>
 
                                         </Grid>
 
