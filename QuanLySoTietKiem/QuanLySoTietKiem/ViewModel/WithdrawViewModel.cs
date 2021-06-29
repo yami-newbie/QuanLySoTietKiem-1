@@ -206,13 +206,7 @@ namespace QuanLySoTietKiem.ViewModel
             return false;
 
         }
-        private bool kiemTraDateKhongKyHan(DateTime ngayMoSo)
-        {
-            TimeSpan timedate = (TimeSpan)(DateTime.Now - ngayMoSo);
-
-            if (timedate.Days > 15) return true;
-            return false;
-        }
+ 
         private double TinhSoDu(string maSTK)
         {
             long soDu = 0;
@@ -264,7 +258,7 @@ namespace QuanLySoTietKiem.ViewModel
                         }                           
                     }
                   //  laiKiHan = 0;
-                laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
+                laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
               //  }
                 soDu = (int)(stk.SoTienGoi + laiKhongKiHan);
                 return soDu;
