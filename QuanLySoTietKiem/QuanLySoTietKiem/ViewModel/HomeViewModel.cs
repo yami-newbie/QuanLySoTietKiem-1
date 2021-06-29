@@ -22,6 +22,8 @@ namespace QuanLySoTietKiem.ViewModel
         public ObservableCollection<SOTIETKIEM> ListSTK { get => _ListSTK; set { _ListSTK = value; OnPropertyChanged(); } }
         private ObservableCollection<PHIEURUTTIEN> _ListRutTien;
         public ObservableCollection<PHIEURUTTIEN> ListRutTien { get => _ListRutTien; set { _ListRutTien = value; OnPropertyChanged(); } }
+        private ObservableCollection<BCDOANHSOTHEONGAY> _ListBCNGAY;
+        public ObservableCollection<BCDOANHSOTHEONGAY> ListBCNGAY { get => _ListBCNGAY; set { _ListBCNGAY = value; OnPropertyChanged(); } }
         private int _countCus;
         public int countCus { get => _countCus; set { _countCus = value; OnPropertyChanged(); } }
         private int _countSoMo;
@@ -46,9 +48,8 @@ namespace QuanLySoTietKiem.ViewModel
         public HomeViewModel()
         {
             List = new ObservableCollection<BieuDo1>();
-            ListGoiTien = new ObservableCollection<PHIEUGOITIEN>(DataProvider.Ins.DB.PHIEUGOITIENs);
-            ListRutTien = new ObservableCollection<PHIEURUTTIEN>(DataProvider.Ins.DB.PHIEURUTTIENs);
             ListSTK = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x=>x.BiDong != true));
+            ListBCNGAY = new ObservableCollection<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
             TinhTongTungLoaiTietKiem();
 
             //also adding values updates and animates the chart automatically
@@ -91,26 +92,21 @@ namespace QuanLySoTietKiem.ViewModel
             int sumChiThang = 0;
             tongThu = new int[13];
             tongChi = new int[13];
-            var listPhieuRutTien = ListRutTien.Where(x=>x.NgayRut.Value.Year==yeaR);
-            var listPhieuGoiTien = ListGoiTien.Where(x=>x.NgayGoi.Value.Year==yeaR);
-            if (listPhieuGoiTien == null && listPhieuRutTien == null) return;
+           // var listPhieuRutTien = ListRutTien.Where(x=>x.NgayRut.Value.Year==yeaR);
+           // var listPhieuGoiTien = ListGoiTien.Where(x=>x.NgayGoi.Value.Year==yeaR);
+            var listbCao =ListBCNGAY.Where(x => x.Ngay.Value.Year == yeaR);
+            // if (listPhieuGoiTien == null && listPhieuRutTien == null) return;
+            if (listbCao == null) return;
             for (int i = 1; i < 13; i++)
             {
-                foreach (var item in listPhieuGoiTien)
+                foreach (var item in listbCao)
                 {
-                    DateTime ngayGoi = (DateTime)item.NgayGoi;
-                    if (ngayGoi.Month == i)
+                    if (item.Ngay.Value.Month == i)
                     {
-                        sumThuThang += (int)item.SoTienGoi;
+                        sumThuThang += (int)item.TongThu;
+                        sumChiThang += (int)item.TongChi;
                     }
-                }
-                foreach (var item in listPhieuRutTien)
-                {
-                    DateTime ngayRut = (DateTime)item.NgayRut;
-                    if (ngayRut.Month == i)
-                    {
-                        sumChiThang += (int)item.SoTienRut;
-                    }
+                
                 }
                 //  List.Add(new BieuDo1 { Thang = i,TongThu=sumThuThang,TongChi=sumChiThang });
                 tongThu[i - 1] = sumThuThang;
