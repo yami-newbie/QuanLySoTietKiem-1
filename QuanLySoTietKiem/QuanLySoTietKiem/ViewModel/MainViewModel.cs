@@ -39,7 +39,7 @@ namespace QuanLySoTietKiem.ViewModel
             });
             SavingAccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                CurrentView = new SavingAccountView();
+                CurrentView = new SavingAccountView(n);
                 BackgroundColor = new String[] { "","#5EB2FF", "", "", "", "" };
                 TextIconColor = new String[] { "#A5A5B3", "White", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3", "#A5A5B3" };
             });

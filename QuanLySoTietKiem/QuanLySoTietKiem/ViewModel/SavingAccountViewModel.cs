@@ -41,7 +41,8 @@ namespace QuanLySoTietKiem.ViewModel
         public string Query { get => _Query; set { _Query = value; OnPropertyChanged(); } }
         private string _SelectedFilter;
         public string SelectedFilter { get => _SelectedFilter; set { _SelectedFilter = value; OnPropertyChanged(); } }
-
+        private Visibility _ClosedSavingVisible;
+        public Visibility ClosedSavingVisible { get => _ClosedSavingVisible; set { _ClosedSavingVisible = value; OnPropertyChanged(); } }
         public ICommand AddFormCommand { get; set; }
         public ICommand SearchCommand { get; set; }
         public ICommand SearchCMNDCommand { get; set; }
@@ -52,8 +53,9 @@ namespace QuanLySoTietKiem.ViewModel
         public ICommand ExitCommand { get; set; }
         public ICommand SaveAddCommand { get; set; }
         public ICommand TextChangeCommand { get; set; }
-        public SavingAccountViewModel()
+        public SavingAccountViewModel(NGUOIDUNG n)
         {
+            ClosedSavingVisible = (n.MaNhom == 1) ? Visibility.Visible : Visibility.Hidden;
             FilterList = new String[] { "Tên khách hàng", "Mã sổ tiết kiệm", "Loại tiết kiệm" };
             Init = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.BiDong != true));
             List = Init;

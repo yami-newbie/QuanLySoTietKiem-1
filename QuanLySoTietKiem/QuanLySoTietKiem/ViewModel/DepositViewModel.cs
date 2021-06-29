@@ -101,7 +101,7 @@ namespace QuanLySoTietKiem.ViewModel
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
                     MessageBox.Show(span.ToString());
-                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(int)span / 36000);
+                    tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * (decimal)(int)span / 36000);
                 }
                 else
                 {
@@ -214,6 +214,7 @@ namespace QuanLySoTietKiem.ViewModel
             }
             //
             DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
+            stk.LaiSuat = stk.LOAITIETKIEM.LaiSuat;
             DataProvider.Ins.DB.SaveChanges();
             List.Add(PHIEUGOITIEN);         
             MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);

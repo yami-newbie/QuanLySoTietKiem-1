@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLySoTietKiem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class SavingAccountView : UserControl
     {
-        public SavingAccountView()
+        public SavingAccountView(NGUOIDUNG n)
         {
             InitializeComponent();
-            DataContext = new ViewModel.SavingAccountViewModel();
+            DataContext = new ViewModel.SavingAccountViewModel(n);
         }
     }
 }
