@@ -68,7 +68,10 @@ namespace QuanLySoTietKiem.ViewModel
                 RestoreCategoryView restore = new RestoreCategoryView(this);
                 restore.ShowDialog();
             });
-            RestoreCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
+            RestoreCommand = new RelayCommand<Window>((p) => {
+                if (SelectedItemDaXoa == null) return false;
+                return true;
+            }, (p) =>
             {
                 {
                     var result = MessageBox.Show("Bạn có muốn phục hồi loại tiết kiệm này không?", "Phục hồi", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
