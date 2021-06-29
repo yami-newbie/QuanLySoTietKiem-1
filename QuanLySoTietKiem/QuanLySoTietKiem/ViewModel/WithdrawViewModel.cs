@@ -217,12 +217,10 @@ namespace QuanLySoTietKiem.ViewModel
             var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
             if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
             {
-                var koKiHan = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == "Không kì hạn").SingleOrDefault();
-                if (koKiHan == null) return 0;
-                var laiSuatKoKiHan = koKiHan.LaiSuat;
+
                 if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu) return 0;
                 else
-                    soDu = (long)(stk.SoTienGoi + ((int)((decimal)stk.SoTienGoi * laiSuatKoKiHan * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000)));
+                    soDu = (long)(stk.SoTienGoi + ((int)((decimal)stk.SoTienGoi * stk.LaiSuat * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000)));
                 //  MessageBox.Show(((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * (decimal)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000).ToString());
                 return soDu;
             }
@@ -297,6 +295,8 @@ namespace QuanLySoTietKiem.ViewModel
                 if (result2.ToString() == "Yes")
                 {
                     stk.NgayTinhLaiGanNhat = DateTime.Now;// cập nhật sau
+                    stk.LaiSuat = stk.LOAITIETKIEM.LaiSuat;
+
                     if (copySoTienGui == 0)
                     {
                         stk.BiDong = true;
