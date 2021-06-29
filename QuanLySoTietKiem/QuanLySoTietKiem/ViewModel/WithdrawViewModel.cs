@@ -217,7 +217,7 @@ namespace QuanLySoTietKiem.ViewModel
         {
             long soDu = 0;
             bool isIntMaSo = int.TryParse(maSTK, out int _mastk);
-            bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
+          //  bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
             if (!isIntMaSo ) return 0;
 
             var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
@@ -243,17 +243,28 @@ namespace QuanLySoTietKiem.ViewModel
                 var laiSuatKoKiHan = koKiHan.LaiSuat;
                 int laiKiHan;
                 int laiKhongKiHan;
-                if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
-                {
-                 //   MessageBox.Show("cc");
-                    laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
-                }
-                else
-                {
+                /*   if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                   {
+                    //   MessageBox.Show("cc");
+                       laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+                       laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                   }
+                */
+                //    else
+                //    {
+                var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / stk.LOAITIETKIEM.ThoiGianGoiToiThieu);
+                    if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    {
+                        for(int i=0;i<soLanKyHan; i++)
+                        {
+                            laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+
+                            stk.SoTienGoi += laiKiHan;
+                        }                           
+                    }
                     laiKiHan = 0;
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
-                }
+                laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
+              //  }
                 soDu = (int)(stk.SoTienGoi+ laiKiHan + laiKhongKiHan);
                 return soDu;
             }
