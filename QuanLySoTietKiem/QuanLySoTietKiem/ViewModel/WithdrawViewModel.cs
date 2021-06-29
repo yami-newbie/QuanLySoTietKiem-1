@@ -206,18 +206,12 @@ namespace QuanLySoTietKiem.ViewModel
             return false;
 
         }
-        private bool kiemTraDateKhongKyHan(DateTime ngayMoSo)
-        {
-            TimeSpan timedate = (TimeSpan)(DateTime.Now - ngayMoSo);
-
-            if (timedate.Days > 15) return true;
-            return false;
-        }
+ 
         private double TinhSoDu(string maSTK)
         {
             long soDu = 0;
             bool isIntMaSo = int.TryParse(maSTK, out int _mastk);
-            bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
+          //  bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
             if (!isIntMaSo ) return 0;
 
             var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
@@ -243,18 +237,30 @@ namespace QuanLySoTietKiem.ViewModel
                 var laiSuatKoKiHan = koKiHan.LaiSuat;
                 int laiKiHan;
                 int laiKhongKiHan;
-                if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
-                {
-                 //   MessageBox.Show("cc");
-                    laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
-                }
-                else
-                {
-                    laiKiHan = 0;
-                    laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)(DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays / 36000);
-                }
-                soDu = (int)(stk.SoTienGoi+ laiKiHan + laiKhongKiHan);
+                /*   if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                   {
+                    //   MessageBox.Show("cc");
+                       laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+                       laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu) / 36000);
+                   }
+                */
+                //    else
+                //    {
+                var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / stk.LOAITIETKIEM.ThoiGianGoiToiThieu);
+                MessageBox.Show(soLanKyHan.ToString() + "Lần kì hạn");
+                    if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                    {
+                        for(int i=0;i<soLanKyHan; i++)
+                        {
+                            laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+
+                            stk.SoTienGoi += laiKiHan;
+                        }                           
+                    }
+                  //  laiKiHan = 0;
+                laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
+              //  }
+                soDu = (int)(stk.SoTienGoi + laiKhongKiHan);
                 return soDu;
             }
 
@@ -279,6 +285,50 @@ namespace QuanLySoTietKiem.ViewModel
                 if (stk.SoTienGoi == 0)
                 {
                     stk.BiDong = true;
+                    //Them mo dong so
+                    List<BCMODONGSOTHANG> bcaoDongMoList = new List<BCMODONGSOTHANG>(DataProvider.Ins.DB.BCMODONGSOTHANGs);
+                    var bcaoThangCount = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
+                    CTBCMODONGSOTHANG ctbcThang;
+                    BCMODONGSOTHANG bcaoThang;
+                    if (bcaoThangCount > 0)
+                    {
+                        bcaoThang = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
+                        List<CTBCMODONGSOTHANG> ctbcThangList = new List<CTBCMODONGSOTHANG>(DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Where(x => x.MaBaoCaoMoDongSo == bcaoThang.MaBaoCaoMoDongSo));
+                        var ctbcCount = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Count();
+                        if (ctbcCount > 0)
+                        {
+                            ctbcThang = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Single();
+                            ctbcThang.SoDong += 1;
+                            ctbcThang.ChenhLech -= 1;
+                        }
+                        else
+                        {
+                            ctbcThang = new CTBCMODONGSOTHANG
+                            {
+                                ChenhLech = -1,
+                                SoMo = 0,
+                                SoDong = 1,
+                                BCMODONGSOTHANG = bcaoThang,
+                                MaBaoCaoMoDongSo = bcaoThang.MaBaoCaoMoDongSo,
+                                Ngay = DateTime.Now.Day
+                            };
+                            DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
+                        }
+                    }
+                    else
+                    {
+
+                        bcaoThang = new BCMODONGSOTHANG
+                        {
+                            LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem,
+                            Nam = DateTime.Now.Year,
+                            Thang = DateTime.Now.Month,
+                            LOAITIETKIEM1 = stk.LOAITIETKIEM,
+                        };
+                        DataProvider.Ins.DB.BCMODONGSOTHANGs.Add(bcaoThang);
+                        ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = -1, SoDong = 1, SoMo = 0, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
+                        DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
+                    }
                 }
                 var result2 = MessageBox.Show("Bạn muốn rút số tiền: "+SoTienRut.ToString(),
                 "Kiểm tra lại thao tác",
@@ -302,7 +352,7 @@ namespace QuanLySoTietKiem.ViewModel
                     }
                     else
                     {
-                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = soTienRut };
+                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
                         DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
                         DataProvider.Ins.DB.SaveChanges();
                     }

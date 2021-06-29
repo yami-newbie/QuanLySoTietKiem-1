@@ -136,7 +136,7 @@ namespace QuanLySoTietKiem.ViewModel
                             sb.AppendLine("STT, Thời gian ,Tổng sổ mở ,Tổng sổ đóng, Chênh lệch(Sổ)");
                             foreach (var item in List2)
                             {
-                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString("dd/M/yyyy"),item.SoMo, item.SoDong, item.ChenhLech2));
+                                sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString(),item.SoMo, item.SoDong, item.ChenhLech2));
 
                             }
                             await sw.WriteAsync(sb.ToString());
@@ -240,174 +240,30 @@ namespace QuanLySoTietKiem.ViewModel
         }
         public void TongSo(string strLoaiTietKiem, int soThang, int soNam)
         {
-            int sumTongSoMo = 1;
-            int sumTongSoDong = 1;
-            int stt = 0;
-            var listSoMo = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayMoSo.Value.Month == soThang && x.NgayMoSo.Value.Year == soNam).OrderBy(v => v.NgayMoSo));
-            var listSoDong = new ObservableCollection<SOTIETKIEM>(DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayTinhLaiGanNhat.Value.Month == soThang && x.NgayTinhLaiGanNhat.Value.Year == soNam && x.BiDong == true).OrderBy(v => v.NgayTinhLaiGanNhat));
-            //  var listSoMo = (ObservableCollection<SOTIETKIEM>)ListSTK.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayMoSo.Value.Month==soThang &&x.BiXoa!=true).OrderBy(v=>v.NgayMoSo);
-            // var listSoDong = ListSTK.Where(x => x.LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem && x.NgayTinhLaiGanNhat.Value.Month == soThang &&x.BiXoa==true).OrderBy(v => v.NgayTinhLaiGanNhat);
+            List<BCMODONGSOTHANG> bcaoDongMoList = new List<BCMODONGSOTHANG>(DataProvider.Ins.DB.BCMODONGSOTHANGs);
+            var bcaoThangCount = bcaoDongMoList.Where(x => x.Nam == soNam && x.Thang == soThang && x.LOAITIETKIEM1.TenLoaiTietKiem==strLoaiTietKiem).Count();
+            if (bcaoThangCount < 1)
+            {
+                if (List2 != null)
+                    List2.Clear();
+                MessageBox.Show("Không có thông tin để hiển thị", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            BCMODONGSOTHANG bcaoList = bcaoDongMoList.Where(x => x.Nam == soNam && x.Thang == soThang && x.LOAITIETKIEM1.TenLoaiTietKiem==strLoaiTietKiem).First();
+            List<CTBCMODONGSOTHANG> ctbcThangList = new List<CTBCMODONGSOTHANG>(DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Where(x => x.MaBaoCaoMoDongSo == bcaoList.MaBaoCaoMoDongSo).OrderBy(v=>v.Ngay));
+
+         
             List3 = new ObservableCollection<ThongKe2>();
+ 
+            for (int i = 0; i < ctbcThangList.Count(); i++)
+            {
+                List3.Add(new ThongKe2 { STT = i + 1, Ngay = ctbcThangList[i].Ngay.ToString() + "/" + soThang + "/" + soNam, SoMo = (int)ctbcThangList[i].SoMo, SoDong = (int)ctbcThangList[i].SoDong, ChenhLech2 = (int)ctbcThangList[i].ChenhLech });
+            }
 
-            for (int i = 0; i < listSoMo.Count(); i++)
-            {
-                if (i != listSoMo.Count() - 1 && listSoMo[i].NgayMoSo.Value.Day == listSoMo[i + 1].NgayMoSo.Value.Day)
-                {
-                    sumTongSoMo += 1;
-                }
-                else
-                {
-                    if (i == listSoMo.Count() - 1)
-                    {
-                        stt++;
-                        List3.Add(new ThongKe2 { STT = stt, Ngay = (DateTime)listSoMo[i].NgayMoSo, SoMo = sumTongSoMo, SoDong = 0, ChenhLech2 = 0 });
-                        sumTongSoMo = 1;
-                    }
-                    else
-                    {
-                        stt++;
-                        List3.Add(new ThongKe2 { STT = stt, Ngay = (DateTime)listSoMo[i].NgayMoSo, SoMo = sumTongSoMo, SoDong = 0, ChenhLech2 = 0 });
-                        sumTongSoMo = 1;
-                    }
 
-                }
-            }
-            for (int i = 0; i < listSoDong.Count(); i++)
-            {
 
-                if (i != listSoDong.Count() - 1 && listSoDong[i].NgayTinhLaiGanNhat.Value.Day == listSoDong[i + 1].NgayTinhLaiGanNhat.Value.Day)
-                {
-                    sumTongSoDong += 1;
-                }
-                else
-                {
-                    if (i == listSoDong.Count() - 1)
-                    {
-                        stt++;
-                        List3.OrderBy(v => v.Ngay.Date);
-                        List3.Add(new ThongKe2 { STT = stt, Ngay = (DateTime)listSoDong[i].NgayTinhLaiGanNhat, SoMo = 0, SoDong = sumTongSoDong, ChenhLech2 = 0 });
-                        sumTongSoDong = 1;
-                    }
-                    else
-                    {
-                        stt++;
-                        List3.OrderBy(v => v.Ngay.Date);
-                        List3.Add(new ThongKe2 { STT = stt, Ngay = (DateTime)listSoDong[i].NgayTinhLaiGanNhat, SoMo = 0, SoDong = sumTongSoDong, ChenhLech2 = 0 });
-                        sumTongSoDong = 1;
-                    }
-
-                }
-            }
-            for (int i = 0; i < List3.Count(); i++)
-            {
-                for (int j = i + 1; j < List3.Count(); j++)
-                {
-                    if (List3[i].Ngay.Date == List3[j].Ngay.Date)
-                    {
-                        List3[i].SoDong = List3[j].SoDong;
-
-                        List3.RemoveAt(j);
-
-                    }
-                }
-            }
-            //Tinh chenh lech
-            for (int i = 0; i < List3.Count(); i++)
-            {
-                List3[i].ChenhLech2 = Math.Abs(List3[i].SoMo - List3[i].SoDong);
-            }
-            //Sap xep theo ngay
-            for (int i = 0; i < List3.Count(); i++)
-            {
-                for (int j = 0; j < List3.Count() - 1; j++)
-                {
-                    if (List3[j].Ngay.Date > List3[j + 1].Ngay.Date)
-                    {
-                        var c = List3[j];
-                        List3[j] = List3[j + 1];
-                        List3[j + 1] = c;
-                    }
-                }
-            }
-            for (int i = 0; i < List3.Count(); i++)
-            {
-                List3[i].STT = i + 1;
-            }
-            if (List3.Count() == 0)
-            {
-                MessageBox.Show("Không có dữ liệu để hiển thị");
-            }
             List2 = List3;
 
-            /* foreach(var item in listSTK2)
-             {
-
-                 DateTime ngayMoSo = (DateTime)item.NgayMoSo;
-                 //var formatngayTinhLaiGanNhat = String.Format("{0:d}", ngayTinhLaiGanNhat);
-                 if (ngayMoSo.Month == soThang)
-                 {
-                     stt++;
-                     List2.Add(new ThongKe2 { STT = stt, Ngay= ngayMoSo,SoMo = item.MaSo.ToString(), SoDong = "Null", ChenhLech2 = 0 });
-                 }
-             }
-             foreach (var item in listSTK2)
-             {
-                 DateTime ngayTinhLaiGanNhat = (DateTime)item.NgayTinhLaiGanNhat;
-                 //var formatngayTinhLaiGanNhat = String.Format("{0:d}", ngayTinhLaiGanNhat);
-                 if (ngayTinhLaiGanNhat.Month == soThang&&item.BiXoa==true)
-                 {
-                     stt++;
-                     List2.Add(new ThongKe2 { STT = stt, Ngay = ngayTinhLaiGanNhat, SoMo = "Null", SoDong = item.MaSo.ToString(), ChenhLech2 = 0 });
-                 }
-             }*/
-
-
-            /*  for (int i=0;i<ListSTK.Count();i++)
-              {
-                  DateTime ngayMoSo = (DateTime)ListSTK[i].NgayMoSo;
-                  var formatngayMoSo = String.Format("{0:d}", ngayMoSo);
-                  DateTime ngayTinhLaiGanNhat = (DateTime)ListSTK[i].NgayTinhLaiGanNhat;
-                  var formatngayTinhLaiGanNhat = String.Format("{0:d}", ngayTinhLaiGanNhat);
-                  if ((ngayMoSo.Month == soThang||(ngayTinhLaiGanNhat.Month==soThang&& ListSTK[i].BiXoa==true))&&ListSTK[i].LOAITIETKIEM.TenLoaiTietKiem==strLoaiTietKiem)
-                  {
-                      for(int j=i;j<ListSTK.Count();j++)
-                      {
-                          DateTime ngayMoSo2 = (DateTime)ListSTK[j].NgayMoSo;
-                          var formatngayMoSo2 = String.Format("{0:d}", ngayMoSo2);
-                          DateTime ngayTinhLaiGanNhat2 = (DateTime)ListSTK[j].NgayTinhLaiGanNhat;
-                          var formatngayTinhLaiGanNhat2 = String.Format("{0:d}", ngayTinhLaiGanNhat2);
-
-                          if (formatngayMoSo2==formatngayMoSo&&ListSTK[j].LOAITIETKIEM.TenLoaiTietKiem==strLoaiTietKiem)
-                          {
-                              MessageBox.Show("vo so mo" + "- thang:" + soThang);
-
-                              sumTongSoMo += 1;
-                          }
-                          if((formatngayTinhLaiGanNhat2==formatngayTinhLaiGanNhat)&& ListSTK[j].BiXoa==true && ListSTK[j].LOAITIETKIEM.TenLoaiTietKiem == strLoaiTietKiem)
-                          {
-                              MessageBox.Show("vo so dong" + "- thang:" + soThang);
-
-                              sumTongSoDong += 1;
-                          }
-
-                      }
-                      if (sumTongSoMo != 0||sumTongSoDong!=0)
-                      {
-                          i++;
-                          if(sumTongSoMo!=0 && sumTongSoDong==0)
-                              List2.Add(new ThongKe2 { STT = i,Ngay=ngayMoSo ,SoMo = sumTongSoMo, SoDong = sumTongSoDong, ChenhLech2 = 0 });
-                          else if(sumTongSoDong!=0 && sumTongSoMo == 0)
-                          {
-                              List2.Add(new ThongKe2 { STT = i,Ngay=ngayTinhLaiGanNhat, SoMo = sumTongSoMo, SoDong = sumTongSoDong, ChenhLech2 = 0 });
-                          }
-                          else
-                              List2.Add(new ThongKe2 { STT = i, Ngay=ngayMoSo,SoMo = sumTongSoMo, SoDong = sumTongSoDong, ChenhLech2 = 0 });
-                          sumTongSoDong = 0;
-                          sumTongSoMo = 0;
-
-                      }
-                  }
-              }*/
         }
         public int TongSoDong(string strLoaiTietKiem, int soThang)
         {
@@ -439,7 +295,7 @@ namespace QuanLySoTietKiem.ViewModel
     public class ThongKe2
     {
         public int STT { get; set; }
-        public DateTime Ngay { get; set; }
+        public string Ngay { get; set; }
         public int SoMo { get; set; }
         public int SoDong { get; set; }
         public int ChenhLech2 { get; set; }
