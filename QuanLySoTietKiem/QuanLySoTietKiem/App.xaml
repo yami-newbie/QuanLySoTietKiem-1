@@ -13,9 +13,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="/ResourceXAML/MainResource.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <DataTemplate DataType="{x:Type vm:SavingAccountViewModel}">
-                <local:SavingAccountView/>
-            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:DepositViewModel}">
                 <local:DepositView/>
             </DataTemplate>
