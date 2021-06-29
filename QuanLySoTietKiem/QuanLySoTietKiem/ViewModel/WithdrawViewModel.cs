@@ -253,6 +253,7 @@ namespace QuanLySoTietKiem.ViewModel
                 //    else
                 //    {
                 var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / stk.LOAITIETKIEM.ThoiGianGoiToiThieu);
+                MessageBox.Show(soLanKyHan.ToString() + "Lần kì hạn");
                     if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
                         for(int i=0;i<soLanKyHan; i++)
@@ -262,10 +263,10 @@ namespace QuanLySoTietKiem.ViewModel
                             stk.SoTienGoi += laiKiHan;
                         }                           
                     }
-                    laiKiHan = 0;
+                  //  laiKiHan = 0;
                 laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
               //  }
-                soDu = (int)(stk.SoTienGoi+ laiKiHan + laiKhongKiHan);
+                soDu = (int)(stk.SoTienGoi + laiKhongKiHan);
                 return soDu;
             }
 
@@ -310,7 +311,7 @@ namespace QuanLySoTietKiem.ViewModel
                         {
                             ctbcThang = new CTBCMODONGSOTHANG
                             {
-                                ChenhLech = 1,
+                                ChenhLech = -1,
                                 SoMo = 0,
                                 SoDong = 1,
                                 BCMODONGSOTHANG = bcaoThang,
@@ -331,7 +332,7 @@ namespace QuanLySoTietKiem.ViewModel
                             LOAITIETKIEM1 = stk.LOAITIETKIEM,
                         };
                         DataProvider.Ins.DB.BCMODONGSOTHANGs.Add(bcaoThang);
-                        ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = 1, SoDong = 1, SoMo = 2, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
+                        ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = -1, SoDong = 1, SoMo = 0, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
                         DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
                     }
                 }
@@ -357,7 +358,7 @@ namespace QuanLySoTietKiem.ViewModel
                     }
                     else
                     {
-                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = soTienRut };
+                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
                         DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
                         DataProvider.Ins.DB.SaveChanges();
                     }
