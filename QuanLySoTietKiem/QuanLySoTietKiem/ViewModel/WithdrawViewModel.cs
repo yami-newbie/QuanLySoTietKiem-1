@@ -144,7 +144,7 @@ namespace QuanLySoTietKiem.ViewModel
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
                     if ((DateTime.Now - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
-                        MessageBox.Show("Chưa đủ 15 ngày để rút tiền. Số ngày mới gửi được: " + timedate.Days + " ngày");
+                        MessageBox.Show("Chưa đủ thời gian để rút tiền. Số ngày mới gửi được: " + timedate.Days + " ngày");
 
                     else
                         MessageBox.Show(DateTime.Now + "---" + stk.NgayMoSo + "= " + timedate.Days.ToString());
@@ -189,7 +189,7 @@ namespace QuanLySoTietKiem.ViewModel
                 }
                 else
                 {
-                    if (soTienRut!=TinhSoDu(mastk.ToString()))
+                    if (soTienRut!=TinhSoDu(maSTK))
                     {
                         SoTienRut = TinhSoDu(maSTK).ToString();
 
@@ -207,13 +207,13 @@ namespace QuanLySoTietKiem.ViewModel
 
         }
  
-        private double TinhSoDu(string maSTK)
+        private long TinhSoDu(string maSTK)
         {
             long soDu = 0;
             bool isIntMaSo = int.TryParse(maSTK, out int _mastk);
           //  bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
             if (!isIntMaSo ) return 0;
-
+            int luuSoTienGui = 0;
             var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
             if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
             {
@@ -235,8 +235,8 @@ namespace QuanLySoTietKiem.ViewModel
                 var koKiHan = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == "Không kì hạn").SingleOrDefault();
                 if (koKiHan == null) return 0;
                 var laiSuatKoKiHan = koKiHan.LaiSuat;
-                int laiKiHan;
-                int laiKhongKiHan;
+                int laiKiHan=0;
+                int laiKhongKiHan=0;
                 /*   if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                    {
                     //   MessageBox.Show("cc");
@@ -246,21 +246,26 @@ namespace QuanLySoTietKiem.ViewModel
                 */
                 //    else
                 //    {
-                var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / stk.LOAITIETKIEM.ThoiGianGoiToiThieu);
-                MessageBox.Show(soLanKyHan.ToString() + "Lần kì hạn");
+                var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / (int)(stk.LOAITIETKIEM.ThoiGianGoiToiThieu));
+                luuSoTienGui = (int)stk.SoTienGoi;
+               // MessageBox.Show((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays.ToString()+"ngày, "+ soLanKyHan+ "Lần kì hạn/"+stk.LaiSuat/100);
                     if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
                         for(int i=0;i<soLanKyHan; i++)
                         {
-                            laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LOAITIETKIEM.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+                            laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
 
-                            stk.SoTienGoi += laiKiHan;
+                            luuSoTienGui += laiKiHan;
                         }                           
                     }
+              //  MessageBox.Show("So tien gui co ki han: " + luuSoTienGui);
                   //  laiKiHan = 0;
-                laiKhongKiHan = (int)((decimal)stk.SoTienGoi * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
-              //  }
-                soDu = (int)(stk.SoTienGoi + laiKhongKiHan);
+                laiKhongKiHan = (int)(luuSoTienGui * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
+                //  }
+              //  MessageBox.Show("So tien gui khong  ki han: " + laiKhongKiHan);
+
+                soDu = (int)(luuSoTienGui + laiKhongKiHan);
+             //   MessageBox.Show("Số dư: " + soDu);
                 return soDu;
             }
 
@@ -278,90 +283,96 @@ namespace QuanLySoTietKiem.ViewModel
             CheckMaSTK(MaSo);
             if (checkTienRut(MaSo))
             {
-               // MessageBox.Show("Vô nút save"+ "sotiengoi: "+stk.SoTienGoi);
-                stk.SoTienGoi = (int)(TinhSoDu(MaSo) - soTienRut);
+                // MessageBox.Show("Vô nút save"+ "sotiengoi: "+stk.SoTienGoi);
+                int copySoTienGui = 0;
+                copySoTienGui = (int)(TinhSoDu(MaSo) - soTienRut);
                // MessageBox.Show(stk.SoTienGoi.ToString()+"= sodu:"+TinhSoDu(MaSo)+"+ sotienrut: "+soTienRut);
-                stk.NgayTinhLaiGanNhat = DateTime.Now;
-                if (stk.SoTienGoi == 0)
+                var result2 = MessageBox.Show("Bạn muốn rút số tiền: " + SoTienRut.ToString(),
+             "Kiểm tra lại thao tác",
+             MessageBoxButtons.YesNo,
+             MessageBoxIcon.Warning);
+                if (result2.ToString() == "Yes")
                 {
-                    stk.BiDong = true;
-                    //Them mo dong so
-                    List<BCMODONGSOTHANG> bcaoDongMoList = new List<BCMODONGSOTHANG>(DataProvider.Ins.DB.BCMODONGSOTHANGs);
-                    var bcaoThangCount = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
-                    CTBCMODONGSOTHANG ctbcThang;
-                    BCMODONGSOTHANG bcaoThang;
-                    if (bcaoThangCount > 0)
+                    stk.NgayTinhLaiGanNhat = DateTime.Now;// cập nhật sau
+                    if (copySoTienGui == 0)
                     {
-                        bcaoThang = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
-                        List<CTBCMODONGSOTHANG> ctbcThangList = new List<CTBCMODONGSOTHANG>(DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Where(x => x.MaBaoCaoMoDongSo == bcaoThang.MaBaoCaoMoDongSo));
-                        var ctbcCount = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Count();
-                        if (ctbcCount > 0)
+                        stk.BiDong = true;
+                        stk.SoTienGoi = 0;
+                        //Them mo dong so
+                        List<BCMODONGSOTHANG> bcaoDongMoList = new List<BCMODONGSOTHANG>(DataProvider.Ins.DB.BCMODONGSOTHANGs);
+                        var bcaoThangCount = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
+                        CTBCMODONGSOTHANG ctbcThang;
+                        BCMODONGSOTHANG bcaoThang;
+                        if (bcaoThangCount > 0)
                         {
-                            ctbcThang = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Single();
-                            ctbcThang.SoDong += 1;
-                            ctbcThang.ChenhLech -= 1;
+                            bcaoThang = bcaoDongMoList.Where(x => x.Nam == DateTime.Now.Year && x.Thang == DateTime.Now.Month && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
+                            List<CTBCMODONGSOTHANG> ctbcThangList = new List<CTBCMODONGSOTHANG>(DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Where(x => x.MaBaoCaoMoDongSo == bcaoThang.MaBaoCaoMoDongSo));
+                            var ctbcCount = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Count();
+                            if (ctbcCount > 0)
+                            {
+                                ctbcThang = ctbcThangList.Where(x => x.Ngay == DateTime.Now.Day).Single();
+                                ctbcThang.SoDong += 1;
+                                ctbcThang.ChenhLech -= 1;
+                            }
+                            else
+                            {
+                                ctbcThang = new CTBCMODONGSOTHANG
+                                {
+                                    ChenhLech = -1,
+                                    SoMo = 0,
+                                    SoDong = 1,
+                                    BCMODONGSOTHANG = bcaoThang,
+                                    MaBaoCaoMoDongSo = bcaoThang.MaBaoCaoMoDongSo,
+                                    Ngay = DateTime.Now.Day
+                                };
+                                DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
+                            }
                         }
                         else
                         {
-                            ctbcThang = new CTBCMODONGSOTHANG
+
+                            bcaoThang = new BCMODONGSOTHANG
                             {
-                                ChenhLech = -1,
-                                SoMo = 0,
-                                SoDong = 1,
-                                BCMODONGSOTHANG = bcaoThang,
-                                MaBaoCaoMoDongSo = bcaoThang.MaBaoCaoMoDongSo,
-                                Ngay = DateTime.Now.Day
+                                LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem,
+                                Nam = DateTime.Now.Year,
+                                Thang = DateTime.Now.Month,
+                                LOAITIETKIEM1 = stk.LOAITIETKIEM,
                             };
+                            DataProvider.Ins.DB.BCMODONGSOTHANGs.Add(bcaoThang);
+                            ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = -1, SoDong = 1, SoMo = 0, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
                             DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
                         }
-                    }
-                    else
-                    {
+                     }
+                    stk.SoTienGoi = copySoTienGui;
+                   
+                        var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
+                        DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
+                        //  var bcTheoNgay = DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Where(x => x.Ngay.Value.Day == DateTime.Now.Day&&x.Ngay.Value.Month==DateTime.Now.Month&&x.Ngay.Value.Year==DateTime.Now.Year).SingleOrDefault();
+                        var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+                        var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
+                        BCDOANHSOTHEONGAY bcaoNgay;
 
-                        bcaoThang = new BCMODONGSOTHANG
+                        if (check > 0)
                         {
-                            LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem,
-                            Nam = DateTime.Now.Year,
-                            Thang = DateTime.Now.Month,
-                            LOAITIETKIEM1 = stk.LOAITIETKIEM,
-                        };
-                        DataProvider.Ins.DB.BCMODONGSOTHANGs.Add(bcaoThang);
-                        ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = -1, SoDong = 1, SoMo = 0, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
-                        DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
-                    }
-                }
-                var result2 = MessageBox.Show("Bạn muốn rút số tiền: "+SoTienRut.ToString(),
-                "Kiểm tra lại thao tác",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-                if (result2.ToString() == "Yes")
-                {
-                    var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
-                    DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
-                    //  var bcTheoNgay = DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Where(x => x.Ngay.Value.Day == DateTime.Now.Day&&x.Ngay.Value.Month==DateTime.Now.Month&&x.Ngay.Value.Year==DateTime.Now.Year).SingleOrDefault();
-                    var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
-                    var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
-                    BCDOANHSOTHEONGAY bcaoNgay;
+                            bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
+                            bcaoNgay.TongChi += soTienRut;
+                            bcaoNgay.ChenhLech -= bcaoNgay.TongChi;
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
+                        else
+                        {
+                            bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
+                            DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
+                            DataProvider.Ins.DB.SaveChanges();
+                        }
 
-                    if (check > 0)
-                    {
-                        bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
-                        bcaoNgay.TongChi += soTienRut;
-                        bcaoNgay.ChenhLech -= bcaoNgay.TongChi;
                         DataProvider.Ins.DB.SaveChanges();
-                    }
-                    else
-                    {
-                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
-                        DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
-                        DataProvider.Ins.DB.SaveChanges();
-                    }
-                  
-                    DataProvider.Ins.DB.SaveChanges();
-                    List.Add(PHIEURUTTIEN);
-                    MaSo = "";
+                        List.Add(PHIEURUTTIEN);
+                        MaSo = "";
+                    
                 }
-                else {
+                else
+                {
 
                     MaSo = "";
                 }
