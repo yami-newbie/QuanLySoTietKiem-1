@@ -17,8 +17,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         x:Name="window"
         WindowStartupLocation="CenterScreen"
-        Height="550" Width="450"
-        DataContext="{StaticResource SavingAccountVM}">
+        Height="550" Width="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>

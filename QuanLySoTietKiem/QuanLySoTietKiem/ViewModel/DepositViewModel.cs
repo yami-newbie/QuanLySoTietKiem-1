@@ -100,12 +100,10 @@ namespace QuanLySoTietKiem.ViewModel
                 var span = (DateTime.Now.Date - stk.NgayTinhLaiGanNhat.Value.Date).TotalDays;
                 if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
-                    MessageBox.Show(span.ToString());
                     tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * (decimal)(int)span / 36000);
                 }
                 else
                 {
-                    MessageBox.Show(span.ToString ());
                     if (span < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                     {
                         MessageBox.Show(
