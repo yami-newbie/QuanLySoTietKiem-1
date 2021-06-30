@@ -98,7 +98,7 @@ namespace QuanLySoTietKiem.ViewModel
                     return;
                 }
                 var span = (DateTime.Now.Date - stk.NgayTinhLaiGanNhat.Value.Date).TotalDays;
-                if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
+                if ((bool)!stk.LOAITIETKIEM.PhaiRutToanBo)
                 {
                     tienLai = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * (decimal)(int)span / 36000);
                 }
