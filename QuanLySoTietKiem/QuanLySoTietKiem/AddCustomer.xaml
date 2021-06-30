@@ -54,7 +54,7 @@
 
                     <TextBox
                     Width="220"
-                    materialDesign:HintAssist.Hint="Số CMND)"
+                    materialDesign:HintAssist.Hint="Số CMND"
                     Text="{Binding CMND, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     VerticalAlignment="Center"
