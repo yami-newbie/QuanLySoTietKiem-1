@@ -174,13 +174,13 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.KHACHHANG.TenKhachHang.Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.KHACHHANG.TenKhachHang.ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                         case "Mã sổ tiết kiệm":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.MaSo.ToString().Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.MaSo.ToString().ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                         case "Loại tiết kiệm":
-                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.LOAITIETKIEM.TenLoaiTietKiem.ToString().Contains(Query)));
+                            List = new ObservableCollection<SOTIETKIEM>(List.Where(x => x.BiDong != true && x.LOAITIETKIEM.TenLoaiTietKiem.ToString().ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                     }
                 }

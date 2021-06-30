@@ -136,10 +136,10 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.TenKhachHang.Contains(Query)));
+                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.TenKhachHang.ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                         case "Số CMND":
-                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.CMND.Contains(Query)));
+                            List = new ObservableCollection<KHACHHANG>(List.Where(x => x.BiXoa != true && x.CMND.ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                     }
                 }
