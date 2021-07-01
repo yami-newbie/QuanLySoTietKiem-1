@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="QuanLySoTietKiem.CategoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLySoTietKiem"
+             mc:Ignorable="d" 
+             DataContext="{StaticResource CategoryVM}"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
+             TextElement.FontWeight="Regular"    
+             TextElement.FontSize="13"     
+             TextOptions.TextFormattingMode="Ideal"    
+             TextOptions.TextRenderingMode="Auto"    
+             Background="{DynamicResource MaterialDesignPaper}"          
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="450" d:DesignWidth="540">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition ></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" >
+            <materialDesign:Card>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button   
+                        Margin="0 0 5 0"
+                    Command="{Binding AddFormCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    Background="Blue">
+                        <materialDesign:PackIcon Kind="Add" Width="20" Height="20"/>
+                    </Button>
+                    <Button     
+                    Command="{Binding RestoreFormCommand}"
+                    HorizontalAlignment="Right"            
+                    Style="{DynamicResource MaterialDesignRaisedButton}"          
+                    Background="Green">
+                        <materialDesign:PackIcon Kind="Restore" Width="20" Height="20"/>
+                    </Button>
+                </StackPanel>
+            </materialDesign:Card>
+            
+        </Grid>
+        <Grid Grid.Row="1" Margin="0 10 0 0">
+            <materialDesign:Card>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                    <ListView materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem}" Width="510">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding EditFormCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Id" DisplayMemberBinding="{Binding MaLoaiTietKiem}"></GridViewColumn>
+                                <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding TenLoaiTietKiem}"></GridViewColumn>
+                                <GridViewColumn Header="Thời gian (Ngày)" DisplayMemberBinding="{Binding ThoiGianGoiToiThieu}"></GridViewColumn>
+                                <GridViewColumn Header="Lãi suất" DisplayMemberBinding="{Binding LaiSuat}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+            
+        </Grid>
+        
+    </Grid>
+</UserControl>

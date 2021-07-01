@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLySoTietKiem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace QuanLySoTietKiem
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(NGUOIDUNG n)
         {
             InitializeComponent();
+            DataContext = new ViewModel.MainViewModel(n);
         }
     }
 }

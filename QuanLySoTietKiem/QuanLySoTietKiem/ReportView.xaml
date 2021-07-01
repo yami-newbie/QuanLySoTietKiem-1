@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="QuanLySoTietKiem.ReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLySoTietKiem"
+             mc:Ignorable="d" 
+             DataContext="{StaticResource ReportVM}"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"    
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"    
+             TextElement.FontWeight="Regular"    
+             TextElement.FontSize="13"     
+             TextOptions.TextFormattingMode="Ideal"    
+             TextOptions.TextRenderingMode="Auto"    
+             Background="{DynamicResource MaterialDesignPaper}"          
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <TextBlock 
+                        Margin="5,10,0,0"
+                        Text="Báo cáo doanh số hoạt động ngày"
+                           FontSize="30"
+                           FontWeight="Bold"/>
+                    
+                </Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Center">
+                    <Button     
+                    Command="{Binding ExcelDate}"
+                    HorizontalAlignment="Left"    
+                        VerticalAlignment="Bottom"
+                    Foreground="Green"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"                              
+                    Background="White">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="MicrosoftExcel" Width="20" Height="20"/>
+                            <TextBlock Margin="5 2 5 0">Xuất excel</TextBlock>
+                        </StackPanel>
+
+                    </Button>
+                </Grid>
+                <Grid Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <DatePicker
+                        FontWeight="Bold"
+                        Margin="0,10,10,0"
+                        Name="LocaleDatePicker"  
+                        Width="120" 
+                        FontSize="18"
+                        materialDesign:HintAssist.Hint="Locale Date" 
+                        SelectedDate="{Binding DateInput,UpdateSourceTrigger=PropertyChanged,StringFormat=dd/MM/yyyy}"
+                        />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+                <materialDesign:Card VerticalAlignment="Stretch">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView x:Name="ListTK1" materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List1}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA" FontWeight="Bold">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="Auto" Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Loại tiết kiệm" DisplayMemberBinding="{Binding LoaiTietKiem}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng thu(VNĐ)" DisplayMemberBinding="{Binding TongThu}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Tổng chi(VNĐ)" DisplayMemberBinding="{Binding TongChi}"></GridViewColumn>
+                                    <GridViewColumn Width="Auto" Header="Chênh lệch(VNĐ)" DisplayMemberBinding="{Binding ChenhLech}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+            
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <TextBlock 
+                        Margin="5,10,0,0"
+                        Text="Báo cáo Mở/Đóng sổ tháng"
+                           FontSize="28"
+                           FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Column="1" HorizontalAlignment="Center" >
+                    <Button     
+                    Command="{Binding ExcelMonth}"
+                    HorizontalAlignment="Left"    
+                        VerticalAlignment="Bottom"
+                    Foreground="Green"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"                              
+                    Background="White">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="MicrosoftExcel" Width="20" Height="20"/>
+                            <TextBlock Margin="5 2 5 0">Xuất excel</TextBlock>
+                        </StackPanel>
+
+                    </Button>
+                </Grid>
+
+                <Grid Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition ></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <ComboBox
+                            Margin="0,0,10,0"
+                          materialDesign:HintAssist.Hint="Loại tiết kiệm"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding ListLoaiTietKiem}"
+                          DisplayMemberPath="TenLoaiTietKiem"
+                          SelectedItem="{Binding SelectedLoai, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <ComboBox
+                          materialDesign:HintAssist.Hint="Tháng"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding cbxThang}"
+                          SelectedItem="{Binding SelectedThang, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <ComboBox
+                          materialDesign:HintAssist.Hint="Năm"
+                          Margin="10,0,10,0"
+                          FontSize="17"
+                          FontWeight="Bold"
+                          ItemsSource="{Binding cbxNam}"
+                          SelectedItem="{Binding SelectedNam, UpdateSourceTrigger=PropertyChanged}"
+
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </ComboBox.ItemsPanel>
+                        </ComboBox>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+            
+            <Grid Grid.Row="1" Margin="5" VerticalAlignment="Stretch">
+                <materialDesign:Card VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ListView  materialDesign:ListViewAssist.ListViewItemPadding="23 10 0 10" ItemsSource="{Binding List2}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}" Foreground="#DDEE0303" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="#FFFAFAFA"  ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" SnapsToDevicePixels="True" BorderBrush="#89FABF07" FontWeight="Bold">
+                            
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn   Header="STT" DisplayMemberBinding="{Binding STT}"></GridViewColumn>
+                                    <GridViewColumn Width="200" Header="Ngày" DisplayMemberBinding="{Binding Ngay, StringFormat=dd/MM/yyyy }"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Tổng sổ mở" DisplayMemberBinding="{Binding SoMo}"></GridViewColumn>
+                                    <GridViewColumn Width="150" Header="Tổng sổ đóng" DisplayMemberBinding="{Binding SoDong}"></GridViewColumn>
+                                    <GridViewColumn Width="500" Header="Chênh lệch" DisplayMemberBinding="{Binding ChenhLech2}"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </ScrollViewer>
+                </materialDesign:Card>
+            </Grid>
+
+        </Grid>
+
+
+    </Grid>
+</UserControl>
