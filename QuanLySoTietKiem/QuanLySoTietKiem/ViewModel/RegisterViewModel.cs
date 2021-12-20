@@ -36,12 +36,10 @@ namespace QuanLySoTietKiem.ViewModel
                 if (p != null) p.DragMove();
 
             });
-            DoiMatKhau = new RelayCommand<Window>((p) => { return !(String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(MatKhauMoi)|| String.IsNullOrEmpty(MatKhauCu)); }, (p) =>
+            DoiMatKhau = new RelayCommand<Window>((p) => { return isDoiMatKhauFormValidate(); }, (p) =>
             {
-                if(checkEmailvsMatKhau(TenDangNhap,MatKhauCu))
+                if(f_DoiMatKhau())
                 {
-                    var nguoi=DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap).SingleOrDefault();
-                    nguoi.MatKhau = ComputeSha256Hash(MatKhauMoi);
                     DataProvider.Ins.DB.SaveChanges();
                     MessageBox.Show("Cập nhật tài khoản thành công");
                     ResetAll();
@@ -52,10 +50,25 @@ namespace QuanLySoTietKiem.ViewModel
                 {
                     MessageBox.Show("Tên đăng nhập,mật khẩu sai hoặc không tồn tại");
                 }
-              
             });
-
         }
+        private bool isDoiMatKhauFormValidate()
+        {
+            return !(String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(MatKhauMoi) || String.IsNullOrEmpty(MatKhauCu));
+        }
+        public bool f_DoiMatKhau()
+        {
+            if (!isDoiMatKhauFormValidate())
+                return false;
+            if(checkEmailvsMatKhau(TenDangNhap, MatKhauCu))
+            {
+                var nguoi = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == TenDangNhap).SingleOrDefault();
+                nguoi.MatKhau = ComputeSha256Hash(MatKhauMoi);
+                return true;
+            }
+            return false;
+        }
+
         private void ResetAll()
         {
             TenDangNhap = "";

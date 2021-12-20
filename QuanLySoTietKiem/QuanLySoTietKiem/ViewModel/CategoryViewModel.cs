@@ -159,11 +159,9 @@ namespace QuanLySoTietKiem.ViewModel
                 },
                 (p) =>
                 {
-                    int time = int.Parse(ThoiGianGoiToiThieu);
-                    decimal laiSuat = decimal.Parse(LaiSuat);
-                    bool rutHet = SelectedYesNo == "Có";
-                    var ltk = new LOAITIETKIEM() { BiDong = false, TenLoaiTietKiem = TenLoaiTietKiem, LaiSuat = laiSuat, ThoiGianGoiToiThieu = time, PhaiRutToanBo = rutHet };
-                    DataProvider.Ins.DB.LOAITIETKIEMs.Add(ltk);
+                    LOAITIETKIEM ltk = null;
+                    if (!CheckAddLoai(ref ltk))
+                        return;
                     DataProvider.Ins.DB.SaveChanges();
                     List.Add(ltk);
                     MessageBox.Show("Thêm thành công!");
@@ -196,6 +194,22 @@ namespace QuanLySoTietKiem.ViewModel
                     (p as Window).Close();
                 });
         }
+
+        public bool CheckAddLoai(ref LOAITIETKIEM ltk)
+        {
+            if (!isValidatedAdd())
+                return false;
+            decimal o = new decimal();
+            if (ThoiGianGoiToiThieu == null || LaiSuat == null || TenLoaiTietKiem == null || !decimal.TryParse( LaiSuat, out o))
+                return false;
+            int time = int.Parse(ThoiGianGoiToiThieu);
+            decimal laiSuat = decimal.Parse(LaiSuat);
+            bool rutHet = SelectedYesNo == "Có";
+            ltk = new LOAITIETKIEM() { BiDong = false, TenLoaiTietKiem = TenLoaiTietKiem, LaiSuat = laiSuat, ThoiGianGoiToiThieu = time, PhaiRutToanBo = rutHet };
+            DataProvider.Ins.DB.LOAITIETKIEMs.Add(ltk);
+            return true;
+        }
+
         private bool isValidatedAdd()
         {
             if ((String.IsNullOrEmpty(TenLoaiTietKiem) || String.IsNullOrEmpty(ThoiGianGoiToiThieu) || String.IsNullOrEmpty(LaiSuat) || String.IsNullOrEmpty(SelectedYesNo))) return false;

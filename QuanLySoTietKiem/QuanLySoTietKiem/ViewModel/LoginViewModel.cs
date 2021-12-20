@@ -51,16 +51,14 @@ namespace QuanLySoTietKiem.ViewModel
                 p.Hide();
                 r.Show();
             });
-
-
         }
-        public void Login(Window p)
+        private void Login(Window p)
         {
             if (p == null) return;
-            var passEncode = ComputeSha256Hash(Password);
-            var accCount = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName && x.MatKhau == passEncode).FirstOrDefault();
-            if (accCount != null)
+            NGUOIDUNG accCount = null;
+            if (CheckAccount(accCount: ref accCount))
             {
+                IsLogin = true;
                 MainWindow main = new MainWindow(accCount);
                 main.Show();
                 p.Close();
@@ -69,8 +67,18 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 MessageBox.Show("Sai tài khoản hoặc mật khẩu");
             }
-            
         }
+
+        public bool CheckAccount(ref NGUOIDUNG accCount)
+        {
+            var passEncode = ComputeSha256Hash(Password);
+            accCount = DataProvider.Ins.DB.NGUOIDUNGs.Where(x => x.TenDangNhap == UserName && x.MatKhau == passEncode).FirstOrDefault();
+            if (accCount != null)
+                return true;
+            else
+                return false;
+        }
+
         static string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   

@@ -13,7 +13,7 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace QuanLySoTietKiem.ViewModel
 {
-    public class WithdrawViewModel: BaseViewModel
+    public class WithdrawViewModel : BaseViewModel
     {
         private ObservableCollection<PHIEURUTTIEN> _List;
         public ObservableCollection<PHIEURUTTIEN> List { get => _List; set { _List = value; OnPropertyChanged(); } }
@@ -72,7 +72,7 @@ namespace QuanLySoTietKiem.ViewModel
             SaveCommand = new RelayCommand<Window>(
                 (p) =>
                 {
-                    if ((String.IsNullOrEmpty(MaSo)) != true && clicked==true )
+                    if ((String.IsNullOrEmpty(MaSo)) != true && clicked == true)
                         return true;
                     else
                         return false;
@@ -92,7 +92,7 @@ namespace QuanLySoTietKiem.ViewModel
                     switch (SelectedFilter)
                     {
                         case "Tên khách hàng":
-                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x=> x.SOTIETKIEM.KHACHHANG.TenKhachHang.ToLowerInvariant().Contains(Query.ToLowerInvariant())));
+                            List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.SOTIETKIEM.KHACHHANG.TenKhachHang.ToLowerInvariant().Contains(Query.ToLowerInvariant())));
                             break;
                         case "Mã sổ tiết kiệm":
                             List = new ObservableCollection<PHIEURUTTIEN>(List.Where(x => x.MaSo.ToString().ToLowerInvariant().Contains(Query.ToLowerInvariant())));
@@ -113,11 +113,11 @@ namespace QuanLySoTietKiem.ViewModel
                 WithdrawVoucherPrint d = new WithdrawVoucherPrint(this);
                 d.ShowDialog();
             });
-            
+
         }
         private void ResetField()
         {
-     
+
             CMND = "";
             TenKhachHang = "";
             SoTienRut = "";
@@ -156,9 +156,9 @@ namespace QuanLySoTietKiem.ViewModel
                 }
 
 
-            }              
+            }
         }
-        private bool checkTienRut(string maSTK)
+        public bool checkTienRut(string maSTK)
         {
             bool isIntMaSo = int.TryParse(maSTK, out int mastk);
             bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienRut);
@@ -167,6 +167,8 @@ namespace QuanLySoTietKiem.ViewModel
                 clicked = false;
                 return false;
             }
+            if (!isIntSoTienRut)
+                return false;
             var stk = ListSTK.Where(x => x.MaSo == mastk && x.BiDong != true).SingleOrDefault();
             if (stk == null)
             {
@@ -175,26 +177,27 @@ namespace QuanLySoTietKiem.ViewModel
             }
             else
             {
-                if(stk.LOAITIETKIEM.TenLoaiTietKiem=="Không kì hạn")
+                if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
                 {
                     if (soTienRut <= TinhSoDu(stk.MaSo.ToString()))
-                        {
+                    {
                         clicked = true;
                         return true;
                     }
-                    else {
+                    else
+                    {
                         clicked = false;
-                        return false; 
+                        return false;
                     }
                 }
                 else
                 {
-                    if (soTienRut!=TinhSoDu(maSTK))
+                    if (soTienRut != TinhSoDu(maSTK))
                     {
                         SoTienRut = TinhSoDu(maSTK).ToString();
 
-                         clicked = true;
-                          return true;
+                        clicked = true;
+                        return true;
                     }
                     else
                     {
@@ -206,13 +209,13 @@ namespace QuanLySoTietKiem.ViewModel
             return false;
 
         }
- 
+
         private long TinhSoDu(string maSTK)
         {
             long soDu = 0;
             bool isIntMaSo = int.TryParse(maSTK, out int _mastk);
-          //  bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
-            if (!isIntMaSo ) return 0;
+            //  bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienGoi);
+            if (!isIntMaSo) return 0;
             int luuSoTienGui = 0;
             var stk = ListSTK.Where(x => x.MaSo == _mastk && x.BiDong != true).SingleOrDefault();
             if (stk.LOAITIETKIEM.TenLoaiTietKiem == "Không kì hạn")
@@ -236,8 +239,8 @@ namespace QuanLySoTietKiem.ViewModel
                 var koKiHan = DataProvider.Ins.DB.LOAITIETKIEMs.Where(x => x.TenLoaiTietKiem == "Không kì hạn").SingleOrDefault();
                 if (koKiHan == null) return 0;
                 var laiSuatKoKiHan = koKiHan.LaiSuat;
-                int laiKiHan=0;
-                int laiKhongKiHan=0;
+                int laiKiHan = 0;
+                int laiKhongKiHan = 0;
                 /*   if (((DateTime)stk.NgayTinhLaiGanNhat - (DateTime)stk.NgayMoSo).TotalDays < stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
                    {
                     //   MessageBox.Show("cc");
@@ -247,39 +250,40 @@ namespace QuanLySoTietKiem.ViewModel
                 */
                 //    else
                 //    {
+
                 var soLanKyHan = (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays / (int)(stk.LOAITIETKIEM.ThoiGianGoiToiThieu));
                 luuSoTienGui = (int)stk.SoTienGoi;
-               // MessageBox.Show((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays.ToString()+"ngày, "+ soLanKyHan+ "Lần kì hạn/"+stk.LaiSuat/100);
-                    if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
-                    {
-                        for(int i=0;i<soLanKyHan; i++)
-                        {
-                            laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
 
-                            luuSoTienGui += laiKiHan;
-                        }                           
+                // MessageBox.Show((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays.ToString()+"ngày, "+ soLanKyHan+ "Lần kì hạn/"+stk.LaiSuat/100);
+                if ((DateTime.Now - (DateTime)stk.NgayTinhLaiGanNhat).TotalDays > stk.LOAITIETKIEM.ThoiGianGoiToiThieu)
+                {
+                    for (int i = 0; i < soLanKyHan; i++)
+                    {
+                        laiKiHan = (int)((decimal)stk.SoTienGoi * (decimal)stk.LaiSuat * stk.LOAITIETKIEM.ThoiGianGoiToiThieu / 36000);
+
+                        luuSoTienGui += laiKiHan;
                     }
-              //  MessageBox.Show("So tien gui co ki han: " + luuSoTienGui);
-                  //  laiKiHan = 0;
-                laiKhongKiHan = (int)(luuSoTienGui * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu*soLanKyHan) / 36000);
+                }
+                //  MessageBox.Show("So tien gui co ki han: " + luuSoTienGui);
+                //  laiKiHan = 0;
+                laiKhongKiHan = (int)(luuSoTienGui * (decimal)laiSuatKoKiHan * (int)((DateTime.Now.Date - (DateTime)stk.NgayTinhLaiGanNhat.Value.Date).TotalDays - stk.LOAITIETKIEM.ThoiGianGoiToiThieu * soLanKyHan) / 36000);
                 //  }
-              //  MessageBox.Show("So tien gui khong  ki han: " + laiKhongKiHan);
+                //  MessageBox.Show("So tien gui khong  ki han: " + laiKhongKiHan);
 
                 soDu = (int)(luuSoTienGui + laiKhongKiHan);
-             //   MessageBox.Show("Số dư: " + soDu);
+                //   MessageBox.Show("Số dư: " + soDu);
                 return soDu;
             }
 
         }
-        private void AddDeposit()
+        private bool AddDeposit()
         {
-
             bool isIntMaSo = int.TryParse(MaSo, out int maSo);
             bool isIntSoTienRut = int.TryParse(SoTienRut, out int soTienRut);
-            if (!isIntMaSo || !isIntSoTienRut) return;
+            if (!isIntMaSo || !isIntSoTienRut) return false;
 
             var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == maSo && x.BiDong != true).SingleOrDefault();
-            if (stk == null) return;
+            if (stk == null) return false;
 
             CheckMaSTK(MaSo);
             if (checkTienRut(MaSo))
@@ -287,11 +291,11 @@ namespace QuanLySoTietKiem.ViewModel
                 // MessageBox.Show("Vô nút save"+ "sotiengoi: "+stk.SoTienGoi);
                 int copySoTienGui = 0;
                 copySoTienGui = (int)(TinhSoDu(MaSo) - soTienRut);
-               // MessageBox.Show(stk.SoTienGoi.ToString()+"= sodu:"+TinhSoDu(MaSo)+"+ sotienrut: "+soTienRut);
+                // MessageBox.Show(stk.SoTienGoi.ToString()+"= sodu:"+TinhSoDu(MaSo)+"+ sotienrut: "+soTienRut);
                 var result2 = MessageBox.Show("Bạn muốn rút số tiền: " + SoTienRut.ToString(),
-             "Kiểm tra lại thao tác",
-             MessageBoxButtons.YesNo,
-             MessageBoxIcon.Warning);
+                                                 "Kiểm tra lại thao tác",
+                                                 MessageBoxButtons.YesNo,
+                                                 MessageBoxIcon.Warning);
                 if (result2.ToString() == "Yes")
                 {
                     stk.NgayTinhLaiGanNhat = DateTime.Now;// cập nhật sau
@@ -345,44 +349,43 @@ namespace QuanLySoTietKiem.ViewModel
                             ctbcThang = new CTBCMODONGSOTHANG() { ChenhLech = -1, SoDong = 1, SoMo = 0, Ngay = DateTime.Now.Day, BCMODONGSOTHANG = bcaoThang };
                             DataProvider.Ins.DB.CTBCMODONGSOTHANGs.Add(ctbcThang);
                         }
-                     }
+                    }
                     stk.SoTienGoi = copySoTienGui;
-                   
-                        var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
-                        DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
-                        //  var bcTheoNgay = DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Where(x => x.Ngay.Value.Day == DateTime.Now.Day&&x.Ngay.Value.Month==DateTime.Now.Month&&x.Ngay.Value.Year==DateTime.Now.Year).SingleOrDefault();
-                        var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
-                        var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
-                        BCDOANHSOTHEONGAY bcaoNgay;
 
-                        if (check > 0)
-                        {
-                            bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
-                            bcaoNgay.TongChi += soTienRut;
-                            bcaoNgay.ChenhLech -= bcaoNgay.TongChi;
-                            DataProvider.Ins.DB.SaveChanges();
-                        }
-                        else
-                        {
-                            bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
-                            DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
-                            DataProvider.Ins.DB.SaveChanges();
-                        }
+                    var PHIEURUTTIEN = new PHIEURUTTIEN { SOTIETKIEM = stk, SoTienRut = soTienRut, MaSo = maSo, NgayRut = DateTime.Now };
+                    DataProvider.Ins.DB.PHIEURUTTIENs.Add(PHIEURUTTIEN);
+                    //  var bcTheoNgay = DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Where(x => x.Ngay.Value.Day == DateTime.Now.Day&&x.Ngay.Value.Month==DateTime.Now.Month&&x.Ngay.Value.Year==DateTime.Now.Year).SingleOrDefault();
+                    var bcaoList = new List<BCDOANHSOTHEONGAY>(DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
+                    var check = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).Count();
+                    BCDOANHSOTHEONGAY bcaoNgay;
 
+                    if (check > 0)
+                    {
+                        bcaoNgay = bcaoList.Where(x => x.Ngay.Value.Date == DateTime.Now.Date && x.LoaiTietKiem == stk.LOAITIETKIEM.MaLoaiTietKiem).First();
+                        bcaoNgay.TongChi += soTienRut;
+                        bcaoNgay.ChenhLech -= bcaoNgay.TongChi;
                         DataProvider.Ins.DB.SaveChanges();
-                        List.Add(PHIEURUTTIEN);
-                        MaSo = "";
-                    MessageBox.Show("Bạn đã rút tiền thành công", "Thông báo", MessageBoxButtons.OK, (MessageBoxIcon)MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        bcaoNgay = new BCDOANHSOTHEONGAY { Ngay = DateTime.Now, LoaiTietKiem = stk.LOAITIETKIEM.MaLoaiTietKiem, LOAITIETKIEM1 = PHIEURUTTIEN.SOTIETKIEM.LOAITIETKIEM, TongChi = soTienRut, TongThu = 0, ChenhLech = -soTienRut };
+                        DataProvider.Ins.DB.BCDOANHSOTHEONGAYs.Add(bcaoNgay);
+                        DataProvider.Ins.DB.SaveChanges();
+                    }
 
+                    DataProvider.Ins.DB.SaveChanges();
+                    List.Add(PHIEURUTTIEN);
+                    MaSo = "";
+                    MessageBox.Show("Bạn đã rút tiền thành công", "Thông báo", MessageBoxButtons.OK, (MessageBoxIcon)MessageBoxImage.Information);
+                    return true;
                 }
                 else
                 {
-
                     MaSo = "";
+                    return false;
                 }
-               
             }
-
+            return false;
         }
     }
 }

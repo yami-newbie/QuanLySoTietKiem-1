@@ -137,7 +137,6 @@ namespace QuanLySoTietKiem.ViewModel
                             foreach (var item in List2)
                             {
                                 sb.AppendLine(string.Format("{0},{1},{2},{3},{4}", item.STT, item.Ngay.ToString(),item.SoMo, item.SoDong, item.ChenhLech2));
-
                             }
                             await sw.WriteAsync(sb.ToString());
                             MessageBox.Show("Báo cáo của bạn đã được xuất ra file thành công", "Tin nhắn", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);

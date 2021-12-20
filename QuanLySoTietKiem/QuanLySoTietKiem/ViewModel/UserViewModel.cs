@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace QuanLySoTietKiem.ViewModel
 {
-    class UserViewModel : BaseViewModel
+    public class UserViewModel : BaseViewModel
 
     {
         private ObservableCollection<NGUOIDUNG> _List;
@@ -99,17 +99,15 @@ namespace QuanLySoTietKiem.ViewModel
                 },
                 (p) =>
                 {
-                    if (!CheckValidUsername(TenDangNhap))
+                    NGUOIDUNG user = null;
+                    if(CheckAddUser(ref user))
                     {
-                        MessageBox.Show("Tên đăng nhập đã tồn tại!");
-                        return;
+                        DataProvider.Ins.DB.SaveChanges();
+                        List.Add(user);
+                        MessageBox.Show("Thêm thành công!");
+                        ResetField();
                     }
-                    var user = new NGUOIDUNG() { MaNhom = SelectedGroup.MaNhom, NHOMNGUOIDUNG = SelectedGroup, MatKhau = ComputeSha256Hash(Password), TenDangNhap = TenDangNhap, TenThat = TenThat };
-                    DataProvider.Ins.DB.NGUOIDUNGs.Add(user);
-                    DataProvider.Ins.DB.SaveChanges();
-                    List.Add(user);
-                    MessageBox.Show("Thêm thành công!");
-                    ResetField();
+                    
                 });
                 SaveEditCommand = new RelayCommand<object>(
                 (p) =>
@@ -151,6 +149,19 @@ namespace QuanLySoTietKiem.ViewModel
         private bool isValidatedAdd()
         {
             if (SelectedGroup == null || String.IsNullOrEmpty(TenThat) || String.IsNullOrEmpty(TenDangNhap) || String.IsNullOrEmpty(Password)) return false;
+            return true;
+        }
+        public bool CheckAddUser(ref NGUOIDUNG user)
+        {
+            if (!isValidatedAdd())
+                return false;
+            if (!CheckValidUsername(TenDangNhap))
+            {
+                MessageBox.Show("Tên đăng nhập đã tồn tại!");
+                return false;
+            }
+            user = new NGUOIDUNG() { MaNhom = SelectedGroup.MaNhom, NHOMNGUOIDUNG = SelectedGroup, MatKhau = ComputeSha256Hash(Password), TenDangNhap = TenDangNhap, TenThat = TenThat };
+            DataProvider.Ins.DB.NGUOIDUNGs.Add(user);
             return true;
         }
         private bool CheckUserName()

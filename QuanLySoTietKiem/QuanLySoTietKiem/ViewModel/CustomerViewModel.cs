@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace QuanLySoTietKiem.ViewModel
 {
-    class CustomerViewModel : BaseViewModel
+    public class CustomerViewModel : BaseViewModel
     {
         private ObservableCollection<KHACHHANG> _List;
         public ObservableCollection<KHACHHANG> List { get => _List; set { _List = value; OnPropertyChanged(); } }
@@ -92,27 +92,18 @@ namespace QuanLySoTietKiem.ViewModel
             });
 
             SaveAddCommand = new RelayCommand<object>(
-                (p) =>
-                {
-                    return !(String.IsNullOrEmpty(DiaChi) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang));
-                },
+                (p) => { return isAddFormValidate(); }
+                ,
                 (p) =>
                 {
                     AddCustomer();
-
                 });
 
             SaveEditCommand = new RelayCommand<object>((p) => { return isEditFormValidate(); }, (p) =>
             {
                 var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.MaKhachHang == SelectedItem.MaKhachHang).SingleOrDefault();
-                if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() > 0)
-                {
-                    MessageBox.Show("CMND đã tồn tại!");
+                if (!EditCustomer(ref kh))
                     return;
-                }
-                kh.DiaChi = DiaChi;
-                kh.CMND = CMND;
-                kh.TenKhachHang = TenKhachHang;
                 DataProvider.Ins.DB.SaveChanges();
                 for (int i = 0; i < List.Count; i++)
                 {
@@ -145,6 +136,23 @@ namespace QuanLySoTietKiem.ViewModel
                 }
             });
         }
+        private bool isAddFormValidate()
+        {
+            return !(String.IsNullOrEmpty(DiaChi) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang));
+        }
+        public bool EditCustomer(ref KHACHHANG kh)
+        {
+            if ((String.IsNullOrEmpty(DiaChi) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang))) return false;
+            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() > 0)
+            {
+                MessageBox.Show("CMND đã tồn tại!");
+                return false;
+            }
+            kh.DiaChi = DiaChi;
+            kh.CMND = CMND;
+            kh.TenKhachHang = TenKhachHang;
+            return true;
+        }
         private void ResetField()
         {
             
@@ -154,12 +162,12 @@ namespace QuanLySoTietKiem.ViewModel
         }
         private void AddCustomer()
         {
-            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() == 0)
+            KHACHHANG kh = null;
+
+            if (AddKhachHang(ref kh))
             {
-                var kh = new KHACHHANG() { TenKhachHang = TenKhachHang, DiaChi = DiaChi, CMND = CMND };
-                DataProvider.Ins.DB.KHACHHANGs.Add(kh);
-                DataProvider.Ins.DB.SaveChanges();
                 List.Add(kh);
+                DataProvider.Ins.DB.SaveChanges();
                 MessageBox.Show("Thêm thành công!");
                 ResetField();
             }
@@ -167,8 +175,21 @@ namespace QuanLySoTietKiem.ViewModel
             {
                 MessageBox.Show("CMND đã tồn tại","Cảnh báo lỗi",MessageBoxButton.OK,MessageBoxImage.Warning);
             }
-           
         }
+
+        public bool AddKhachHang(ref KHACHHANG kh)
+        {
+            if (!isAddFormValidate())
+                return false;
+            if (DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).Count() == 0)
+            {
+                kh = new KHACHHANG() { TenKhachHang = TenKhachHang, DiaChi = DiaChi, CMND = CMND };
+                DataProvider.Ins.DB.KHACHHANGs.Add(kh);
+                return true;
+            }
+            return false;
+        }
+
         private bool isEditFormValidate()
         {
             if (SelectedItem == null) return false;

@@ -69,7 +69,7 @@ namespace QuanLySoTietKiem.ViewModel
 
             RestoreFormCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-  
+
                 RestoreSavingAccountView restore = new RestoreSavingAccountView(this);
                 restore.ShowDialog();
             });
@@ -99,7 +99,7 @@ namespace QuanLySoTietKiem.ViewModel
                 (p) =>
                 {
                     if (SelectedItemDaXoa == null) return false;
-                    return (SelectedItemDaXoa.SoTienGoi <= 0); 
+                    return (SelectedItemDaXoa.SoTienGoi <= 0);
                 },
                 (p) =>
                 {
@@ -108,7 +108,7 @@ namespace QuanLySoTietKiem.ViewModel
                     {
                         var stk = DataProvider.Ins.DB.SOTIETKIEMs.Where(x => x.MaSo == SelectedItemDaXoa.MaSo).SingleOrDefault();
                         if (stk != null)
-                        { 
+                        {
                             DataProvider.Ins.DB.SOTIETKIEMs.Remove(stk);
                             DataProvider.Ins.DB.SaveChanges();
                             ListDaDong.Remove(SelectedItemDaXoa);
@@ -135,21 +135,21 @@ namespace QuanLySoTietKiem.ViewModel
                         SelectedItem = null;
                     }
                 });
-            
+
             SaveAddCommand = new RelayCommand<object>(
                 (p) =>
                 {
-                   return !(String.IsNullOrEmpty(DiaChi) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang) || String.IsNullOrEmpty(SoTienGoi) || SelectedLoai == null);
-                }, 
+                    return !(String.IsNullOrEmpty(DiaChi) || String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(TenKhachHang) || String.IsNullOrEmpty(SoTienGoi) || SelectedLoai == null);
+                },
                 (p) =>
                 {
                     AddSavingAccount();
-                    
+
                 });
             SearchCMNDCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
-                
+
                 if (kh == null)
                 {
                     MessageBox.Show("Không tìm thấy khách hàng này! Bạn có thể qua tab khách hàng để đăng kí thông tin khách hàng");
@@ -163,7 +163,7 @@ namespace QuanLySoTietKiem.ViewModel
                 DiaChi = "";
                 TenKhachHang = "";
             });
-            
+
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 List = Init;
@@ -195,23 +195,41 @@ namespace QuanLySoTietKiem.ViewModel
             SoTienGoi = "";
             DiaChi = "";
         }
-        private void AddSavingAccount()
+        private bool isSavingFormValidate()
         {
+            return !(String.IsNullOrEmpty(CMND) || String.IsNullOrEmpty(SoTienGoi) || SelectedLoai == null);
+        }
+
+        public bool CheckSavingAccount()
+        {
+            if (!isSavingFormValidate())
+                return false;
             bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
 
-            if (!isIntSoTienGoi) 
+            if (!isIntSoTienGoi)
             {
                 MessageBox.Show("Vui lòng nhập đúng định dạng tiền!");
-                return; 
+                return false;
             }
             var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
             var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.TenThamSo == "SoTienGoiBanDau").SingleOrDefault();
-            if (kh == null || thamSo == null) return;
+            if (kh == null || thamSo == null) return false;
             if (soTienGoi < thamSo.GiaTri)
             {
                 MessageBox.Show("Số tiền gởi ban đầu tối thiểu là: " + thamSo.GiaTri.ToString());
-                return;
+                return false;
             }
+            return true;
+        }
+        public bool AddSavingAccount()
+        {
+
+            if (!CheckSavingAccount())
+                return false;
+
+            bool isIntSoTienGoi = int.TryParse(SoTienGoi, out int soTienGoi);
+            var kh = DataProvider.Ins.DB.KHACHHANGs.Where(x => x.CMND == CMND).SingleOrDefault();
+            var thamSo = DataProvider.Ins.DB.THAMSOes.Where(x => x.TenThamSo == "SoTienGoiBanDau").SingleOrDefault();
             var SOTIETKIEM = new SOTIETKIEM { LaiSuat = SelectedLoai.LaiSuat, NgayMoSo = DateTime.Now, LOAITIETKIEM = SelectedLoai, SoTienGoi = soTienGoi, KHACHHANG = kh, NgayTinhLaiGanNhat = DateTime.Now };
             // Thêm hoặc cập nhật báo cáo doah số ngày
             var bcaoList = new List<BCDOANHSOTHEONGAY> (DataProvider.Ins.DB.BCDOANHSOTHEONGAYs);
@@ -277,6 +295,7 @@ namespace QuanLySoTietKiem.ViewModel
             List.Add(SOTIETKIEM);
             ResetField();
             MessageBox.Show("Mở sổ tiết kiệm thành công!");
+            return true;
         }
         private bool CompareDay(DateTime d1, DateTime d2)
         {
