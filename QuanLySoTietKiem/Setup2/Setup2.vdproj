@@ -220,12 +220,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7C2648C4D8F5EEBAB19D0DF03D31F070"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_7EBB4623B7574061892D5C036AF35D6B"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -325,6 +319,12 @@
         "OwnerKey" = "8:_14E1369766B9477ECF5B5620D4F52173"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_7C2648C4D8F5EEBAB19D0DF03D31F070"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -343,6 +343,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -359,6 +367,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -1123,7 +1139,7 @@
             "Target" = "8:_7EBB4623B7574061892D5C036AF35D6B"
             "Folder" = "8:_6CAB02DD92314B9BAA2D46F709AA4C19"
             "WorkingFolder" = "8:_8F489D0F863B40DCB58AD0A16320AED4"
-            "Icon" = "8:_6F6307F345074390B3D4A87BE5BE1E3A"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_AD46279ED2FC4331A0537C1CC9991D27"
@@ -1137,7 +1153,7 @@
             "Target" = "8:_7EBB4623B7574061892D5C036AF35D6B"
             "Folder" = "8:_0B2E54BBF68C4F59B5B2360556B90481"
             "WorkingFolder" = "8:_8F489D0F863B40DCB58AD0A16320AED4"
-            "Icon" = "8:_6F6307F345074390B3D4A87BE5BE1E3A"
+            "Icon" = "8:"
             "Feature" = "8:"
             }
         }

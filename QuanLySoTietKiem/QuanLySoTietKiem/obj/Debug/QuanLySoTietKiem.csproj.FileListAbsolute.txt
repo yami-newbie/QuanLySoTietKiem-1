@@ -433,4 +433,3 @@ C:\Users\hoang\Downloads\Compressed\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTi
 C:\Users\hoang\Downloads\Compressed\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.csproj.CopyComplete
 C:\Users\hoang\Downloads\Compressed\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.exe
 C:\Users\hoang\Downloads\Compressed\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.pdb
-C:\Users\hoang\Downloads\Compressed\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\QuanLySoTietKiem\obj\Debug\QuanLySoTietKiem.csproj.AssemblyReference.cache
