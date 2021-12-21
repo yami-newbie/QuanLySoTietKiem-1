@@ -8,7 +8,7 @@ namespace QuanLySoTietKiem.Model
 {
     public class DataProvider
     {
-        public QuanLySoTietKiemEntities DB;
+        public QuanLySoTietKiemEntities1 DB;
         private static DataProvider _ins;
         public static DataProvider Ins
         {
@@ -25,7 +25,7 @@ namespace QuanLySoTietKiem.Model
         }
         public DataProvider()
         {
-            DB = new QuanLySoTietKiemEntities();
+            DB = new QuanLySoTietKiemEntities1();
         }
     }
 }

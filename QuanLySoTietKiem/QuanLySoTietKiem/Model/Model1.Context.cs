@@ -13,9 +13,9 @@ namespace QuanLySoTietKiem.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLySoTietKiemEntities : DbContext
+    public partial class QuanLySoTietKiemEntities1 : DbContext
     {
-        public QuanLySoTietKiemEntities()
+        public QuanLySoTietKiemEntities1()
             : base("name=QuanLySoTietKiemEntities")
         {
         }

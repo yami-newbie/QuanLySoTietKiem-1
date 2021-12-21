@@ -214,7 +214,7 @@ namespace QuanLySoTietKiem.ViewModel
             DataProvider.Ins.DB.PHIEUGOITIENs.Add(PHIEUGOITIEN);
             stk.LaiSuat = stk.LOAITIETKIEM.LaiSuat;
             DataProvider.Ins.DB.SaveChanges();
-            List.Add(PHIEUGOITIEN);         
+            List.Add(PHIEUGOITIEN);
             MessageBox.Show("Gửi tiền thành công! Số dư mới là: " + SoDuMoi);
             ResetField();
         }

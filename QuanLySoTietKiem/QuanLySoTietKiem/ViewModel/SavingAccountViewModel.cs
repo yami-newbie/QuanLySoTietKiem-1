@@ -223,7 +223,6 @@ namespace QuanLySoTietKiem.ViewModel
         }
         public bool AddSavingAccount()
         {
-
             if (!CheckSavingAccount())
                 return false;
 
